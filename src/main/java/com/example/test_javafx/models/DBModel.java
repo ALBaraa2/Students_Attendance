@@ -13,7 +13,7 @@ public class DBModel {
 
     //here our queries method
     private DBModel() {
-        schemaConnect("uni-largespace");
+        schemaConnect("project");
     }
 
     public static DBModel getModel() {
@@ -26,7 +26,7 @@ public class DBModel {
     public void connect() {
         PGSimpleDataSource source = new PGSimpleDataSource();
         source.setServerName("localhost");
-        source.setDatabaseName("UNI1");
+        source.setDatabaseName("project");
         source.setUser("postgres");
         source.setPassword("123");
 
