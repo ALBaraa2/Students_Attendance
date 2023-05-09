@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.*?>
+<AnchorPane id="AnchorPane" fx:id="rootPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.test_javafx.controllers.AddSectionController">
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="401.0" prefWidth="600.0">
+        <Button fx:id="btn_add" layoutX="365.0" layoutY="348.0" mnemonicParsing="false" onAction="#addSection"
+                prefHeight="26.0" prefWidth="101.0" text="Add">
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
+            <font>
+                <Font name="Times New Roman" size="18.0"/>
+            </font>
+        </Button>
+        <ComboBox fx:id="course_id" layoutX="121.0" layoutY="44.0" onAction="#comboboxChange" prefHeight="26.0"
+                  prefWidth="162.0"/>
+        <Label layoutX="43.0" layoutY="44.0" prefHeight="23.0" prefWidth="98.0" text="Course ID">
+            <font>
+                <Font name="Times New Roman" size="16.0"/>
+            </font>
+        </Label>
+        <ComboBox fx:id="building" layoutX="121.0" layoutY="96.0" onAction="#loadRooms" prefHeight="26.0"
+                  prefWidth="162.0"/>
+        <Label layoutX="43.0" layoutY="96.0" prefHeight="23.0" prefWidth="98.0" text="Building">
+            <font>
+                <Font name="Times New Roman" size="16.0"/>
+            </font>
+        </Label>
+        <ComboBox fx:id="room" layoutX="121.0" layoutY="148.0" prefHeight="26.0" prefWidth="162.0"/>
+        <Label layoutX="43.0" layoutY="148.0" prefHeight="23.0" prefWidth="98.0" text="Room #">
+            <font>
+                <Font name="Times New Roman" size="16.0"/>
+            </font>
+        </Label>
+        <ComboBox fx:id="year" layoutX="121.0" layoutY="200.0" prefHeight="26.0" prefWidth="162.0"/>
+        <Label layoutX="43.0" layoutY="200.0" prefHeight="23.0" prefWidth="98.0" text="Year">
+            <font>
+                <Font name="Times New Roman" size="16.0"/>
+            </font>
+        </Label>
+        <ComboBox fx:id="semester" layoutX="121.0" layoutY="252.0" prefHeight="26.0" prefWidth="162.0"/>
+        <Label layoutX="43.0" layoutY="252.0" prefHeight="23.0" prefWidth="98.0" text="Semester">
+            <font>
+                <Font name="Times New Roman" size="16.0"/>
+            </font>
+        </Label>
+        <Label fx:id="course_name" layoutX="307.0" layoutY="40.0" prefHeight="34.0" prefWidth="232.0"
+               textFill="#49484a">
+            <font>
+                <Font name="Times New Roman" size="25.0"/>
+            </font>
+        </Label>
+        <Label fx:id="conflict_in_room" layoutX="299.0" layoutY="298.0" prefHeight="34.0" prefWidth="232.0"
+               text="Conflict !" textFill="#e80602" visible="false">
+            <font>
+                <Font name="Times New Roman" size="25.0"/>
+            </font>
+        </Label>
+        <ComboBox fx:id="time_slot" layoutX="121.0" layoutY="302.0" prefHeight="26.0" prefWidth="162.0"/>
+        <Label layoutX="43.0" layoutY="302.0" prefHeight="23.0" prefWidth="98.0" text="Time Slot">
+            <font>
+                <Font name="Times New Roman" size="16.0"/>
+            </font>
+        </Label>
+        <Button fx:id="nav_back" layoutX="481.0" layoutY="348.0" mnemonicParsing="false" onAction="#back_to_start"
+                prefHeight="26.0" prefWidth="101.0" text="Close">
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
+            <font>
+                <Font name="Times New Roman" size="18.0"/>
+            </font>
+        </Button>
+        <Label fx:id="notification" layoutX="359.0" layoutY="223.0" prefHeight="59.0" prefWidth="215.0"
+               style="-fx-background-color: white;" text="Label">
+            <font>
+                <Font name="Times New Roman" size="16.0"/>
+            </font>
+        </Label>
+        <Button fx:id="btn_hide" alignment="CENTER" contentDisplay="RIGHT" focusTraversable="false" layoutX="539.0"
+                layoutY="236.0" mnemonicParsing="false" onAction="#hide" prefHeight="32.0" prefWidth="32.0">
+            <effect>
+                <Glow/>
+            </effect>
+        </Button>
+
+
+    </AnchorPane>
+</AnchorPane>
