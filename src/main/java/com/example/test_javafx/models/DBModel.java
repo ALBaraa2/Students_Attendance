@@ -12,9 +12,7 @@ public class DBModel {
     Connection con = null;
 
     //here our queries method
-    private DBModel() {
-        schemaConnect("project");
-    }
+    private DBModel() {schemaConnect("project");}
 
     public static DBModel getModel() {
         if (dbmodel == null) {
@@ -470,6 +468,10 @@ public class DBModel {
         }
         return false;
     }
+    public boolean feras(String e, String p) {
+        return false;
+    }
+
 
 //    public boolean isAdmin(String e, String p){
 //
