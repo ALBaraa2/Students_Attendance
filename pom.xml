@@ -8,7 +8,28 @@
     <artifactId>Test_JavaFX</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>Test_JavaFX</name>
-
+    <repositories>
+    <repository>
+        <id>maven-central</id>
+        <url>https://repo1.maven.org/maven2/</url>
+    </repository>
+    <repository>
+        <id>jcenter</id>
+        <url>https://jcenter.bintray.com/</url>
+    </repository>
+    <repository>
+        <id>openjfx</id>
+        <url>https://repo.maven.apache.org/maven2/org/openjfx/</url>
+    </repository>
+    <repository>
+        <id>jensd-repo</id>
+        <url>https://dl.bintray.com/jerady/maven</url>
+    </repository>
+    <repository>
+        <id>javafx</id>
+        <url>https://maven.javafx.com/3.0.0</url>
+    </repository>
+</repositories>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.version>5.9.1</junit.version>
@@ -32,6 +53,7 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
@@ -44,10 +66,19 @@
             <version>8.9</version>
         </dependency>
         <dependency>
+
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>16</version>
+        </dependency>
+
+        <dependency>
+
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>42.6.0</version>
         </dependency>
+
     </dependencies>
 
     <build>
