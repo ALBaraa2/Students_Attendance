@@ -36,7 +36,10 @@ public class Login implements Initializable {
 
     public void ass() {
         if (db.getEmailPassword(email.getText(), passwoed.getText())){
-            nav.navigateTo(root, nav.START_CONTROLLER_FXML);
+            if (db.isAdmin(email.getText())) {
+                nav.navigateTo(root, nav.ADMIN_FXML);
+            }else
+                nav.navigateTo(root, nav.TEACH_ASSISTANT_FXML);
         }else
             faild.setVisible(true);
 

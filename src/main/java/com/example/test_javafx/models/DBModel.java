@@ -12,7 +12,9 @@ public class DBModel {
     Connection con = null;
 
     //here our queries method
-    private DBModel() {schemaConnect("attendance");}
+    public DBModel() {
+        schemaConnect("project");
+    }
 
     public static DBModel getModel() {
         if (dbmodel == null) {
@@ -24,9 +26,9 @@ public class DBModel {
     public void connect() {
         PGSimpleDataSource source = new PGSimpleDataSource();
         source.setServerName("localhost");
-        source.setDatabaseName("project_database");
+        source.setDatabaseName("project");
         source.setUser("postgres");
-        source.setPassword("feraskhaled30");
+        source.setPassword("123");
 
         try {
             con = source.getConnection();
@@ -70,25 +72,6 @@ public class DBModel {
         System.exit(0);
     }
 
-    public ArrayList<String> getCourseIDs() {
-        String sql = "select course_id from course;";
-        ArrayList<String> ids = new ArrayList<>();
-        try (Statement st = con.createStatement();
-             ResultSet rs = st.executeQuery(sql)
-        ) {
-            while (rs.next()) {
-                ids.add(rs.getString(1));
-                //  System.out.println(rs.getString(1));
-            }
-            return ids;
-        } catch (SQLException ex) {
-
-            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
-
-    }
-
     public ArrayList<String> getBuildings() {
         String sql = "select building from classroom;";
         ArrayList<String> buildings = new ArrayList<>();
@@ -117,24 +100,6 @@ public class DBModel {
                 rooms.add(rs.getString(1));
             }
             return rooms;
-        } catch (SQLException ex) {
-
-            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
-
-    }
-
-    public String getcourseName(String id) {
-        String sql = "select title from course where course_id = ? ;";
-        try (PreparedStatement st = con.prepareStatement(sql)) {
-            st.setString(1, id);
-            ResultSet rs = st.executeQuery();
-            if (rs.next()) {
-                System.out.println(rs.getString(1));
-                return rs.getString(1);
-            }
-            return null;
         } catch (SQLException ex) {
 
             Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
@@ -448,9 +413,9 @@ public class DBModel {
             return null;
         }
     }
-
+//-------------------------------------------------------------------------------------------------//
     public boolean getEmailPassword(String e, String p) {
-        String sql = "select email, password, user_type" +
+        String sql = "select email, password" +
                 " from users" +
                 " where email = ? and password = ? ;";
         try (PreparedStatement st = con.prepareStatement(sql)) {
@@ -460,8 +425,7 @@ public class DBModel {
             if (rs.next()) {
                 String email = rs.getString(1);
                 String password = rs.getString(2);
-                String user_type = rs.getString(3);
-                if (email.equals(e) && password.equals(p) && user_type.equals("admin")) {
+                if (email.equals(e) && password.equals(p)) {
                     return true;
                 } else {
                     return false;
@@ -472,6 +436,154 @@ public class DBModel {
         } catch (SQLException ex) {
             Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
             return false;
+        }
+    }
+
+    public boolean isAdmin(String e) {
+        String sql = "select user_type" +
+                " from users" +
+                " where email = ?;";
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, e);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                String user_type = rs.getString(1);
+                if (user_type.equals("admin")) {
+                    return true;
+                } else
+                    return false;
+            } else
+                return false;
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+
+    public boolean modifyCourse(String cId, String cName, String iName, String cLocation) {
+        String sql = "UPDATE courses " +
+                "SET instructor_name = ?, course_name = ?, course_location = ? " +
+                "WHERE course_id = ?;";
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            if (iName.equals(null)) {
+                    st.setString(1, a(cId)[1]);
+                    st.setString(2, cName);
+                    st.setString(3, cLocation);
+                    st.setString(4, cId);
+            }
+            if (cLocation.equals(null)) {
+                    st.setString(1, iName);
+                    st.setString(2, cName);
+                    st.setString(3, a(cId)[2]);
+                    st.setString(4, cId);
+            }
+            if (cName.equals(null)) {
+                    st.setString(1, iName);
+                    st.setString(2, a(cId)[0]);
+                    st.setString(3, cLocation);
+                    st.setString(4, cId);
+            }
+            if (!cName.equals(null) && !iName.equals(null) && !cLocation.equals(null)) {
+                st.setString(1, iName);
+                st.setString(2, cName);
+                st.setString(3, cLocation);
+                st.setString(4, cId);
+            }
+            if (st.executeUpdate() > 0) {
+                return true;
+            } else return false;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+
+    public String[] a(String cId){
+        String sql = "select course_name, instructor_name, course_location " +
+                "from courses "+
+                "where course_id = ? ;";
+        String data[] = new String[3];
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, cId);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                data[0] = rs.getString(1);
+                data[1] = rs.getString(2);
+                data[2] = rs.getString(3);
+                return data;
+            } else
+                return data;
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return data;
+    }
+
+
+
+    public boolean insertCourse(String cId, String iName, String cName, String cLocation) {
+        String sql = "insert into courses (course_id, instructor_name, course_name, course_location) values (?,?,?,?);";
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, cId);
+            st.setString(2, iName);
+            st.setString(3, cName);
+            st.setString(4, cLocation);
+            if (st.executeUpdate() > 0) {
+                return true;
+            } else return false;
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+
+    public ArrayList<Courses> getCourses() {
+        ArrayList<Courses> c = new ArrayList<>();
+        String sql = "select course_id, instructor_name, course_name, course_location, year"
+                + " from courses natural join assist ;";
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                c.add(new Courses(rs.getString(1), rs.getString(2), rs.getString(3),
+                        rs.getString(4), rs.getString(5)));
+            }
+            return c;
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+
+    public ArrayList<String> getCourseIDs() {
+        String sql = "select course_id from courses;";
+        ArrayList<String> ids = new ArrayList<>();
+        try (Statement st = con.createStatement();
+             ResultSet rs = st.executeQuery(sql)
+        ) {
+            while (rs.next()) {
+                ids.add(rs.getString(1));
+            }
+            return ids;
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+
+    public String getcourseName(String id) {
+        String sql = "select course_name from courses where course_id = ? ;";
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, id);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                System.out.println(rs.getString(1));
+                return rs.getString(1);
+            }
+            return null;
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
     }
 }
