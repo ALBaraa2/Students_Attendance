@@ -13,7 +13,7 @@ public class DBModel {
 
     //here our queries method
     private DBModel() {
-        schemaConnect("uni-largespace");
+        schemaConnect("attendance");
     }
 
     public static DBModel getModel() {
@@ -26,9 +26,9 @@ public class DBModel {
     public void connect() {
         PGSimpleDataSource source = new PGSimpleDataSource();
         source.setServerName("localhost");
-        source.setDatabaseName("UNI1");
+        source.setDatabaseName("project_database");
         source.setUser("postgres");
-        source.setPassword("123");
+        source.setPassword("feraskhaled30");
 
         try {
             con = source.getConnection();
@@ -470,6 +470,10 @@ public class DBModel {
         }
         return false;
     }
+    public boolean feras(String e, String p) {
+        return false;
+    }
+
 
 //    public boolean isAdmin(String e, String p){
 //
