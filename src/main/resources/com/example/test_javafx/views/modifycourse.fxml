@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<?import javafx.scene.control.TextField?>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <left>
+      <AnchorPane prefHeight="400.0" prefWidth="300.0" style="-fx-background-color: #0568ff;" BorderPane.alignment="CENTER">
+         <children>
+            <Text fill="WHITE" layoutX="7.0" layoutY="146.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Modifying a Course" wrappingWidth="291.576171875">
+               <font>
+                  <Font size="33.0" />
+               </font>
+            </Text>
+         </children>
+      </AnchorPane>
+   </left>
+   <right>
+      <AnchorPane prefHeight="400.0" prefWidth="300.0" style="-fx-background-color: #a89696;" BorderPane.alignment="CENTER">
+         <children>
+            <ComboBox layoutX="75.0" layoutY="79.0" prefWidth="150.0" promptText="Select Course_id" />
+            <Label layoutX="18.0" layoutY="136.0" prefHeight="26.0" prefWidth="97.0" text="Course name:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="11.0" layoutY="200.0" prefHeight="18.0" prefWidth="105.0" text="Insructor name:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="11.0" layoutY="256.0" text="Course location:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <TextField layoutX="111.0" layoutY="137.0" promptText="Enter new Course name" />
+            <TextField layoutX="111.0" layoutY="197.0" promptText="Enter new instructor name" />
+            <TextField layoutX="112.0" layoutY="253.0" promptText="Enter new location" />
+            <Button cache="true" layoutX="55.0" layoutY="328.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="61.0" style="-fx-background-color: #0568ff;" text="Done" />
+            <Button layoutX="200.0" layoutY="328.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="57.0" style="-fx-background-color: #0568ff;" text="Back" />
+         </children>
+      </AnchorPane>
+   </right>
+</BorderPane>
