@@ -460,35 +460,13 @@ public class DBModel {
         }
     }
 
-    public boolean modifyCourse(String cId, String cName, String iName, String cLocation) {
+    public boolean modifyCourseName(String cId, String cName) {
         String sql = "UPDATE courses " +
-                "SET instructor_name = ?, course_name = ?, course_location = ? " +
+                "SET course_name = ? " +
                 "WHERE course_id = ?;";
         try (PreparedStatement st = con.prepareStatement(sql)) {
-            if (iName.equals(null)) {
-                    st.setString(1, a(cId)[1]);
-                    st.setString(2, cName);
-                    st.setString(3, cLocation);
-                    st.setString(4, cId);
-            }
-            if (cLocation.equals(null)) {
-                    st.setString(1, iName);
-                    st.setString(2, cName);
-                    st.setString(3, a(cId)[2]);
-                    st.setString(4, cId);
-            }
-            if (cName.equals(null)) {
-                    st.setString(1, iName);
-                    st.setString(2, a(cId)[0]);
-                    st.setString(3, cLocation);
-                    st.setString(4, cId);
-            }
-            if (!cName.equals(null) && !iName.equals(null) && !cLocation.equals(null)) {
-                st.setString(1, iName);
-                st.setString(2, cName);
-                st.setString(3, cLocation);
-                st.setString(4, cId);
-            }
+                st.setString(1, cName);
+                st.setString(2, cId);
             if (st.executeUpdate() > 0) {
                 return true;
             } else return false;
@@ -499,29 +477,39 @@ public class DBModel {
         }
     }
 
-    public String[] a(String cId){
-        String sql = "select course_name, instructor_name, course_location " +
-                "from courses "+
-                "where course_id = ? ;";
-        String data[] = new String[3];
+    public boolean modifyCourseLocation(String cId, String cLocation) {
+        String sql = "UPDATE courses " +
+                "SET course_location = ? " +
+                "WHERE course_id = ?;";
         try (PreparedStatement st = con.prepareStatement(sql)) {
-            st.setString(1, cId);
-            ResultSet rs = st.executeQuery();
-            if (rs.next()) {
-                data[0] = rs.getString(1);
-                data[1] = rs.getString(2);
-                data[2] = rs.getString(3);
-                return data;
-            } else
-                return data;
+            st.setString(1, cLocation);
+            st.setString(2, cId);
+            if (st.executeUpdate() > 0) {
+                return true;
+            } else return false;
+
         } catch (SQLException ex) {
             Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
         }
-        return data;
     }
 
+    public boolean modifyInstructorName(String cId, String iName) {
+        String sql = "UPDATE courses " +
+                "SET instructor_name = ? " +
+                "WHERE course_id = ?;";
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, iName);
+            st.setString(2, cId);
+            if (st.executeUpdate() > 0) {
+                return true;
+            } else return false;
 
-
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
     public boolean insertCourse(String cId, String iName, String cName, String cLocation) {
         String sql = "insert into courses (course_id, instructor_name, course_name, course_location) values (?,?,?,?);";
         try (PreparedStatement st = con.prepareStatement(sql)) {
