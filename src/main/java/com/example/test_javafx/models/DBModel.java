@@ -12,9 +12,7 @@ public class DBModel {
     Connection con = null;
 
     //here our queries method
-    private DBModel() {
-        schemaConnect("attendance");
-    }
+    private DBModel() {schemaConnect("attendance");}
 
     public static DBModel getModel() {
         if (dbmodel == null) {
@@ -452,30 +450,28 @@ public class DBModel {
     }
 
     public boolean getEmailPassword(String e, String p) {
-        String sql = "select email, password" +
-                " from Users" +
+        String sql = "select email, password, user_type" +
+                " from users" +
                 " where email = ? and password = ? ;";
         try (PreparedStatement st = con.prepareStatement(sql)) {
             st.setString(1, e);
             st.setString(2, p);
             ResultSet rs = st.executeQuery();
-            String email = rs.getArray(1).toString();
-            String password = rs.getArray(2).toString();
-            if (email.equals(e) && password.equals(p)){
-                return true;
+            if (rs.next()) {
+                String email = rs.getString(1);
+                String password = rs.getString(2);
+                String user_type = rs.getString(3);
+                if (email.equals(e) && password.equals(p) && user_type.equals("admin")) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
             }
         } catch (SQLException ex) {
             Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
-        return false;
     }
-    public boolean feras(String e, String p) {
-        return false;
-    }
-
-
-//    public boolean isAdmin(String e, String p){
-//
-//    }
 }

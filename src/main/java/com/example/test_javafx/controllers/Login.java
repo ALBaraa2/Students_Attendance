@@ -5,42 +5,40 @@ import com.example.test_javafx.models.DBModel;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.layout.*;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class Login implements Initializable {
 
-    @FXML
-    private AnchorPane zzz;
 
     @FXML
-    private Button Login;
+    public BorderPane root;
 
     @FXML
-    private TextField email;
+    private Label faild;
+    @FXML
+    public TextField email;
+    @FXML
+    public TextField passwoed;
 
     @FXML
-    private TextField password;
-
-    @FXML
-    private Label error;
+    public Button log;
 
     DBModel db = DBModel.getModel();
     Navigation nav = new Navigation();
+
     public void initialize(URL url, ResourceBundle rb) {
 
     }
 
-    public void login(){
-        String Email = email.getText();
-        String Password = password.getText();
-        if (db.getEmailPassword(Email, Password)){
-            nav.navigateTo(zzz, nav.START_CONTROLLER_FXML);
+    public void ass() {
+        if (db.getEmailPassword(email.getText(), passwoed.getText())){
+            nav.navigateTo(root, nav.START_CONTROLLER_FXML);
         }else
-            error.setText("Email or Password incorrect!");
+            faild.setVisible(true);
+
     }
-
 }
-
-
