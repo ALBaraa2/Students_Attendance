@@ -604,4 +604,21 @@ public class DBModel {
             return false;
         }
     }
+
+    public boolean isValidEmail(String email){
+        String sql = "SELECT check_email_format(?);";
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, email);
+            ResultSet rs = st.executeQuery();
+            rs.next();
+            boolean result = rs.getBoolean(1);
+            if (result) {
+                return true;
+            }else
+                return false;
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
 }

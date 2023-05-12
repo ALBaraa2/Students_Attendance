@@ -22,10 +22,10 @@
             <ComboBox fx:id="UT" layoutX="88.0" layoutY="232.0" prefWidth="150.0" promptText="Select user type" />
             <Button fx:id="rId" layoutX="36.0" layoutY="336.0" mnemonicParsing="false" onAction="#regisert" style="-fx-background-color: #000000;" text="Register" textFill="#0ee556" />
             <Button fx:id="bId" layoutX="183.0" layoutY="336.0" mnemonicParsing="false" onAction="#backToAdmin" prefHeight="30.0" prefWidth="63.0" style="-fx-background-color: #000000;" text="Back" textFill="RED" />
-            <PasswordField fx:id="password" layoutX="88.0" layoutY="161.0" prefHeight="30.0" prefWidth="152.0" promptText="Enter password" />
+            <PasswordField fx:id="password" layoutX="88.0" layoutY="161.0" prefHeight="30.0" prefWidth="152.0" promptText="must be at least 6 characters" />
             <Label fx:id="massege" alignment="CENTER" layoutX="2.0" layoutY="283.0" prefHeight="18.0" prefWidth="288.0" visible="false">
                <font>
-                  <Font size="22.0" />
+                  <Font size="18.0" />
                </font>
             </Label>
          </children>

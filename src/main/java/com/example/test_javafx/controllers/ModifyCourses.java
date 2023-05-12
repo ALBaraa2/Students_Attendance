@@ -129,6 +129,7 @@ public class ModifyCourses implements Initializable {
             if (CL.isSelected() && CN.isSelected() && IN.isSelected()) {
                 if (courseName.getText().equals("") || courseLocation.getText().equals("") || instructorName.getText().equals("")) {
                     modifyMassege.setText("Enter Values!");
+                    modifyMassege.setTextFill(Color.RED);
                     modifyMassege.setVisible(true);
                 } else {
                     if (db.modifyCourseName(selectCourse_id.getValue().toString(), courseName.getText()) &&
@@ -138,6 +139,7 @@ public class ModifyCourses implements Initializable {
                         reset();
                     } else {
                         modifyMassege.setText("Modification failed!");
+                        modifyMassege.setTextFill(Color.RED);
                         modifyMassege.setVisible(true);
                     }
                 }
@@ -149,10 +151,12 @@ public class ModifyCourses implements Initializable {
                             reset();
                         } else {
                             modifyMassege.setText("Modification failed!");
+                            modifyMassege.setTextFill(Color.RED);
                             modifyMassege.setVisible(true);
                         }
                     } else {
                         modifyMassege.setText("Enter Values!");
+                        modifyMassege.setTextFill(Color.RED);
                         modifyMassege.setVisible(true);
                     }
                 }
@@ -164,10 +168,12 @@ public class ModifyCourses implements Initializable {
                             reset();
                         } else {
                             modifyMassege.setText("Modification failed!");
+                            modifyMassege.setTextFill(Color.RED);
                             modifyMassege.setVisible(true);
                         }
                     } else {
                         modifyMassege.setText("Enter Values!");
+                        modifyMassege.setTextFill(Color.RED);
                         modifyMassege.setVisible(true);
                     }
                 }
@@ -179,10 +185,12 @@ public class ModifyCourses implements Initializable {
                             reset();
                         } else {
                             modifyMassege.setText("Modification failed!");
+                            modifyMassege.setTextFill(Color.RED);
                             modifyMassege.setVisible(true);
                         }
                     } else {
                         modifyMassege.setText("Enter Values!");
+                        modifyMassege.setTextFill(Color.RED);
                         modifyMassege.setVisible(true);
                     }
                 }
@@ -194,10 +202,12 @@ public class ModifyCourses implements Initializable {
                             reset();
                         } else {
                             modifyMassege.setText("Modification failed!");
+                            modifyMassege.setTextFill(Color.RED);
                             modifyMassege.setVisible(true);
                         }
                     } else {
                         modifyMassege.setText("Enter Values!");
+                        modifyMassege.setTextFill(Color.RED);
                         modifyMassege.setVisible(true);
                     }
                 }
@@ -208,10 +218,12 @@ public class ModifyCourses implements Initializable {
                             reset();
                         } else {
                             modifyMassege.setText("Modification failed!");
+                            modifyMassege.setTextFill(Color.RED);
                             modifyMassege.setVisible(true);
                         }
                     } else {
                         modifyMassege.setText("Enter Values!");
+                        modifyMassege.setTextFill(Color.RED);
                         modifyMassege.setVisible(true);
                     }
                 }
@@ -222,10 +234,12 @@ public class ModifyCourses implements Initializable {
                             reset();
                         } else {
                             modifyMassege.setText("Modification failed!");
+                            modifyMassege.setTextFill(Color.RED);
                             modifyMassege.setVisible(true);
                         }
                     } else {
                         modifyMassege.setText("Enter Values!");
+                        modifyMassege.setTextFill(Color.RED);
                         modifyMassege.setVisible(true);
                     }
                 }

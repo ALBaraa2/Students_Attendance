@@ -13,6 +13,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -72,32 +74,49 @@ public class CreateUserAccount implements Initializable {
 
     @FXML
     void regisert(ActionEvent event) {
-        if (!db.isPre_Registered(email.getText())){
-            if (!name.getText().equals("") && !email.getText().equals("") && !password.getText().equals("")){
-                if (UT.getValue().toString().equals("Admin") || UT.getValue().toString().equals("Teach assistant")) {
-                    String usertype;
-                    if (UT.getValue().toString().equals("Admin")){
-                        usertype = "admin";
-                    } else
-                        usertype = "teach assistant";
-                    if (db.creatUser(name.getText(), email.getText(), password.getText(), usertype)){
-                        massege.setText("Registration Successful");
-                        massege.setVisible(true);
-                        reset();
+        if (!name.getText().equals("") && !email.getText().equals("") && !password.getText().equals("") && UT.getValue() != null) {
+            if (UT.getValue().equals("Admin") || UT.getValue().equals("Teach assistant")) {
+                String usertype;
+                if (UT.getValue().toString().equals("Admin")) {
+                    usertype = "admin";
+                } else
+                    usertype = "teach assistant";
+                if (password.getText().length() >= 6) {
+                    if (!db.isPre_Registered(email.getText())) {
+                        if (db.isValidEmail(email.getText())) {
+                            if (db.creatUser(name.getText(), email.getText(), password.getText(), usertype)) {
+                                massege.setText("Registration Successful");
+                                massege.setTextFill(Color.GREEN);
+                                massege.setVisible(true);
+                                reset();
+                            } else {
+                                massege.setText("Registration failed");
+                                massege.setTextFill(Color.RED);
+                                massege.setVisible(true);
+                            }
+                        } else {
+                            massege.setText("Enter a valid email");
+                            massege.setTextFill(Color.RED);
+                            massege.setVisible(true);
+                        }
                     } else {
-                        massege.setText("Registration failed");
+                        massege.setText("This email is used!");
+                        massege.setTextFill(Color.RED);
                         massege.setVisible(true);
                     }
                 } else {
-                    massege.setText("Select the user type");
+                    massege.setText("Password must be at least 6 characters");
+                    massege.setTextFill(Color.RED);
                     massege.setVisible(true);
                 }
             } else {
-                massege.setText("Complete data registration");
+                massege.setText("Select the user type");
+                massege.setTextFill(Color.RED);
                 massege.setVisible(true);
             }
         } else {
-            massege.setText("This email is used!");
+            massege.setText("Complete data registration");
+            massege.setTextFill(Color.RED);
             massege.setVisible(true);
         }
     }
