@@ -14,7 +14,7 @@
    <right>
       <AnchorPane prefHeight="400.0" prefWidth="300.0" style="-fx-background-color: #a89696;" BorderPane.alignment="CENTER">
          <children>
-            <ComboBox fx:id="selectCourse_id" layoutX="75.0" layoutY="23.0" onAction="#ids" prefWidth="150.0" />
+            <ComboBox fx:id="selectCourse_id" layoutX="74.0" layoutY="23.0" onAction="#ids" prefWidth="150.0" />
             <Label fx:id="LCN" layoutX="32.0" layoutY="174.0" prefHeight="26.0" prefWidth="97.0" text="Course name:" visible="false">
                <font>
                   <Font size="14.0" />

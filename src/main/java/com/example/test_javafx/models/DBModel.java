@@ -565,13 +565,43 @@ public class DBModel {
             st.setString(1, id);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                System.out.println(rs.getString(1));
                 return rs.getString(1);
             }
             return null;
         } catch (SQLException ex) {
             Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
             return null;
+        }
+    }
+
+    public boolean creatUser(String name, String email, String password, String userType){
+        String sql = "insert into users (username, email, password, user_type) values (?,?,?,?);";
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, name);
+            st.setString(2, email);
+            st.setString(3, password);
+            st.setString(4, userType);
+            if (st.executeUpdate() > 0) {
+                return true;
+            } else return false;
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+
+    public boolean isPre_Registered(String email){
+        String sql = "select email from users where email = ? ;";
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, email);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                return true;
+            }else
+                return false;
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
         }
     }
 }

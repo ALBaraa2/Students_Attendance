@@ -38,13 +38,17 @@ public class InsertCourse {
 
     @FXML
     void insertcourse(ActionEvent event) {
-        if (db.insertCourse(course_id.getText(), instructor_name.getText(), course_name.getText(), course_location.getText())){
-            faild.setText("Course added successfully");
-            faild.setVisible(true);
-        }else {
-            faild.setText("Course registration failed!");
+        if (!course_id.getText().equals("") && !course_name.getText().equals("") && !course_location.getText().equals("") && !instructor_name.getText().equals("")) {
+            if (db.insertCourse(course_id.getText(), instructor_name.getText(), course_name.getText(), course_location.getText())) {
+                faild.setText("Course added successfully");
+                faild.setVisible(true);
+            } else {
+                faild.setText("Course registration failed!");
+                faild.setVisible(true);
+            }
+        } else {
+            faild.setText("Complete data registration");
             faild.setVisible(true);
         }
     }
-
 }

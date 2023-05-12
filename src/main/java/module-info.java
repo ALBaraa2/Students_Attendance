@@ -4,6 +4,7 @@ module com.example.test_javafx {
     requires java.sql;
     requires org.postgresql.jdbc;
     requires java.naming;
+    requires org.controlsfx.controls;
 
 
     exports com.example.test_javafx;
