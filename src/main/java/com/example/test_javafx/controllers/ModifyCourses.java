@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -63,6 +64,7 @@ public class ModifyCourses implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        selectCourse_id.setValue("Select course");
         setComboBoxes();
     }
     private void setComboBoxes() {
@@ -119,39 +121,135 @@ public class ModifyCourses implements Initializable {
 
     @FXML
     void doneModify(ActionEvent event) {
-        if (CN.isSelected()){
-            if (courseName.getText().length() > 0) {
-                db.modifyCourseName(selectCourse_id.getValue().toString(), courseName.getText());
-                modifyMassege.setText("Modified successfully");
-                modifyMassege.setVisible(true);
-            }else {
+        if (selectCourse_id.equals("Select course")) {
+            modifyMassege.setText("Please select course id!");
+            modifyMassege.setVisible(true);
+        } else {
+            modifyMassege.setVisible(false);
+            if (CL.isSelected() && CN.isSelected() && IN.isSelected()) {
+                if (courseName.getText().equals("") || courseLocation.getText().equals("") || instructorName.getText().equals("")) {
+                    modifyMassege.setText("Enter Values!");
+                    modifyMassege.setVisible(true);
+                } else {
+                    if (db.modifyCourseName(selectCourse_id.getValue().toString(), courseName.getText()) &&
+                            db.modifyCourseLocation(selectCourse_id.getValue().toString(), courseLocation.getText()) &&
+                            db.modifyInstructorName(selectCourse_id.getValue().toString(), instructorName.getText())) {
+                        modifyMassege.setText("Modified successfully");
+                        reset();
+                    } else {
+                        modifyMassege.setText("Modification failed!");
+                        modifyMassege.setVisible(true);
+                    }
+                }
+            } else {
+                if (CN.isSelected() && (!CL.isSelected() && !IN.isSelected())) {
+                    if (!courseName.getText().equals("")) {
+                        if (db.modifyCourseName(selectCourse_id.getValue().toString(), courseName.getText())) {
+                            modifyMassege.setText("Modified successfully");
+                            reset();
+                        } else {
+                            modifyMassege.setText("Modification failed!");
+                            modifyMassege.setVisible(true);
+                        }
+                    } else {
+                        modifyMassege.setText("Enter Values!");
+                        modifyMassege.setVisible(true);
+                    }
+                }
+                if (CN.isSelected() && CL.isSelected() && !IN.isSelected()) {
+                    if (!courseName.getText().equals("") && !courseLocation.getText().equals("")) {
+                        if (db.modifyCourseName(selectCourse_id.getValue().toString(), courseName.getText()) &&
+                                db.modifyCourseLocation(selectCourse_id.getValue().toString(), courseLocation.getText())) {
+                            modifyMassege.setText("Modified successfully");
+                            reset();
+                        } else {
+                            modifyMassege.setText("Modification failed!");
+                            modifyMassege.setVisible(true);
+                        }
+                    } else {
+                        modifyMassege.setText("Enter Values!");
+                        modifyMassege.setVisible(true);
+                    }
+                }
+                if (CN.isSelected() && !CL.isSelected() && IN.isSelected()) {
+                    if (!courseName.getText().equals("") && !instructorName.getText().equals("")) {
+                        if (db.modifyCourseName(selectCourse_id.getValue().toString(), courseName.getText()) &&
+                                db.modifyInstructorName(selectCourse_id.getValue().toString(), instructorName.getText())) {
+                            modifyMassege.setText("Modified successfully");
+                            reset();
+                        } else {
+                            modifyMassege.setText("Modification failed!");
+                            modifyMassege.setVisible(true);
+                        }
+                    } else {
+                        modifyMassege.setText("Enter Values!");
+                        modifyMassege.setVisible(true);
+                    }
+                }
+                if (!CN.isSelected() && CL.isSelected() && IN.isSelected()) {
+                    if (!courseLocation.getText().equals("") && !instructorName.getText().equals("")) {
+                        if (db.modifyCourseLocation(selectCourse_id.getValue().toString(), courseLocation.getText()) &&
+                                db.modifyInstructorName(selectCourse_id.getValue().toString(), instructorName.getText())) {
+                            modifyMassege.setText("Modified successfully");
+                            reset();
+                        } else {
+                            modifyMassege.setText("Modification failed!");
+                            modifyMassege.setVisible(true);
+                        }
+                    } else {
+                        modifyMassege.setText("Enter Values!");
+                        modifyMassege.setVisible(true);
+                    }
+                }
+                if ((!CN.isSelected() && !CL.isSelected()) && IN.isSelected()) {
+                    if (!instructorName.getText().equals("")) {
+                        if (db.modifyInstructorName(selectCourse_id.getValue().toString(), instructorName.getText())) {
+                            modifyMassege.setText("Modified successfully");
+                            reset();
+                        } else {
+                            modifyMassege.setText("Modification failed!");
+                            modifyMassege.setVisible(true);
+                        }
+                    } else {
+                        modifyMassege.setText("Enter Values!");
+                        modifyMassege.setVisible(true);
+                    }
+                }
+                if (CL.isSelected() && (!CN.isSelected() && !IN.isSelected())) {
+                    if (!courseLocation.getText().equals("")) {
+                        if (db.modifyCourseLocation(selectCourse_id.getValue().toString(), courseLocation.getText())) {
+                            modifyMassege.setText("Modified successfully");
+                            reset();
+                        } else {
+                            modifyMassege.setText("Modification failed!");
+                            modifyMassege.setVisible(true);
+                        }
+                    } else {
+                        modifyMassege.setText("Enter Values!");
+                        modifyMassege.setVisible(true);
+                    }
+                }
+            }
+        }
+    }
 
-                modifyMassege.setVisible(true);
-            }
-        }
-        if (CL.isSelected()){
-            if (courseLocation.getText().length() > 0) {
-                db.modifyCourseLocation(selectCourse_id.getValue().toString(), courseLocation.getText());
-                modifyMassege.setText("Modified successfully");
-                modifyMassege.setVisible(true);
-            }else {
-
-                modifyMassege.setVisible(true);
-            }
-        }
-        if (IN.isSelected()){
-            if (instructorName.getText().length() > 0) {
-                db.modifyInstructorName(selectCourse_id.getValue().toString(), instructorName.getText());
-                modifyMassege.setText("Modified successfully");
-                modifyMassege.setVisible(true);
-            }else {
-                modifyMassege.setText("Enter Value!");
-                modifyMassege.setVisible(true);
-            }
-        }
-        if ((CN.isSelected() && courseName.getText().length() > 0) || (CL.isSelected() && courseLocation.getText().length() > 0) || (IN.isSelected() && instructorName.getText().length() > 0)){
-            modifyMassege.setText("Modified successfully");
-        }
+    private void reset(){
+        modifyMassege.setTextFill(Color.GREEN);
+        modifyMassege.setVisible(true);
+        courseName.setText("");
+        courseLocation.setText("");
+        instructorName.setText("");
+        courseName.setVisible(false);
+        courseLocation.setVisible(false);
+        instructorName.setVisible(false);
+        LCN.setVisible(false);
+        LIN.setVisible(false);
+        LCL.setVisible(false);
+        Done.setVisible(false);
+        CN.setSelected(false);
+        CL.setSelected(false);
+        IN.setSelected(false);
+        selectCourse_id.setValue("Select Course_id");
     }
 
     @FXML
