@@ -559,6 +559,24 @@ public class DBModel {
         }
     }
 
+    public ArrayList<String> getSecIds(String course_id) {
+        String sql = "select sec_id from courses natural join enrollments" +
+                " where course_id = ? ;";
+        ArrayList<String> ids = new ArrayList<>();
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, course_id);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                ids.add(rs.getString(1));
+                return ids;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+        return ids;
+    }
+
     public String getcourseName(String id) {
         String sql = "select course_name from courses where course_id = ? ;";
         try (PreparedStatement st = con.prepareStatement(sql)) {
@@ -620,5 +638,30 @@ public class DBModel {
             Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
+    }
+
+    public ArrayList<Lectures> getLectures(String course_id, int sec_id) {
+        ArrayList<Lectures> lectures = new ArrayList<>();
+        String sql = "select course_id, lecture_id, lecture_title, lecture_time, lecture_date, lecture_location "
+                + " from courses natural join lectures natural join enrollments " +
+                " where course_id = ? and sec_id = ? ;";
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, course_id);
+            st.setInt(2, sec_id);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                String courses_id = rs.getString("course_id");
+                String lecture_id = rs.getString("lecture_id");
+                String lecture_title = rs.getString("lecture_title");
+                Time lecture_time = rs.getTime("lecture_time");
+                Date lecture_date = rs.getDate("lecture_date");
+                String lecture_location = rs.getString("lecture_location");
+                Lectures lecture = new Lectures(courses_id, lecture_id, lecture_title, lecture_time, lecture_date, lecture_location);
+                lectures.add(lecture);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return lectures;
     }
 }

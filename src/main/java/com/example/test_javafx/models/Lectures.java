@@ -1,52 +1,23 @@
 package com.example.test_javafx.models;
 
+import java.sql.Time;
+import java.util.Date;
+
 public class Lectures {
-    String name;
-    String id;
-    String title;
-    String data;
-    String time;
-    String location;
     String course_id;
+    String lecture_id;
+    String lecture_title;
+    Time lecture_time;
+    Date lecture_data;
+    String lecture_location;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getData() {
-        return data;
-    }
-
-    public void setData(String data) {
-        this.data = data;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
+    public Lectures(String course_id, String lecture_id, String lecture_title, Time lecture_time, Date lecture_data, String lecture_location) {
+        this.course_id = course_id;
+        this.lecture_id = lecture_id;
+        this.lecture_title = lecture_title;
+        this.lecture_time = lecture_time;
+        this.lecture_data = lecture_data;
+        this.lecture_location = lecture_location;
     }
 
     public String getCourse_id() {
@@ -57,11 +28,43 @@ public class Lectures {
         this.course_id = course_id;
     }
 
-    public String getName() {
-        return name;
+    public String getLecture_id() {
+        return lecture_id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setLecture_id(String lecture_id) {
+        this.lecture_id = lecture_id;
+    }
+
+    public String getLecture_title() {
+        return lecture_title;
+    }
+
+    public void setLecture_title(String lecture_title) {
+        this.lecture_title = lecture_title;
+    }
+
+    public Time getLecture_time() {
+        return lecture_time;
+    }
+
+    public void setLecture_time(Time lecture_time) {
+        this.lecture_time = lecture_time;
+    }
+
+    public Date getLecture_data() {
+        return lecture_data;
+    }
+
+    public void setLecture_data(Date lecture_data) {
+        this.lecture_data = lecture_data;
+    }
+
+    public String getLecture_location() {
+        return lecture_location;
+    }
+
+    public void setLecture_location(String lecture_location) {
+        this.lecture_location = lecture_location;
     }
 }
