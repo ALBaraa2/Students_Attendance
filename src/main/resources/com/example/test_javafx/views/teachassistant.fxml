@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.test_javafx.controllers.TeachAssistant">
+<BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.test_javafx.controllers.TeachAssistant">
    <left>
       <AnchorPane prefHeight="400.0" prefWidth="302.0" style="-fx-background-color: #da7227;" BorderPane.alignment="CENTER">
          <children>
@@ -22,14 +22,15 @@
    <center>
       <AnchorPane prefHeight="400.0" prefWidth="300.0" BorderPane.alignment="CENTER">
          <children>
-            <VBox layoutX="40.0" layoutY="78.0" spacing="30.0" AnchorPane.bottomAnchor="77.6" AnchorPane.leftAnchor="41.5" AnchorPane.rightAnchor="41.5" AnchorPane.topAnchor="77.6">
+            <VBox layoutX="41.0" layoutY="78.0" spacing="30.0" AnchorPane.bottomAnchor="77.20000000000005" AnchorPane.leftAnchor="41.0" AnchorPane.rightAnchor="42.0" AnchorPane.topAnchor="78.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#editLactures" prefHeight="38.0" prefWidth="217.0" text="Add and edit lectures" />
+                  <Button mnemonicParsing="false" onAction="#editLectures" prefHeight="38.0" prefWidth="217.0" text="Add and edit lectures" />
                   <Button mnemonicParsing="false" onAction="#editStudant" prefHeight="38.0" prefWidth="217.0" text="Registration and editing of students " />
                   <Button mnemonicParsing="false" onAction="#attendance" prefHeight="38.0" prefWidth="217.0" text="Attendance Registration" />
                   <Button mnemonicParsing="false" onAction="#reports" prefHeight="38.0" prefWidth="217.0" text="Extraction of reports and statements" />
                </children>
             </VBox>
+            <Button layoutX="119.0" layoutY="355.0" mnemonicParsing="false" onAction="#backToLogin" prefHeight="30.0" prefWidth="58.0" style="-fx-background-color: #000000;" text="Back" textFill="RED" />
          </children>
       </AnchorPane>
    </center>

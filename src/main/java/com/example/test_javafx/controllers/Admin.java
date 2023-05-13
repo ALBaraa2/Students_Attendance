@@ -15,28 +15,15 @@ public class Admin {
     @FXML
     private AnchorPane anchorPane;
 
-    @FXML
-    private Button courses;
-
-    @FXML
-    private Button createUserAccount;
-
-    @FXML
-    private Button taEnrollmentCourse;
-
-    DBModel db = DBModel.getModel();
     Navigation nav = new Navigation();
 
-    public void initialize(URL url, ResourceBundle rb) {
-
-    }
 
     @FXML
     void Courses(ActionEvent event) {nav.navigateTo(anchorPane, nav.COURSE_FXML);}
 
     @FXML
     void navToCreateUserAccount(ActionEvent event) {
-        nav.navigateTo(anchorPane, nav.Create_User_Account_FXML);
+        nav.navigateTo(anchorPane, nav.CREATE_USER_ACCOUNT_FXML);
     }
 
     @FXML
