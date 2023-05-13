@@ -119,10 +119,8 @@ public class Lecture implements Initializable {
         } else {
             lectures.setItems(FXCollections.observableArrayList(db.getLectures(CIcom.getValue(),
                     Integer.parseInt(SIcom.getValue()))));
-            CIcom.setValue("Course_id");
-            SIcom.setValue("Section_id");
-            System.out.println(CIcom.getValue());
-            System.out.println(SIcom.getValue());
+            CIcom.setValue(null);
+            SIcom.setValue(null);
         }
     }
 
