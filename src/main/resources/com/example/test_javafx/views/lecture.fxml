@@ -2,6 +2,8 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -33,14 +35,14 @@
             </Button>
          </buttons>
       </ButtonBar>
-      <TableView fx:id="lectures" layoutY="-2.0" prefHeight="358.0" prefWidth="600.0" AnchorPane.bottomAnchor="44.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <TableView fx:id="lectures" layoutY="-2.0" prefHeight="356.0" prefWidth="494.0" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="106.0" AnchorPane.topAnchor="0.0">
          <columns>
             <TableColumn fx:id="course_id" maxWidth="1.7976931348623157E308" minWidth="50.39996337890625" prefWidth="62.39996337890625" text="Course_id" />
             <TableColumn fx:id="lecture_id" maxWidth="1.7976931348623157E308" minWidth="56.79998779296875" prefWidth="62.39996337890625" text="lecture_id" />
             <TableColumn fx:id="lecture_title" maxWidth="1.7976931348623157E308" minWidth="95.0" prefWidth="153.5999755859375" text="lecture_title" />
             <TableColumn fx:id="lecture_time" maxWidth="1.7976931348623157E308" minWidth="52.79998779296875" prefWidth="93.60003662109375" text="lecture_time" />
             <TableColumn fx:id="lecture_date" maxWidth="1.7976931348623157E308" minWidth="45.5999755859375" prefWidth="74.4000244140625" text="lecture_date" />
-            <TableColumn fx:id="lecture_location" maxWidth="1.7976931348623157E308" prefWidth="47.20001220703125" text="Hall" />
+            <TableColumn fx:id="lecture_location" maxWidth="1.7976931348623157E308" prefWidth="53.80001220703127" text="Hall" />
          </columns>
       </TableView>
       <ButtonBar blendMode="DIFFERENCE" layoutX="501.0" layoutY="354.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="46.0" prefWidth="62.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="6.0">
@@ -52,5 +54,17 @@
             </Button>
          </buttons>
       </ButtonBar>
+      <ComboBox fx:id="CIcom" layoutX="503.0" layoutY="1.0" prefHeight="26.0" prefWidth="106.0" promptText="Course_id" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <ComboBox fx:id="SIcom" layoutX="503.0" layoutY="165.0" prefHeight="26.0" prefWidth="106.0" promptText="Section_id" AnchorPane.rightAnchor="0.0" />
+      <Label fx:id="massege" layoutX="533.0" layoutY="264.0" prefHeight="33.0" prefWidth="106.0" visible="false" AnchorPane.rightAnchor="0.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="massege1" alignment="CENTER" layoutX="493.0" layoutY="298.0" prefHeight="34.0" prefWidth="106.0" visible="false">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
