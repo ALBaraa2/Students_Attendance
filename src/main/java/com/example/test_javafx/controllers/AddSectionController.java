@@ -60,7 +60,7 @@ public class AddSectionController implements Initializable {
 //                "-fx-background-position: center center;"
 //                + "-fx-background-size: 32px 32px; -fx-background-repeat: no-repeat; ");
 
-        setComboBoxes();
+//        setComboBoxes();
     }
 
     private void setCombInitials() {
@@ -72,40 +72,40 @@ public class AddSectionController implements Initializable {
         time_slot.setValue("Select time_slot");
     }
 
-    private void setComboBoxes() {
-        setCombInitials();
-        ObservableList<String> ids = FXCollections.observableList(db.getCourseIDs());
-        ObservableList<String> buildings = FXCollections.observableList(db.getBuildings());
-
-        List<Integer> years
-                = IntStream.rangeClosed(Integer.parseInt(Objects.requireNonNull("2000")),
-                        Integer.parseInt(Objects.requireNonNull("2020")))
-                .boxed()
-                .collect(Collectors.toList());
-
-        ArrayList<String> semesters = new ArrayList<>();
-        semesters.add("Spring");
-        semesters.add("Fall");
-        semesters.add("Summer");
-        semesters.add("Winter");
-
-        List<String> chars = new ArrayList<>();
-
-        for (char ch : "ABCDEFGHL".toCharArray()) {
-            chars.add(ch + "");
-        }
-
-        course_id.setItems(ids);
-
-        building.setItems(buildings);
-
-        year.setItems(FXCollections.observableList(years));
-
-        semester.setItems(FXCollections.observableArrayList(semesters));
-
-        time_slot.setItems(FXCollections.observableArrayList(chars));
-
-    }
+//    private void setComboBoxes() {
+//        setCombInitials();
+////        ObservableList<String> ids = FXCollections.observableList(db.getCourseIDs());
+//        ObservableList<String> buildings = FXCollections.observableList(db.getBuildings());
+//
+//        List<Integer> years
+//                = IntStream.rangeClosed(Integer.parseInt(Objects.requireNonNull("2000")),
+//                        Integer.parseInt(Objects.requireNonNull("2020")))
+//                .boxed()
+//                .collect(Collectors.toList());
+//
+//        ArrayList<String> semesters = new ArrayList<>();
+//        semesters.add("Spring");
+//        semesters.add("Fall");
+//        semesters.add("Summer");
+//        semesters.add("Winter");
+//
+//        List<String> chars = new ArrayList<>();
+//
+//        for (char ch : "ABCDEFGHL".toCharArray()) {
+//            chars.add(ch + "");
+//        }
+//
+//        course_id.setItems(ids);
+//
+//        building.setItems(buildings);
+//
+//        year.setItems(FXCollections.observableList(years));
+//
+//        semester.setItems(FXCollections.observableArrayList(semesters));
+//
+//        time_slot.setItems(FXCollections.observableArrayList(chars));
+//
+//    }
 
     public void comboboxChange() {
         if (!course_id.equals("Select course")) {

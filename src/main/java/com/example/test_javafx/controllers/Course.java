@@ -1,5 +1,4 @@
 package com.example.test_javafx.controllers;
-
 import com.example.test_javafx.Navigation;
 import com.example.test_javafx.models.Courses;
 import com.example.test_javafx.models.DBModel;
@@ -37,8 +36,6 @@ public class Course implements Initializable {
 
     @FXML
     private TableView<Courses> courses;
-
-
     DBModel db = DBModel.getModel();
     Navigation nav = new Navigation();
 

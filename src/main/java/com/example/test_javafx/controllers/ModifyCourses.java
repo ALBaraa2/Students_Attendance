@@ -1,6 +1,11 @@
 package com.example.test_javafx.controllers;
-
+import com.example.test_javafx.models.ComboBoxAutoComplete;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Tooltip;
 import com.example.test_javafx.Navigation;
+import com.example.test_javafx.models.Courses;
 import com.example.test_javafx.models.DBModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,11 +15,16 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
-
+//import org.mdiutil.jfx.autocomplete.JFXAutoComplete;
+import org.rapidpm.modul.javafx.textfield.autocomplete.AutoCompleteElement;
+import org.rapidpm.modul.javafx.textfield.autocomplete.AutoCompleteTextField;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 
-public class ModifyCourses implements Initializable {
+public class ModifyCourses   implements  Initializable {
 
     @FXML
     private BorderPane root;
@@ -58,18 +68,24 @@ public class ModifyCourses implements Initializable {
     @FXML
     private Label modifyMassege;
 
-
     DBModel db = DBModel.getModel();
     Navigation nav = new Navigation();
 
+
+
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
         selectCourse_id.setValue("Select course");
         setComboBoxes();
     }
-    private void setComboBoxes() {
+    public  void setComboBoxes() {
+
         ObservableList<String> ids = FXCollections.observableList(db.getCourseIDs());
-        selectCourse_id.setItems(ids);
+        selectCourse_id.setTooltip(new Tooltip());
+        selectCourse_id.getItems().addAll(ids);
+        new ComboBoxAutoComplete<String>(selectCourse_id);
     }
 
     @FXML

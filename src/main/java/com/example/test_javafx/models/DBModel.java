@@ -4,6 +4,7 @@ import org.postgresql.ds.PGSimpleDataSource;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -13,7 +14,7 @@ public class DBModel {
 
     //here our queries method
     public DBModel() {
-        schemaConnect("project");
+        schemaConnect("attendance");
     }
 
     public static DBModel getModel() {
@@ -26,9 +27,9 @@ public class DBModel {
     public void connect() {
         PGSimpleDataSource source = new PGSimpleDataSource();
         source.setServerName("localhost");
-        source.setDatabaseName("project");
+        source.setDatabaseName("project_database");
         source.setUser("postgres");
-        source.setPassword("123");
+        source.setPassword("feraskhaled30");
 
         try {
             con = source.getConnection();
@@ -543,9 +544,9 @@ public class DBModel {
         }
     }
 
-    public ArrayList<String> getCourseIDs() {
+    public List<String> getCourseIDs() {
         String sql = "select course_id from courses;";
-        ArrayList<String> ids = new ArrayList<>();
+        List<String> ids = new ArrayList<>();
         try (Statement st = con.createStatement();
              ResultSet rs = st.executeQuery(sql)
         ) {

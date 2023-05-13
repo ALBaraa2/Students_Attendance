@@ -5,6 +5,7 @@ module com.example.test_javafx {
     requires org.postgresql.jdbc;
     requires java.naming;
     requires org.controlsfx.controls;
+    requires javafx.autocomplete.textfield;
 
 
     exports com.example.test_javafx;

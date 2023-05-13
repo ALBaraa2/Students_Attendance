@@ -1,6 +1,8 @@
 package com.example.test_javafx.models;
 
-public class Courses {
+import org.rapidpm.modul.javafx.textfield.autocomplete.AutoCompleteElement;
+
+public class Courses extends AutoCompleteElement {
     String course_id;
     String instructor_name;
     String course_name;
