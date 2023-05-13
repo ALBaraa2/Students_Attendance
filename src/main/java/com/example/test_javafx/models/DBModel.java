@@ -413,7 +413,8 @@ public class DBModel {
             return null;
         }
     }
-//-------------------------------------------------------------------------------------------------//
+
+    //-------------------------------------------------------------------------------------------------//
     public boolean getEmailPassword(String e, String p) {
         String sql = "select email, password" +
                 " from users" +
@@ -465,8 +466,8 @@ public class DBModel {
                 "SET course_name = ? " +
                 "WHERE course_id = ?;";
         try (PreparedStatement st = con.prepareStatement(sql)) {
-                st.setString(1, cName);
-                st.setString(2, cId);
+            st.setString(1, cName);
+            st.setString(2, cId);
             if (st.executeUpdate() > 0) {
                 return true;
             } else return false;
@@ -510,6 +511,7 @@ public class DBModel {
             return false;
         }
     }
+
     public boolean insertCourse(String cId, String iName, String cName, String cLocation) {
         String sql = "insert into courses (course_id, instructor_name, course_name, course_location) values (?,?,?,?);";
         try (PreparedStatement st = con.prepareStatement(sql)) {
@@ -592,7 +594,7 @@ public class DBModel {
         }
     }
 
-    public boolean creatUser(String name, String email, String password, String userType){
+    public boolean creatUser(String name, String email, String password, String userType) {
         String sql = "insert into users (username, email, password, user_type) values (?,?,?,?);";
         try (PreparedStatement st = con.prepareStatement(sql)) {
             st.setString(1, name);
@@ -608,14 +610,14 @@ public class DBModel {
         }
     }
 
-    public boolean isPre_Registered(String email){
+    public boolean isPre_Registered(String email) {
         String sql = "select email from users where email = ? ;";
         try (PreparedStatement st = con.prepareStatement(sql)) {
             st.setString(1, email);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
                 return true;
-            }else
+            } else
                 return false;
         } catch (SQLException ex) {
             Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
@@ -623,7 +625,7 @@ public class DBModel {
         }
     }
 
-    public boolean isValidEmail(String email){
+    public boolean isValidEmail(String email) {
         String sql = "SELECT check_email_format(?);";
         try (PreparedStatement st = con.prepareStatement(sql)) {
             st.setString(1, email);
@@ -632,7 +634,7 @@ public class DBModel {
             boolean result = rs.getBoolean(1);
             if (result) {
                 return true;
-            }else
+            } else
                 return false;
         } catch (SQLException ex) {
             Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
@@ -641,27 +643,23 @@ public class DBModel {
     }
 
     public ArrayList<Lectures> getLectures(String course_id, int sec_id) {
-        ArrayList<Lectures> lectures = new ArrayList<>();
-        String sql = "select course_id, lecture_id, lecture_title, lecture_time, lecture_date, lecture_location "
-                + " from courses natural join lectures natural join enrollments " +
-                " where course_id = ? and sec_id = ? ;";
+        ArrayList<Lectures> lects = new ArrayList<>();
+        String sql = "select course_id, lecture_id, lecture_title, lecture_time, lecture_date, lecture_location " +
+                "from courses natural join lectures natural join enrollments " +
+                "where course_id = ? and sec_id = ? ;";
         try (PreparedStatement st = con.prepareStatement(sql)) {
             st.setString(1, course_id);
             st.setInt(2, sec_id);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                String courses_id = rs.getString("course_id");
-                String lecture_id = rs.getString("lecture_id");
-                String lecture_title = rs.getString("lecture_title");
-                Time lecture_time = rs.getTime("lecture_time");
-                Date lecture_date = rs.getDate("lecture_date");
-                String lecture_location = rs.getString("lecture_location");
-                Lectures lecture = new Lectures(courses_id, lecture_id, lecture_title, lecture_time, lecture_date, lecture_location);
-                lectures.add(lecture);
+                lects.add(new Lectures(rs.getString(1), rs.getString(2), rs.getString(3),
+                        rs.getTime(4), rs.getDate(5), rs.getString(6)));
             }
+            return lects;
         } catch (SQLException ex) {
+
             Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
-        return lectures;
     }
 }

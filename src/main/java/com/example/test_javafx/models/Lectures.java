@@ -1,23 +1,24 @@
 package com.example.test_javafx.models;
 
+
 import java.sql.Time;
-import java.util.Date;
+import java.util.*;
 
 public class Lectures {
     String course_id;
     String lecture_id;
     String lecture_title;
     Time lecture_time;
-    Date lecture_data;
-    String lecture_location;
+    Date lecture_date;
+    String hall;
 
-    public Lectures(String course_id, String lecture_id, String lecture_title, Time lecture_time, Date lecture_data, String lecture_location) {
+    public Lectures(String course_id, String lecture_id, String lecture_title, Time lecture_time, Date lecture_date, String hall) {
         this.course_id = course_id;
         this.lecture_id = lecture_id;
         this.lecture_title = lecture_title;
         this.lecture_time = lecture_time;
-        this.lecture_data = lecture_data;
-        this.lecture_location = lecture_location;
+        this.lecture_date = lecture_date;
+        this.hall = hall;
     }
 
     public String getCourse_id() {
@@ -52,19 +53,19 @@ public class Lectures {
         this.lecture_time = lecture_time;
     }
 
-    public Date getLecture_data() {
-        return lecture_data;
+    public Date getLecture_date() {
+        return lecture_date;
     }
 
-    public void setLecture_data(Date lecture_data) {
-        this.lecture_data = lecture_data;
+    public void setLecture_date(Date lecture_date) {
+        this.lecture_date = lecture_date;
     }
 
-    public String getLecture_location() {
-        return lecture_location;
+    public String getHall() {
+        return hall;
     }
 
-    public void setLecture_location(String lecture_location) {
-        this.lecture_location = lecture_location;
+    public void setHall(String hall) {
+        this.hall = hall;
     }
 }
