@@ -21,6 +21,11 @@ public class Lectures {
         this.hall = hall;
     }
 
+    public Lectures(Date lecture_date, Time lecture_time) {
+        this.lecture_time = lecture_time;
+        this.lecture_date = lecture_date;
+    }
+
     public String getCourse_id() {
         return course_id;
     }

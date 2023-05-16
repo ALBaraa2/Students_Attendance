@@ -3,7 +3,7 @@ package com.example.test_javafx.controllers;
 import com.example.test_javafx.Navigation;
 import com.example.test_javafx.models.DBModel;
 import com.example.test_javafx.models.Lectures;
-import javafx.beans.binding.Bindings;
+import com.example.test_javafx.models.SharedData;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -44,10 +44,10 @@ public class Lecture implements Initializable {
     private TableView<Lectures> lectures;
 
     @FXML
-    private ComboBox<String> CIcom;
+    public ComboBox<String> CIcom;
 
     @FXML
-    private ComboBox<String> SIcom;
+    public ComboBox<String> SIcom;
 
     @FXML
     private Label massege;
@@ -56,10 +56,12 @@ public class Lecture implements Initializable {
     private Label massege1;
 
     @FXML
-    private ComboBox<String> Scom;
+    public ComboBox<String> Scom;
 
     @FXML
-    private ComboBox<String> Ycom;
+    public ComboBox<String> Ycom;
+
+    private String selectedValue;
 
     DBModel db = DBModel.getModel();
     Navigation nav = new Navigation();
@@ -130,6 +132,10 @@ public class Lecture implements Initializable {
 
     @FXML
     void insert(ActionEvent event) {
+        SharedData.getInstance().setCourse_id(CIcom.getValue());
+        SharedData.getInstance().setYear(Ycom.getValue());
+        SharedData.getInstance().setSemester(Scom.getValue());
+        SharedData.getInstance().setSec_id(SIcom.getValue());
         nav.navigateTo(root, nav.INSERT_LECTURSE_FXML);
     }
 
