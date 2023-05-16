@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 
 public class InsertCourse {
 
@@ -37,13 +38,19 @@ public class InsertCourse {
     }
 
     @FXML
-    void insertcourse(ActionEvent event) {
+    void DONE(ActionEvent event) {
         if (!course_id.getText().equals("") && !course_name.getText().equals("") && !course_location.getText().equals("") && !instructor_name.getText().equals("")) {
             if (db.insertCourse(course_id.getText(), instructor_name.getText(), course_name.getText(), course_location.getText())) {
                 faild.setText("Course added successfully");
+                faild.setTextFill(Color.GREEN);
                 faild.setVisible(true);
+                course_id.setText("");
+                course_name.setText("");
+                course_location.setText("");
+                instructor_name.setText("");
             } else {
-                faild.setText("Course registration failed!");
+                faild.setText("Course added failed!");
+                faild.setTextFill(Color.RED);
                 faild.setVisible(true);
             }
         } else {

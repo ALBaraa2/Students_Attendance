@@ -1,5 +1,6 @@
 package com.example.test_javafx.models;
 
+
 public class Courses {
     String course_id;
     String instructor_name;

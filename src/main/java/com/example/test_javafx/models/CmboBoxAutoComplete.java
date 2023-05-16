@@ -7,18 +7,6 @@ import javafx.collections.transformation.FilteredList;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-//ميثود الكليك
-//courses.setRowFactory(tv -> {
-//        TableRow<Courses> row = new TableRow<>();
-//        row.setOnMouseClicked(event -> {
-//        if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
-//        Courses rowData = row.getItem();
-//        db.deleteCourse(rowData.getCourse_id());
-//        lable.setText("Selected course: " + rowData.getCourse_name());
-//        }
-//        });
-//        return row ;
-//        });
 
 public class CmboBoxAutoComplete  {
     public static void cmboBoxAutoComplete(ComboBox<String> cb){

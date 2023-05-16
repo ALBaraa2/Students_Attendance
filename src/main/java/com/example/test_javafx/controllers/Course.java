@@ -7,16 +7,18 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 
+import javafx.scene.control.ButtonBar.ButtonData;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
-
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 public class Course implements Initializable {
-
     @FXML
     private AnchorPane root;
 
@@ -29,15 +31,18 @@ public class Course implements Initializable {
     @FXML
     private TableColumn<Courses, String> course_name;
 
-    @FXML
-    private TableColumn<Courses, String> year;
+
 
     @FXML
     private TableColumn<Course, String> instructor_name;
 
+
     @FXML
     private TableView<Courses> courses;
 
+
+    @FXML
+    private Button view;
 
     DBModel db = DBModel.getModel();
     Navigation nav = new Navigation();
@@ -48,9 +53,8 @@ public class Course implements Initializable {
         instructor_name.setCellValueFactory(new PropertyValueFactory<>("instructor_name"));
         course_location.setCellValueFactory(new PropertyValueFactory<>("course_location"));
         course_name.setCellValueFactory(new PropertyValueFactory<>("course_name"));
-        year.setCellValueFactory(new PropertyValueFactory<>("year"));
+        doubleClick(courses);
     }
-
     @FXML
     void backFromCourse(ActionEvent event) {
         nav.navigateTo(root, nav.ADMIN_FXML);
@@ -87,4 +91,53 @@ public class Course implements Initializable {
 //            return row ;
 //        });
 //    }
+    void viewCourses() {
+        courses.setItems(FXCollections.observableArrayList(db.getCourses()));
+    }
+
+    public void doubleClick(TableView<Courses> courses) {
+        ButtonType buttonCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+        courses.setRowFactory(tv -> {
+            TableRow<Courses> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (!row.isEmpty())) {
+                    Courses rowData = row.getItem();
+
+                    Optional<ButtonType> result = showAlert("Are You sure delete " + rowData.getCourse_id());
+                    if (result.isPresent()) {
+                        // التحقق من الزر المنقر عليه المستخدم
+                        if (result.get() == ButtonType.OK) {
+                            // اضغط على OK
+                            db.deleteCourse(rowData.getCourse_id());
+                            nav.navigateTo(root, nav.COURSE_FXML);
+                            view.setCancelButton(true);
+                        } else if (result.get() == buttonCancel) {
+                            nav.navigateTo(root, nav.COURSE_FXML);
+                            courses.setItems(FXCollections.observableArrayList(db.getCourses()));
+                        }
+                    }
+
+
+
+                    }
+            });
+            return row;
+        });
+    }
+
+    public Optional<ButtonType> showAlert(String message) {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Alert");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+
+        // أضف زر "Cancel"
+        ButtonType buttonCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+        alert.getButtonTypes().add(buttonCancel);
+
+        // اظهر Alert وانتظر النقر على زر
+        Optional<ButtonType> result = alert.showAndWait();
+        return result;
+
+    }
 }

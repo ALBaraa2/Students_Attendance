@@ -1,7 +1,9 @@
 package com.example.test_javafx.controllers;
-
-import com.example.test_javafx.Navigation;
 import com.example.test_javafx.models.CmboBoxAutoComplete;
+
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Tooltip;
+import com.example.test_javafx.Navigation;
 import com.example.test_javafx.models.DBModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,11 +13,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
-
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 
-public class ModifyCourses implements Initializable {
+public class ModifyCourses   implements  Initializable {
 
     @FXML
     private BorderPane root;
@@ -59,19 +63,21 @@ public class ModifyCourses implements Initializable {
     @FXML
     private Label modifyMassege;
 
-
     DBModel db = DBModel.getModel();
     Navigation nav = new Navigation();
 
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
         selectCourse_id.setValue("Select course");
         setComboBoxes();
     }
+
     private void setComboBoxes() {
         ObservableList<String> ids = FXCollections.observableList(db.getCourseIDs());
         selectCourse_id.setItems(ids);
-        CmboBoxAutoComplete.cmboBoxAutoComplete( selectCourse_id);
+        CmboBoxAutoComplete.cmboBoxAutoComplete(selectCourse_id);
     }
 
     @FXML
@@ -84,11 +90,11 @@ public class ModifyCourses implements Initializable {
         courseLocation.setVisible(true);
         LCL.setVisible(true);
         Done.setVisible(true);
-        if (!CL.isSelected()){
+        if (!CL.isSelected()) {
             courseLocation.setVisible(false);
             LCL.setVisible(false);
         }
-        if (!IN.isSelected() && !CN.isSelected() && !CL.isSelected()){
+        if (!IN.isSelected() && !CN.isSelected() && !CL.isSelected()) {
             Done.setVisible(false);
         }
     }
@@ -98,11 +104,11 @@ public class ModifyCourses implements Initializable {
         courseName.setVisible(true);
         LCN.setVisible(true);
         Done.setVisible(true);
-        if (!CN.isSelected()){
+        if (!CN.isSelected()) {
             courseName.setVisible(false);
             LCN.setVisible(false);
         }
-        if (!IN.isSelected() && !CN.isSelected() && !CL.isSelected()){
+        if (!IN.isSelected() && !CN.isSelected() && !CL.isSelected()) {
             Done.setVisible(false);
         }
     }
@@ -112,11 +118,11 @@ public class ModifyCourses implements Initializable {
         instructorName.setVisible(true);
         LIN.setVisible(true);
         Done.setVisible(true);
-        if (!IN.isSelected()){
+        if (!IN.isSelected()) {
             instructorName.setVisible(false);
             LIN.setVisible(false);
         }
-        if (!IN.isSelected() && !CN.isSelected() && !CL.isSelected()){
+        if (!IN.isSelected() && !CN.isSelected() && !CL.isSelected()) {
             Done.setVisible(false);
         }
     }
@@ -249,7 +255,7 @@ public class ModifyCourses implements Initializable {
         }
     }
 
-    private void reset(){
+    private void reset() {
         modifyMassege.setTextFill(Color.GREEN);
         modifyMassege.setVisible(true);
         courseName.setText("");
@@ -274,6 +280,4 @@ public class ModifyCourses implements Initializable {
             course_name.setText(db.getcourseName(selectCourse_id.getValue().toString()));
         }
     }
-
 }
-

@@ -1,14 +1,9 @@
 package com.example.test_javafx.controllers;
-
 import com.example.test_javafx.Navigation;
 import com.example.test_javafx.models.DBModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
-
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class Admin {
 
@@ -19,7 +14,9 @@ public class Admin {
 
 
     @FXML
-    void Courses(ActionEvent event) {nav.navigateTo(anchorPane, nav.COURSE_FXML);}
+    void Courses(ActionEvent event) {
+        nav.navigateTo(anchorPane, nav.COURSE_FXML);
+    }
 
     @FXML
     void navToCreateUserAccount(ActionEvent event) {
@@ -29,6 +26,6 @@ public class Admin {
     @FXML
     void navToTAEnrollmentCourse(ActionEvent event) {
         nav.navigateTo(anchorPane, nav.TA_Enrollment_Course_FXML);
-    }
 
+    }
 }

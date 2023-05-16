@@ -6,6 +6,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -13,27 +14,27 @@
     <right>
         <AnchorPane prefHeight="500.0" prefWidth="382.0" BorderPane.alignment="CENTER">
             <children>
-                <Button fx:id="log" layoutX="149.0" layoutY="378.0" mnemonicParsing="false" onAction="#ass" prefHeight="39.0" prefWidth="80.0" style="-fx-background-color: #0598ff;" text="Login" textFill="WHITE" />
-                <TextField fx:id="email" layoutX="119.0" layoutY="204.0" promptText="Email" style="-fx-background-color: transparent; -fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
-                <PasswordField fx:id="passwoed" layoutX="119.0" layoutY="274.0" promptText="Passwoed" style="-fx-background-color: transparent; -fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
-                <Text fill="#0598ff" layoutX="121.0" layoutY="162.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User Login" textAlignment="CENTER" wrappingWidth="107.13671875">
-                    <font>
-                        <Font name="System Bold" size="21.0" />
-                    </font>
-                </Text>
+                <Button fx:id="log" layoutX="149.0" layoutY="378.0" mnemonicParsing="false" onAction="#ass" prefHeight="39.0" prefWidth="80.0" style="-fx-background-color: #da7227;" text="Login" textFill="WHITE" />
+                <TextField fx:id="email" layoutX="119.0" layoutY="204.0" promptText="Email" style="-fx-background-color: transparent; -fx-border-color: #da7227; -fx-border-width: 0px 0px 2px 0px;" />
+                <PasswordField fx:id="passwoed" layoutX="119.0" layoutY="274.0" promptText="Passwoed" style="-fx-background-color: transparent; -fx-border-color: #da7227; -fx-border-width: 0px 0px 2px 0px;" />
+                <Label fx:id="loginTitleLabel" alignment="CENTER" layoutX="97.0" layoutY="134.0" prefHeight="49.0" prefWidth="156.0" style="-fx-font-size: 40; -fx-text-fill: linear-gradient(from 0% 0% to 100% 200%, repeat, aqua 0%, red 50%); -fx-font-weight: BOLD;" text="Login" textFill="#31ebfc" />
                 <Button layoutX="353.0" layoutY="1.0" mnemonicParsing="false" style="-fx-background-color: transparent;" />
             <Label fx:id="faild" contentDisplay="CENTER" layoutX="114.0" layoutY="322.0" prefHeight="36.0" prefWidth="158.0" text="Invaild login" textAlignment="CENTER" textFill="RED" visible="false" />
+            <Pane layoutX="84.0" layoutY="204.0" prefHeight="31.0" prefWidth="30.0" styleClass="user" stylesheets="@style.css" />
+            <Pane layoutX="84.0" layoutY="274.0" prefHeight="31.0" prefWidth="30.0" styleClass="lock" stylesheets="@style.css" />
+            <Pane layoutX="116.0" layoutY="14.0" prefHeight="120.0" prefWidth="119.0" styleClass="users" stylesheets="@style.css" />
             </children>
         </AnchorPane>
     </right>
     <center>
-        <AnchorPane prefHeight="500.0" prefWidth="350.0" style="-fx-background-color: #0568ff;" BorderPane.alignment="CENTER">
+        <AnchorPane prefHeight="500.0" prefWidth="350.0" style="-fx-background-color: #da7227;" BorderPane.alignment="CENTER">
             <children>
-                <Text fill="#fffefe" layoutX="48.0" layoutY="242.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Attendance Management" textAlignment="CENTER" wrappingWidth="240.13671875">
+                <Text fill="#fffefe" layoutX="39.0" layoutY="286.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Attendance Management" textAlignment="CENTER" wrappingWidth="240.13671875">
                     <font>
                         <Font name="System Italic" size="20.0" />
                     </font>
                 </Text>
+            <Pane layoutX="100.0" layoutY="123.0" prefHeight="120.0" prefWidth="119.0" styleClass="correct" stylesheets="@style.css" />
             </children>
         </AnchorPane>
     </center>

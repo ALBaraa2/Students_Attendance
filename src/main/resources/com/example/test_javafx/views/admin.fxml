@@ -1,25 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.test_javafx.controllers.Admin">
+<AnchorPane fx:id="anchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="bodybg1" stylesheets="@style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.test_javafx.controllers.Admin">
     <children>
-        <Button layoutX="213.0" layoutY="76.0" mnemonicParsing="false" onAction="#Courses" prefHeight="34.0" prefWidth="145.0" text="Courses">
-            <font>
-                <Font name="System Bold" size="15.0" />
-            </font>
-        </Button>
-        <Button layoutX="213.0" layoutY="166.0" mnemonicParsing="false" onAction="#navToCreateUserAccount" prefHeight="34.0" prefWidth="145.0" text="Create User Account">
-            <font>
-                <Font name="System Bold" size="13.0" />
-            </font>
-        </Button>
-        <Button layoutX="213.0" layoutY="255.0" mnemonicParsing="false" onAction="#navToTAEnrollmentCourse" prefHeight="34.0" prefWidth="145.0" text="TAEnrollmentCourse">
-            <font>
-                <Font name="System Bold" size="13.0" />
-            </font>
-        </Button>
+        <Label fx:id="Admin" alignment="CENTER" layoutX="132.0" layoutY="20.0" prefHeight="60.0" prefWidth="337.0" style="-fx-font-size: 40; -fx-text-fill: linear-gradient(from 0% 0% to 100% 200%, repeat, aqua 0%, red 50%); -fx-font-weight: BOLD; -fx-border-color: #31ebfc;" text="Admin Page" textFill="#31ebfc" />
+      <VBox layoutX="8.0" layoutY="119.0" prefHeight="200.0" prefWidth="162.0" spacing="57.0" AnchorPane.leftAnchor="8.0">
+         <children>
+              <Button mnemonicParsing="false" onAction="#Courses" prefHeight="42.0" prefWidth="164.0" styleClass="Button" text="Courses">
+                  <font>
+                      <Font name="System Bold" size="15.0" />
+                  </font>
+              </Button>
+              <Button mnemonicParsing="false" onAction="#navToCreateUserAccount" prefHeight="42.0" prefWidth="162.0" styleClass="Button" text="Create User Account">
+                  <font>
+                      <Font name="System Bold" size="13.0" />
+                  </font>
+              </Button>
+              <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#navToTAEnrollmentCourse" prefHeight="42.0" prefWidth="162.0" styleClass="Button" text="TAEnrollmentCourse">
+                  <font>
+                      <Font name="System Bold" size="13.0" />
+                  </font>
+              </Button>
+         </children>
+      </VBox>
     </children>
 </AnchorPane>

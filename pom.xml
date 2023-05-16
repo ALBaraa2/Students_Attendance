@@ -29,6 +29,19 @@
         <id>javafx</id>
         <url>https://maven.javafx.com/3.0.0</url>
     </repository>
+        <repository>
+            <id>central</id>
+            <name>Maven Central Repository</name>
+            <url>https://repo.maven.apache.org/maven2</url>
+        </repository>
+        <repository>
+            <id>javafx</id>
+            <url>https://maven.javafx.com/3.0.0</url>
+        </repository>
+        <repository>
+            <id>my-custom-repo</id>
+            <url>http://my-custom-repo.com/maven</url>
+        </repository>
 </repositories>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -89,6 +102,11 @@
             <groupId>org.webjars.npm</groupId>
             <artifactId>github-com-jonthornton-jquery-timepicker</artifactId>
             <version>1.13.18</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>16</version>
         </dependency>
 
     </dependencies>
