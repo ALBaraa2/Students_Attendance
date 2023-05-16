@@ -6,6 +6,7 @@ module com.example.test_javafx {
     requires java.naming;
     requires org.controlsfx.controls;
     requires javafx.autocomplete.textfield;
+    requires javafx.media;
 
 
     exports com.example.test_javafx;

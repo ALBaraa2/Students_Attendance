@@ -4,6 +4,7 @@
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -11,11 +12,6 @@
    <children>
       <ButtonBar blendMode="DIFFERENCE" layoutX="63.0" layoutY="354.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="46.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0">
         <buttons>
-          <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" style="-fx-background-radius: 20;" text="delete" textFill="#15a4d0">
-               <font>
-                  <Font name="Algerian" size="12.0" />
-               </font>
-            </Button>
             <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#modifyPage" style="-fx-background-radius: 20;" text="modify" textFill="#ae20ae">
                <font>
                   <Font name="Algerian" size="12.0" />
@@ -26,20 +22,22 @@
                   <Font name="Algerian" size="12.0" />
                </font>
             </Button>
-            <Button alignment="CENTER" blendMode="LIGHTEN" contentDisplay="CENTER" mnemonicParsing="false" onAction="#viewCourses" prefHeight="22.0" prefWidth="110.0" style="-fx-background-radius: 20;" text="View Courses" textFill="#ae20ae">
+            <Button fx:id="view" alignment="CENTER" blendMode="LIGHTEN" contentDisplay="CENTER" mnemonicParsing="false" onAction="#viewCourses" prefHeight="22.0" prefWidth="110.0" style="-fx-background-radius: 20;" text="View Courses" textFill="#ae20ae">
                <font>
                   <Font name="Algerian" size="12.0" />
                </font>
             </Button>
         </buttons>
+         <effect>
+            <DropShadow radius="4.75" width="0.0" />
+         </effect>
       </ButtonBar>
-      <TableView fx:id="courses" layoutY="-2.0" prefHeight="358.0" prefWidth="600.0" AnchorPane.bottomAnchor="44.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <TableView fx:id="courses" layoutY="-2.0" prefHeight="336.0" prefWidth="600.0" AnchorPane.bottomAnchor="64.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columns>
           <TableColumn fx:id="course_id" maxWidth="1.7976931348623157E308" minWidth="80.0" prefWidth="-1.0" text="course_id" />
-          <TableColumn fx:id="instructor_name" maxWidth="1.7976931348623157E308" minWidth="114.0" prefWidth="-1.0" text="instructor_name" />
-            <TableColumn fx:id="course_name" maxWidth="1.7976931348623157E308" minWidth="95.0" prefWidth="-1.0" text="course_name" />
-            <TableColumn fx:id="course_location" maxWidth="1.7976931348623157E308" minWidth="52.79998779296875" prefWidth="96.79998779296875" text="course_location" />
-            <TableColumn fx:id="year" maxWidth="1.7976931348623157E308" minWidth="49.5999755859375" prefWidth="53.5999755859375" text="year" />
+          <TableColumn fx:id="instructor_name" maxWidth="1.7976931348623157E308" minWidth="114.0" prefWidth="129.0" text="instructor_name" />
+            <TableColumn fx:id="course_name" maxWidth="1.7976931348623157E308" minWidth="95.0" prefWidth="128.0" text="course_name" />
+            <TableColumn fx:id="course_location" maxWidth="1.7976931348623157E308" minWidth="77.79998779296875" prefWidth="148.79998779296875" text="course_location" />
         </columns>
       </TableView>
       <ButtonBar blendMode="DIFFERENCE" layoutX="501.0" layoutY="354.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="46.0" prefWidth="62.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="6.0">
@@ -52,4 +50,7 @@
          </buttons>
       </ButtonBar>
    </children>
+   <effect>
+      <DropShadow height="85.48" offsetX="10.0" offsetY="10.0" radius="46.5175" width="102.59" />
+   </effect>
 </AnchorPane>

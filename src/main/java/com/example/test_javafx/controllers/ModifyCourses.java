@@ -1,7 +1,7 @@
 package com.example.test_javafx.controllers;
-import com.example.test_javafx.models.ComboBoxAutoComplete;
-import javafx.application.Application;
-import javafx.scene.Scene;
+//import com.example.test_javafx.models.ComboBoxAutoComplete;
+import com.example.test_javafx.models.CmboBoxAutoComplete;
+
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Tooltip;
 import com.example.test_javafx.Navigation;
@@ -72,8 +72,6 @@ public class ModifyCourses   implements  Initializable {
     Navigation nav = new Navigation();
 
 
-
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
@@ -82,10 +80,8 @@ public class ModifyCourses   implements  Initializable {
     }
     public  void setComboBoxes() {
 
-        ObservableList<String> ids = FXCollections.observableList(db.getCourseIDs());
-        selectCourse_id.setTooltip(new Tooltip());
-        selectCourse_id.getItems().addAll(ids);
-        new ComboBoxAutoComplete<String>(selectCourse_id);
+        CmboBoxAutoComplete.cmboBoxAutoComplete( selectCourse_id);
+
     }
 
     @FXML
