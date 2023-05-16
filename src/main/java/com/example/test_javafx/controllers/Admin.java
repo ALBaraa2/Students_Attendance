@@ -1,6 +1,5 @@
 package com.example.test_javafx.controllers;
 import com.example.test_javafx.Navigation;
-import com.example.test_javafx.models.DBModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
