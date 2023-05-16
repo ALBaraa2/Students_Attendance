@@ -54,8 +54,8 @@
             </Button>
          </buttons>
       </ButtonBar>
-      <ComboBox fx:id="CIcom" layoutX="503.0" layoutY="1.0" prefHeight="26.0" prefWidth="106.0" promptText="Course_id" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-      <ComboBox fx:id="SIcom" layoutX="503.0" layoutY="165.0" prefHeight="26.0" prefWidth="106.0" promptText="Section_id" AnchorPane.rightAnchor="0.0" />
+      <ComboBox fx:id="CIcom" layoutX="503.0" layoutY="1.0" prefHeight="26.0" prefWidth="106.0" promptText="Course id" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <ComboBox fx:id="SIcom" layoutX="493.0" layoutY="284.0" prefHeight="26.0" prefWidth="106.0" promptText="Section_id" AnchorPane.rightAnchor="0.6000000000000227" />
       <Label fx:id="massege" layoutX="533.0" layoutY="264.0" prefHeight="33.0" prefWidth="106.0" visible="false" AnchorPane.rightAnchor="0.0">
          <font>
             <Font size="14.0" />
@@ -66,5 +66,8 @@
             <Font size="14.0" />
          </font>
       </Label>
+      <ComboBox fx:id="Ycom" layoutX="493.0" layoutY="94.0" prefHeight="25.0" prefWidth="106.0" promptText="Year" AnchorPane.rightAnchor="0.6000000000000227" />
+      <ComboBox fx:id="Scom" layoutX="493.0" layoutY="187.0" prefHeight="26.0" prefWidth="106.0" promptText="Semester" AnchorPane.rightAnchor="0.6000000000000227" />
+      <Label fx:id="m" layoutX="500.0" layoutY="5.0" prefHeight="18.0" prefWidth="94.0" visible="false" />
    </children>
 </AnchorPane>

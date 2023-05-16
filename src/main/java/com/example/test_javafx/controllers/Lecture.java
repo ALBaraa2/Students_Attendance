@@ -3,6 +3,7 @@ package com.example.test_javafx.controllers;
 import com.example.test_javafx.Navigation;
 import com.example.test_javafx.models.DBModel;
 import com.example.test_javafx.models.Lectures;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,12 +15,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class Lecture implements Initializable {
 
@@ -59,15 +55,59 @@ public class Lecture implements Initializable {
     @FXML
     private Label massege1;
 
+    @FXML
+    private ComboBox<String> Scom;
+
+    @FXML
+    private ComboBox<String> Ycom;
+
+    @FXML
+    private Label m;
+
     DBModel db = DBModel.getModel();
     Navigation nav = new Navigation();
 
 
+    private void setComboBoxes() {
+        ObservableList<String> ids = FXCollections.observableList(db.getCourseIDs());
+        CIcom.setItems(ids);
+        CIcom.setOnAction(this::handleCIcomAction);
+    }
+
     @FXML
     private void handleCIcomAction(ActionEvent event) {
-        String selectedCourseID = CIcom.getSelectionModel().getSelectedItem();
-        ObservableList<String> sec_ids = FXCollections.observableList(db.getSecIds(selectedCourseID));
-        SIcom.setItems(sec_ids);
+        if (CIcom.getValue() != null) {
+            String selectedCourseID = CIcom.getSelectionModel().getSelectedItem();
+            ObservableList<String> year = FXCollections.observableList(db.getYears(selectedCourseID));
+            Ycom.setItems(year);
+            Ycom.setOnAction(this::handleYcomAction);
+        }
+    }
+
+    private void handleYcomAction(ActionEvent event) {
+        int selectedYear;
+        if (Ycom.getValue() != null) {
+            selectedYear = Integer.parseInt(Ycom.getSelectionModel().getSelectedItem());
+            if (CIcom.getValue() != null) {
+                String selectedCourseID = CIcom.getSelectionModel().getSelectedItem();
+                ObservableList<String> semesters = FXCollections.observableList(db.getSemesters(selectedCourseID, selectedYear));
+                Scom.setItems(semesters);
+                Scom.setOnAction(this::handleScomAction);
+            }
+        }
+    }
+
+    private void handleScomAction(ActionEvent event) {
+        int selectedYear;
+        if (Ycom.getValue() != null) {
+            selectedYear = Integer.parseInt(Ycom.getSelectionModel().getSelectedItem());
+            if (CIcom.getValue() != null && Scom.getValue() != null) {
+                String selectedCourseID = CIcom.getSelectionModel().getSelectedItem();
+                String selecteSemester = Scom.getSelectionModel().getSelectedItem();
+                ObservableList<String> SecIds = FXCollections.observableList(db.getSecIds(selectedCourseID, selectedYear, selecteSemester));
+                SIcom.setItems(SecIds);
+            }
+        }
     }
 
     @Override
@@ -79,12 +119,6 @@ public class Lecture implements Initializable {
         lecture_date.setCellValueFactory(new PropertyValueFactory<>("lecture_date"));
         lecture_location.setCellValueFactory(new PropertyValueFactory<>("Hall"));
         setComboBoxes();
-    }
-
-    private void setComboBoxes() {
-        ObservableList<String> ids = FXCollections.observableList(db.getCourseIDs());
-        CIcom.setItems(ids);
-        CIcom.setOnAction(this::handleCIcomAction);
     }
 
     @FXML
@@ -99,7 +133,7 @@ public class Lecture implements Initializable {
 
     @FXML
     void insert(ActionEvent event) {
-
+        nav.navigateTo(root, nav.INSERT_LECTURSE_FXML);
     }
 
     @FXML
@@ -117,9 +151,13 @@ public class Lecture implements Initializable {
             massege1.setVisible(true);
             massege.setVisible(true);
         } else {
-            lectures.setItems(FXCollections.observableArrayList(db.getLectures(CIcom.getValue(),
+            lectures.setItems(FXCollections.observableArrayList(db.getLectures(CIcom.getValue(), Ycom.getValue(), Scom.getValue(),
                     Integer.parseInt(SIcom.getValue()))));
             CIcom.setValue(null);
+            m.setText("Course id");
+            m.setVisible(true);
+            Ycom.setValue(null);
+            Scom.setValue(null);
             SIcom.setValue(null);
         }
     }

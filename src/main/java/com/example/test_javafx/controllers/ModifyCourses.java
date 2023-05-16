@@ -1,6 +1,7 @@
 package com.example.test_javafx.controllers;
 
 import com.example.test_javafx.Navigation;
+import com.example.test_javafx.models.CmboBoxAutoComplete;
 import com.example.test_javafx.models.DBModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -70,6 +71,7 @@ public class ModifyCourses implements Initializable {
     private void setComboBoxes() {
         ObservableList<String> ids = FXCollections.observableList(db.getCourseIDs());
         selectCourse_id.setItems(ids);
+        CmboBoxAutoComplete.cmboBoxAutoComplete( selectCourse_id);
     }
 
     @FXML

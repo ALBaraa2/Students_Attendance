@@ -414,7 +414,7 @@ public class DBModel {
         }
     }
 
-    //-------------------------------------------------------------------------------------------------//
+    //============================================================================================================//
     public boolean getEmailPassword(String e, String p) {
         String sql = "select email, password" +
                 " from users" +
@@ -530,13 +530,13 @@ public class DBModel {
 
     public ArrayList<Courses> getCourses() {
         ArrayList<Courses> c = new ArrayList<>();
-        String sql = "select course_id, instructor_name, course_name, course_location, year"
-                + " from courses natural join assist ;";
+        String sql = "select course_id, instructor_name, course_name, course_location"
+                + " from courses ;";
         try (PreparedStatement st = con.prepareStatement(sql)) {
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 c.add(new Courses(rs.getString(1), rs.getString(2), rs.getString(3),
-                        rs.getString(4), rs.getString(5)));
+                        rs.getString(4)));
             }
             return c;
         } catch (SQLException ex) {
@@ -561,22 +561,61 @@ public class DBModel {
         }
     }
 
-    public ArrayList<String> getSecIds(String course_id) {
-        String sql = "select sec_id from courses natural join enrollments" +
-                " where course_id = ? ;";
-        ArrayList<String> ids = new ArrayList<>();
+    public ArrayList<String> getYears(String course_id) {
+        String sql = "select distinct year from section " +
+                " WHERE course_id = ? " +
+                "GROUP BY year ;";
+        ArrayList<String> years = new ArrayList<>();
         try (PreparedStatement st = con.prepareStatement(sql)) {
             st.setString(1, course_id);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                ids.add(rs.getString(1));
-                return ids;
+                years.add(rs.getString(1));
             }
         } catch (SQLException ex) {
             Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
-        return ids;
+        return years;
+    }
+
+    public ArrayList<String> getSemesters(String course_id, int year) {
+        String sql = "select distinct semester from section" +
+                " WHERE course_id = ? and year = ? " +
+                "GROUP BY semester ;";
+        ArrayList<String> semesters = new ArrayList<>();
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, course_id);
+            st.setInt(2, year);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                semesters.add(rs.getString(1));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+        return semesters;
+    }
+
+    public ArrayList<String> getSecIds(String course_id, int year, String semester) {
+        String sql = "select distinct sec_id from section" +
+                " WHERE course_id = ? and year = ? and semester = ? " +
+                "GROUP BY sec_id;";
+        ArrayList<String> semesters = new ArrayList<>();
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, course_id);
+            st.setInt(2, year);
+            st.setString(3, semester);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                semesters.add(rs.getString(1));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+        return semesters;
     }
 
     public String getcourseName(String id) {
@@ -642,10 +681,10 @@ public class DBModel {
         }
     }
 
-    public ArrayList<Lectures> getLectures(String course_id, int sec_id) {
+    public ArrayList<Lectures> getLectures(String course_id, String year, String semester, int sec_id) {
         ArrayList<Lectures> lects = new ArrayList<>();
         String sql = "select course_id, lecture_id, lecture_title, lecture_time, lecture_date, lecture_location " +
-                "from courses natural join lectures natural join enrollments " +
+                "from lectures " +
                 "where course_id = ? and sec_id = ? ;";
         try (PreparedStatement st = con.prepareStatement(sql)) {
             st.setString(1, course_id);
@@ -661,5 +700,49 @@ public class DBModel {
             Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
+    }
+//    public boolean insertLecture(String course_id, String title, String date, String time, String location) {
+//        String sql = "insert into section (course_id,title,date,time,location)"
+//                + " values (?,?,?,?,?);";
+//
+//        try (PreparedStatement st = con.prepareStatement(sql)) {
+//            st.setString(1, course_id);
+//            st.setString(2, );
+//            st.setString(3, b);
+//            st.setString(4, r);
+//            st.setString(5, s);
+//            st.setInt(6, y);
+//            st.setString(7, t);
+//
+//
+//            if (st.executeUpdate() > 0) {
+//                System.out.println("\tsection added successfully\n\tsec_id = " + maxSecID(c, s, y) + 1);
+//                return " section added successfully\n sec_id = " + maxSecID(c, s, y) + 1;
+//
+//            } else return "";
+//
+//        } catch (SQLException ex) {
+//
+//            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+//            return "";
+//        }
+//    }
+
+    public boolean deleteCourse(String cid){
+        String sql = "DELETE FROM courses" +
+                " WHERE course_id = ? ;";
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, cid);
+            int rowsDeleted = st.executeUpdate();
+            if (rowsDeleted > 0) {
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
 }

@@ -67,7 +67,24 @@ public class Course implements Initializable {
     }
 
     @FXML
+    void delete(ActionEvent event) {
+    }
+
+    @FXML
     void viewCourses(ActionEvent event) {
         courses.setItems(FXCollections.observableArrayList(db.getCourses()));
     }
+
+//    private void delete(){
+//        courses.setRowFactory(tv -> {
+//            TableRow<Courses> row = new TableRow<>();
+//            row.setOnMouseClicked(event -> {
+//                if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+//                    Courses rowData = row.getItem();
+//                    db.deleteCourse(rowData.getCourse_id());
+//                }
+//            });
+//            return row ;
+//        });
+//    }
 }

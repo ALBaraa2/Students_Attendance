@@ -80,6 +80,16 @@
             <artifactId>Test_JavaFX</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>org.webjars.npm</groupId>
+            <artifactId>timepicker</artifactId>
+            <version>1.14.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars.npm</groupId>
+            <artifactId>github-com-jonthornton-jquery-timepicker</artifactId>
+            <version>1.13.18</version>
+        </dependency>
 
     </dependencies>
 
