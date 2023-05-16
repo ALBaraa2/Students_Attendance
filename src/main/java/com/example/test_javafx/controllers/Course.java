@@ -97,7 +97,6 @@ public class Course implements Initializable {
         alert.setContentText(message);
         ButtonType buttonCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
         alert.getButtonTypes().add(buttonCancel);
-        Optional<ButtonType> result = alert.showAndWait();
-        return result;
+        return alert.showAndWait();
     }
 }
