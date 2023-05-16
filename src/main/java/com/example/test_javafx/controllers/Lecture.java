@@ -61,9 +61,6 @@ public class Lecture implements Initializable {
     @FXML
     private ComboBox<String> Ycom;
 
-    @FXML
-    private Label m;
-
     DBModel db = DBModel.getModel();
     Navigation nav = new Navigation();
 
@@ -144,18 +141,13 @@ public class Lecture implements Initializable {
     @FXML
     void viewLectuers(ActionEvent event) {
         if (CIcom.getValue() == null || SIcom.getValue() == null){
-            massege.setText("select course_id");
-            massege1.setText("and sec_id");
-            massege.setTextFill(Color.RED);
+            massege1.setText("Enter all data ");
             massege1.setTextFill(Color.RED);
             massege1.setVisible(true);
-            massege.setVisible(true);
         } else {
             lectures.setItems(FXCollections.observableArrayList(db.getLectures(CIcom.getValue(), Ycom.getValue(), Scom.getValue(),
                     Integer.parseInt(SIcom.getValue()))));
             CIcom.setValue(null);
-            m.setText("Course id");
-            m.setVisible(true);
             Ycom.setValue(null);
             Scom.setValue(null);
             SIcom.setValue(null);

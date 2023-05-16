@@ -35,7 +35,7 @@
             </Button>
          </buttons>
       </ButtonBar>
-      <TableView fx:id="lectures" layoutY="-2.0" prefHeight="356.0" prefWidth="494.0" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="106.0" AnchorPane.topAnchor="0.0">
+      <TableView fx:id="lectures" layoutY="-2.0" prefHeight="319.0" prefWidth="494.0" AnchorPane.bottomAnchor="81.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="106.0" AnchorPane.topAnchor="0.0">
          <columns>
             <TableColumn fx:id="course_id" maxWidth="1.7976931348623157E308" minWidth="50.39996337890625" prefWidth="62.39996337890625" text="Course_id" />
             <TableColumn fx:id="lecture_id" maxWidth="1.7976931348623157E308" minWidth="56.79998779296875" prefWidth="62.39996337890625" text="lecture_id" />
@@ -56,18 +56,12 @@
       </ButtonBar>
       <ComboBox fx:id="CIcom" layoutX="503.0" layoutY="1.0" prefHeight="26.0" prefWidth="106.0" promptText="Course id" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <ComboBox fx:id="SIcom" layoutX="493.0" layoutY="284.0" prefHeight="26.0" prefWidth="106.0" promptText="Section_id" AnchorPane.rightAnchor="0.6000000000000227" />
-      <Label fx:id="massege" layoutX="533.0" layoutY="264.0" prefHeight="33.0" prefWidth="106.0" visible="false" AnchorPane.rightAnchor="0.0">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Label fx:id="massege1" alignment="CENTER" layoutX="493.0" layoutY="298.0" prefHeight="34.0" prefWidth="106.0" visible="false">
+      <Label fx:id="massege1" alignment="CENTER" layoutY="325.0" prefHeight="34.0" prefWidth="494.0" visible="false">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
       <ComboBox fx:id="Ycom" layoutX="493.0" layoutY="94.0" prefHeight="25.0" prefWidth="106.0" promptText="Year" AnchorPane.rightAnchor="0.6000000000000227" />
       <ComboBox fx:id="Scom" layoutX="493.0" layoutY="187.0" prefHeight="26.0" prefWidth="106.0" promptText="Semester" AnchorPane.rightAnchor="0.6000000000000227" />
-      <Label fx:id="m" layoutX="500.0" layoutY="5.0" prefHeight="18.0" prefWidth="94.0" visible="false" />
    </children>
 </AnchorPane>
