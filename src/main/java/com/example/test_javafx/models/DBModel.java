@@ -13,7 +13,7 @@ public class DBModel {
 
     //here our queries method
     public DBModel() {
-        schemaConnect("project");
+        schemaConnect("proj");
     }
 
     public static DBModel getModel() {
@@ -28,7 +28,7 @@ public class DBModel {
         source.setServerName("localhost");
         source.setDatabaseName("project");
         source.setUser("postgres");
-        source.setPassword("123");
+        source.setPassword("120202789");
 
         try {
             con = source.getConnection();
@@ -578,6 +578,22 @@ public class DBModel {
         }
         return years;
     }
+    public ArrayList<String> getTA_id() {
+        String sql = "select DISTINCT id from teach_assistant;";
+        ArrayList<String> ids = new ArrayList<>();
+        try (Statement st = con.createStatement();
+             ResultSet rs = st.executeQuery(sql)
+        ) {
+            while (rs.next()) {
+                ids.add(rs.getString(1));
+            }
+            return ids;
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+
 
     public ArrayList<String> getSemesters(String course_id, int year) {
         String sql = "select distinct semester from section" +
@@ -648,6 +664,22 @@ public class DBModel {
             return false;
         }
     }
+    public void addEnrollment(String course, String year, String semester, String sec, String assistantId) {
+        String sql = "INSERT INTO assist (course_id, year, semester, sec_id, assistant_id) VALUES (?, ?, ?, ?, ?)";
+
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, course);
+            st.setInt(2, Integer.parseInt(year));
+            st.setString(3, semester);
+            st.setInt(4, Integer.parseInt(sec));
+            st.setInt(5, Integer.parseInt(assistantId));
+            st.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+
 
     public boolean isPre_Registered(String email) {
         String sql = "select email from users where email = ? ;";
@@ -663,6 +695,49 @@ public class DBModel {
             return false;
         }
     }
+
+    public boolean checkEnrollments(String course, String year, String semester, String sec) {
+        String sql = "SELECT COUNT(*) FROM assist WHERE course_id = ? AND year = ? AND semester = ? AND sec_id = ?";
+
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, course);
+            st.setInt(2, Integer.parseInt(year));
+            st.setString(3, semester);
+            st.setInt(4, Integer.parseInt(sec));
+
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                return count == 1;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return false;
+    }
+
+
+public String getAssistantId(String course, String year, String semester, String sec) {
+    String id = "";
+    String sql = "SELECT assistant_id FROM assist WHERE course_id = ? AND year = ? AND semester = ? AND sec_id = ? LIMIT 1";
+
+    try (PreparedStatement st = con.prepareStatement(sql)) {
+        st.setString(1, course);
+        st.setInt(2, Integer.parseInt(year));
+        st.setString(3, semester);
+        st.setInt(4, Integer.parseInt(sec));
+
+        ResultSet rs = st.executeQuery();
+        if (rs.next()) {
+            id = String.valueOf(rs.getInt(1));
+        }
+
+    } catch (SQLException ex) {
+        Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    return id;
+}
 
     public boolean isValidEmail(String email) {
         String sql = "SELECT check_email_format(?);";
@@ -701,32 +776,6 @@ public class DBModel {
             return null;
         }
     }
-//    public boolean insertLecture(String course_id, String title, String date, String time, String location) {
-//        String sql = "insert into section (course_id,title,date,time,location)"
-//                + " values (?,?,?,?,?);";
-//
-//        try (PreparedStatement st = con.prepareStatement(sql)) {
-//            st.setString(1, course_id);
-//            st.setString(2, );
-//            st.setString(3, b);
-//            st.setString(4, r);
-//            st.setString(5, s);
-//            st.setInt(6, y);
-//            st.setString(7, t);
-//
-//
-//            if (st.executeUpdate() > 0) {
-//                System.out.println("\tsection added successfully\n\tsec_id = " + maxSecID(c, s, y) + 1);
-//                return " section added successfully\n sec_id = " + maxSecID(c, s, y) + 1;
-//
-//            } else return "";
-//
-//        } catch (SQLException ex) {
-//
-//            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
-//            return "";
-//        }
-//    }
 
     public boolean deleteCourse(String cid){
         String sql = "DELETE FROM courses" +
