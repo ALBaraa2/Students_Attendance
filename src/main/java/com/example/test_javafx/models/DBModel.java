@@ -758,7 +758,7 @@ public String getAssistantId(String course, String year, String semester, String
         }
     }
 
-    public ArrayList<Lectures> getLectures(String course_id, String year, String semester, int sec_id) {
+    public ArrayList<Lectures> getLectures(String course_id, int sec_id) {
         ArrayList<Lectures> lects = new ArrayList<>();
         String sql = "select course_id, lecture_id, lecture_title, lecture_time, lecture_date, lecture_location " +
                 "from lectures " +
@@ -824,29 +824,22 @@ public String getAssistantId(String course, String year, String semester, String
         }
     }
 
-    public ArrayList<Lectures> getDate(String id, String title, String location, String course_id, String year, String semester, String sec_id) {
-        ArrayList<Lectures> lects = new ArrayList<>();
-        String sql = "SELECT lecture_date, lecture_time " +
-                "FROM lectures " +
-                "WHERE lecture_id = ? AND lecture_title = ? AND lecture_location = ? " +
+    public boolean modifyLectureDate(String id, String course_id, String year, String semester, String sec_id, String date) {
+        String sql = "UPDATE lectures " +
+                "SET lecture_date = CAST(? AS DATE) " +
+                "WHERE lecture_id = ? " +
                 "AND course_id = ? AND year = CAST(? AS INTEGER) AND semester = ? AND sec_id = CAST(? AS INTEGER);";
         try (PreparedStatement st = con.prepareStatement(sql)) {
-            st.setString(1, id);
-            st.setString(2, title);
-            st.setString(3, location);
-            st.setString(4, course_id);
-            st.setString(5, year);
-            st.setString(6, semester);
-            st.setString(7, sec_id);
-            ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-                lects.add(new Lectures(rs.getDate(1), rs.getTime(2)));
-            }
-            return lects;
+            st.setString(1, date);
+            st.setString(2, id);
+            st.setString(3, course_id);
+            st.setString(4, year);
+            st.setString(5, semester);
+            st.setString(6, sec_id);
+            return st.executeUpdate() > 0;
         } catch (SQLException ex) {
-
             Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
+            return false;
         }
     }
     public boolean addStudent(String studentId, String studentName, String street, String city, String gender, List<String> phoneNumbers) {
@@ -1022,13 +1015,83 @@ public boolean updateStudentCity(String studentId, String newCity) {
             }
         }
 
+    public boolean modifyLectureTime(String id, String course_id, String year, String semester, String sec_id, String time) {
+        String sql = "UPDATE lectures " +
+                "SET lecture_time = CAST(? AS TIME) " +
+                "WHERE lecture_id = ? " +
+                "AND course_id = ? AND year = CAST(? AS INTEGER) AND semester = ? AND sec_id = CAST(? AS INTEGER);";
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, time);
+            st.setString(2, id);
+            st.setString(3, course_id);
+            st.setString(4, year);
+            st.setString(5, semester);
+            st.setString(6, sec_id);
+            return st.executeUpdate() > 0;
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
     }
 
+    public boolean modifyLectureTitle(String id, String course_id, String year, String semester, String sec_id, String title) {
+        String sql = "UPDATE lectures " +
+                "SET lecture_title = ? " +
+                "WHERE lecture_id = ? " +
+                "AND course_id = ? AND year = CAST(? AS INTEGER) AND semester = ? AND sec_id = CAST(? AS INTEGER);";
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, title);
+            st.setString(2, id);
+            st.setString(3, course_id);
+            st.setString(4, year);
+            st.setString(5, semester);
+            st.setString(6, sec_id);
+            return st.executeUpdate() > 0;
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
 
+    public boolean modifyLectureLocation(String id, String course_id, String year, String semester, String sec_id, String location) {
+        String sql = "UPDATE lectures " +
+                "SET lecture_location = ? " +
+                "WHERE lecture_id = ? " +
+                "AND course_id = ? AND year = CAST(? AS INTEGER) AND semester = ? AND sec_id = CAST(? AS INTEGER);";
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, location);
+            st.setString(2, id);
+            st.setString(3, course_id);
+            st.setString(4, year);
+            st.setString(5, semester);
+            st.setString(6, sec_id);
+            return st.executeUpdate() > 0;
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
 
-
-
-
-
-
+    public ArrayList<String> getLectureIds(String course_id, String year, String semester , String sec_id) {
+        ArrayList<String> arr = new ArrayList<>();
+        String sql = "select distinct lecture_id from lectures " +
+                " WHERE course_id = ? and year = CAST(? AS INTEGER) and semester = ? and sec_id = CAST(? AS INTEGER)" +
+                "GROUP BY lecture_id;";
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, course_id);
+            st.setString(2, year);
+            st.setString(3, semester);
+            st.setString(4 , sec_id);
+            System.out.println(course_id + " " + year + " " + semester + " " + sec_id );
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                arr.add(rs.getString(1));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+        return arr;
+    }
+}
 
