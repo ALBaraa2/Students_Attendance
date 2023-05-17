@@ -2,6 +2,7 @@ package com.example.test_javafx.controllers;
 import com.example.test_javafx.Navigation;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 
 public class Admin {
@@ -10,6 +11,9 @@ public class Admin {
     private AnchorPane anchorPane;
 
     Navigation nav = new Navigation();
+
+    @FXML
+    private Button back;
 
 
     @FXML
@@ -26,5 +30,9 @@ public class Admin {
     void navToTAEnrollmentCourse(ActionEvent event) {
         nav.navigateTo(anchorPane, nav.TA_Enrollment_Course_FXML);
 
+    }
+    @FXML
+    void back(ActionEvent event) {
+        nav.navigateTo(back, nav.LOGIN_FXML);
     }
 }

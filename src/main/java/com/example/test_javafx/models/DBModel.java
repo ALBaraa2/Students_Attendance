@@ -4,6 +4,8 @@ import org.postgresql.ds.PGSimpleDataSource;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -847,5 +849,186 @@ public String getAssistantId(String course, String year, String semester, String
             return null;
         }
     }
+    public boolean addStudent(String studentId, String studentName, String street, String city, String gender, List<String> phoneNumbers) {
+        String sql = "INSERT INTO students (student_id, student_name, student_address, gender, student_phone) VALUES (?, ?, ROW(?, ?)::address, ?, ?)";
 
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, studentId);
+            st.setString(2, studentName);
+            st.setString(3, city);
+            st.setString(4, street);
+            st.setString(5, gender);
+            st.setArray(6, con.createArrayOf("VARCHAR", phoneNumbers.toArray()));
+
+            int rowsAffected = st.executeUpdate();
+
+            if (rowsAffected > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+
+
+
+    public boolean checkStudentExists(String id) {
+        String sql = "SELECT COUNT(*) FROM students WHERE student_id = ?";
+
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, id);
+
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                return count > 0;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return false;
+    }
+    public List<String> getAllStudentIds() {
+        List<String> studentIds = new ArrayList<>();
+
+        String sql = "SELECT DISTINCT student_id FROM students";
+
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                String studentId = rs.getString("student_id");
+                studentIds.add(studentId);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return studentIds;
+    }
+    public List<String> getStudentPhoneNumbers(String studentId) {
+        List<String> phoneNumbers = new ArrayList<>();
+        String sql = "SELECT student_phone FROM phone where student_id = ?";
+
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, studentId);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                String phoneNumber = rs.getString("student_phone");
+                phoneNumbers.add(phoneNumber);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return phoneNumbers;
+    }
+
+    public boolean updateStudentName(String studentId, String newName) {
+        String sql = "UPDATE students SET student_name = ? WHERE student_id = ?";
+
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, newName);
+            st.setString(2, studentId);
+
+            int rowsAffected = st.executeUpdate();
+
+            return rowsAffected > 0;
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+    public boolean updateStudentPhoneNumber(String studentId, String oldPhoneNumber, String newPhoneNumber) {
+        String sql = "UPDATE phone SET student_phone = ? WHERE student_id = ? AND student_phone = ?";
+
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, newPhoneNumber);
+            st.setString(2, studentId);
+            st.setString(3, oldPhoneNumber);
+
+            int rowsAffected = st.executeUpdate();
+
+            return rowsAffected > 0;
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+
+//    public boolean updateStudentCity(String studentId, String newCity) {
+//        String sql = "UPDATE students SET student_address = ROW(?, student_address.street) WHERE student_id = ?";
+//
+//        try (PreparedStatement st = con.prepareStatement(sql)) {
+//            st.setString(1, newCity);
+//            st.setString(2, studentId);
+//
+//            int rowsAffected = st.executeUpdate();
+//
+//            return rowsAffected > 0;
+//        } catch (SQLException ex) {
+//            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+//            return false;
+//        }
+//    }
+public boolean updateStudentCity(String studentId, String newCity) {
+    String sql = "UPDATE students SET student_address.city = ? WHERE student_id = ?";
+
+    try (PreparedStatement st = con.prepareStatement(sql)) {
+        st.setString(1, newCity);
+        st.setString(2, studentId);
+
+        int rowsAffected = st.executeUpdate();
+
+        return rowsAffected > 0;
+    } catch (SQLException ex) {
+        Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+        return false;
+    }
 }
+    public boolean updateStudentStreet(String studentId, String newStreet) {
+        String sql = "UPDATE students SET student_address.street = ? WHERE student_id = ?";
+
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, newStreet);
+            st.setString(2, studentId);
+
+            int rowsAffected = st.executeUpdate();
+
+            return rowsAffected > 0;
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+        public boolean updateStudentGender(String studentId, String newGender) {
+            String sql = "UPDATE students SET gender = ? WHERE student_id = ?";
+
+            try (PreparedStatement st = con.prepareStatement(sql)) {
+                st.setString(1, newGender);
+                st.setString(2, studentId);
+
+                int rowsAffected = st.executeUpdate();
+
+                return rowsAffected > 0;
+            } catch (SQLException ex) {
+                Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+                return false;
+            }
+        }
+
+    }
+
+
+
+
+
+
+
+
+

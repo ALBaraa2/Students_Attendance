@@ -16,6 +16,10 @@ public class Navigation {
     public final String ADMIN_FXML = "views/admin.fxml";
     public final String TEACH_ASSISTANT_FXML = "views/teachassistant.fxml";
     public final String COURSE_FXML = "views/course.fxml";
+
+    public final String Student_Registration = "views/StudentRegistration.fxml";
+
+    public final String ModifyStudentData = "views/ModifyStudentData.fxml";
     public final String INSERT_COURSE_FXML = "views/insertcourse.fxml";
     public final String MODIFY_COURSE_FXML = "views/modifycourse.fxml";
     public final String CREATE_USER_ACCOUNT_FXML = "views/createuseraccount.fxml";
