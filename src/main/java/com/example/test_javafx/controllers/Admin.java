@@ -27,4 +27,8 @@ public class Admin {
         nav.navigateTo(anchorPane, nav.TA_Enrollment_Course_FXML);
 
     }
+    @FXML
+    void back(ActionEvent event) {
+        nav.navigateTo(anchorPane, nav.LOGIN_FXML);
+    }
 }

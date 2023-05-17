@@ -1,9 +1,7 @@
 package com.example.test_javafx.controllers;
 
 import com.example.test_javafx.Navigation;
-import com.example.test_javafx.models.DBModel;
-import com.example.test_javafx.models.Lectures;
-import com.example.test_javafx.models.SharedData;
+import com.example.test_javafx.models.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,6 +13,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class Lecture implements Initializable {
@@ -66,10 +65,22 @@ public class Lecture implements Initializable {
     DBModel db = DBModel.getModel();
     Navigation nav = new Navigation();
 
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        course_id.setCellValueFactory(new PropertyValueFactory<>("Course_id"));
+        lecture_id.setCellValueFactory(new PropertyValueFactory<>("lecture_id"));
+        lecture_title.setCellValueFactory(new PropertyValueFactory<>("lecture_title"));
+        lecture_time.setCellValueFactory(new PropertyValueFactory<>("lecture_time"));
+        lecture_date.setCellValueFactory(new PropertyValueFactory<>("lecture_date"));
+        lecture_location.setCellValueFactory(new PropertyValueFactory<>("Hall"));
+        setComboBoxes();
+        doubleClick(lectures);
+    }
 
     private void setComboBoxes() {
         ObservableList<String> ids = FXCollections.observableList(db.getCourseIDs());
         CIcom.setItems(ids);
+        CmboBoxAutoComplete.cmboBoxAutoComplete(CIcom , ids);
         CIcom.setOnAction(this::handleCIcomAction);
     }
 
@@ -99,26 +110,17 @@ public class Lecture implements Initializable {
     private void handleScomAction(ActionEvent event) {
         int selectedYear;
         if (Ycom.getValue() != null) {
-            selectedYear = Integer.parseInt(Ycom.getSelectionModel().getSelectedItem());
-            if (CIcom.getValue() != null && Scom.getValue() != null) {
-                String selectedCourseID = CIcom.getSelectionModel().getSelectedItem();
-                String selecteSemester = Scom.getSelectionModel().getSelectedItem();
-                ObservableList<String> SecIds = FXCollections.observableList(db.getSecIds(selectedCourseID, selectedYear, selecteSemester));
-                SIcom.setItems(SecIds);
-            }
+        selectedYear = Integer.parseInt(Ycom.getSelectionModel().getSelectedItem());
+        if (CIcom.getValue() != null && Scom.getValue() != null) {
+            String selectedCourseID = CIcom.getSelectionModel().getSelectedItem();
+            String selecteSemester = Scom.getSelectionModel().getSelectedItem();
+            ObservableList<String> SecIds = FXCollections.observableList(db.getSecIds(selectedCourseID, selectedYear, selecteSemester));
+            SIcom.setItems(SecIds);
         }
     }
+}
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        course_id.setCellValueFactory(new PropertyValueFactory<>("Course_id"));
-        lecture_id.setCellValueFactory(new PropertyValueFactory<>("lecture_id"));
-        lecture_title.setCellValueFactory(new PropertyValueFactory<>("lecture_title"));
-        lecture_time.setCellValueFactory(new PropertyValueFactory<>("lecture_time"));
-        lecture_date.setCellValueFactory(new PropertyValueFactory<>("lecture_date"));
-        lecture_location.setCellValueFactory(new PropertyValueFactory<>("Hall"));
-        setComboBoxes();
-    }
+
 
     @FXML
     void backToTeachassistant(ActionEvent event) {
@@ -151,13 +153,43 @@ public class Lecture implements Initializable {
             massege1.setTextFill(Color.RED);
             massege1.setVisible(true);
         } else {
-            lectures.setItems(FXCollections.observableArrayList(db.getLectures(CIcom.getValue(), Ycom.getValue(), Scom.getValue(),
-                    Integer.parseInt(SIcom.getValue()))));
-            CIcom.setValue(null);
-            Ycom.setValue(null);
-            Scom.setValue(null);
-            SIcom.setValue(null);
+            lectures.setItems(FXCollections.observableArrayList(db.getLectures(CIcom.getValue(),Integer.parseInt(SIcom.getValue()))));
+//            CIcom.setValue(null);
+//            Ycom.setValue(null);
+//            Scom.setValue(null);
+//            SIcom.setValue(null);
         }
+    }
+    public void doubleClick(TableView<Lectures> Lectures) {
+        ButtonType buttonCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+        Lectures.setRowFactory(tv -> {
+            TableRow<Lectures> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (!row.isEmpty())) {
+                    Lectures rowData = row.getItem();
+                    Optional<ButtonType> result = showAlert("Are You sure delete " + rowData.getLecture_title());
+                    if (result.isPresent()) {
+                        if (result.get() == ButtonType.OK) {
+                            System.out.println(rowData.getLecture_id() +"" +Ycom.getValue()+"" +Scom.getValue() +"" +CIcom.getValue()+ "" +Integer.parseInt(SIcom.getValue()));
+                            db.deleteLecture(rowData.getLecture_id() ,Integer.parseInt(Ycom.getValue()) ,Scom.getValue() ,CIcom.getValue(),Integer.parseInt(SIcom.getValue()));
+                            nav.navigateTo(root, nav.LECTURES_FXML);
+                        } else if (result.get() == buttonCancel) {
+                            nav.navigateTo(root, nav.LECTURES_FXML);
+                        }
+                    }
+                }
+            });
+            return row;
+        });
+    }
+    public Optional<ButtonType> showAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Alert");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        ButtonType buttonCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+        alert.getButtonTypes().add(buttonCancel);
+        return alert.showAndWait();
     }
 
 }

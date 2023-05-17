@@ -13,7 +13,7 @@ public class DBModel {
 
     //here our queries method
     public DBModel() {
-        schemaConnect("proj");
+        schemaConnect("attendance");
     }
 
     public static DBModel getModel() {
@@ -26,9 +26,9 @@ public class DBModel {
     public void connect() {
         PGSimpleDataSource source = new PGSimpleDataSource();
         source.setServerName("localhost");
-        source.setDatabaseName("project");
+        source.setDatabaseName("project_database");
         source.setUser("postgres");
-        source.setPassword("120202789");
+        source.setPassword("feraskhaled30");
 
         try {
             con = source.getConnection();
@@ -546,8 +546,23 @@ public class DBModel {
     }
 
     public ArrayList<String> getCourseIDs() {
-        String sql = "select course_id from courses;";
         ArrayList<String> ids = new ArrayList<>();
+        String sql = "select course_id from courses;";
+        try (Statement st = con.createStatement();
+             ResultSet rs = st.executeQuery(sql)
+        ) {
+            while (rs.next()) {
+                ids.add(rs.getString(1));
+            }
+            return ids;
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    public ArrayList<String> getCourseIDsFromAttendance() {
+        ArrayList<String> ids = new ArrayList<>();
+        String sql = "select distinct course_id from attendance;";
         try (Statement st = con.createStatement();
              ResultSet rs = st.executeQuery(sql)
         ) {
@@ -578,6 +593,7 @@ public class DBModel {
         }
         return years;
     }
+
     public ArrayList<String> getTA_id() {
         String sql = "select DISTINCT id from teach_assistant;";
         ArrayList<String> ids = new ArrayList<>();
@@ -633,6 +649,27 @@ public class DBModel {
         }
         return semesters;
     }
+    public ArrayList<String> getLectureIds(String course_id, String year, String semester , String sec_id) {
+        ArrayList<String> arr = new ArrayList<>();
+        String sql = "select distinct lecture_id from lectures" +
+                " WHERE course_id = ? and year = CAST(? AS INTEGER) and semester = ? and sec_id = CAST(? AS INTEGER)" +
+                "GROUP BY lecture_id;";
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, course_id);
+            st.setString(2, year);
+            st.setString(3, semester);
+            st.setString(4 , sec_id);
+            System.out.println(course_id + " " + year + " " + semester + " " + sec_id );
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                arr.add(rs.getString(1));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+        return arr;
+    }
 
     public String getcourseName(String id) {
         String sql = "select course_name from courses where course_id = ? ;";
@@ -664,6 +701,7 @@ public class DBModel {
             return false;
         }
     }
+
     public void addEnrollment(String course, String year, String semester, String sec, String assistantId) {
         String sql = "INSERT INTO assist (course_id, year, semester, sec_id, assistant_id) VALUES (?, ?, ?, ?, ?)";
 
@@ -678,7 +716,6 @@ public class DBModel {
             Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
 
 
     public boolean isPre_Registered(String email) {
@@ -718,26 +755,26 @@ public class DBModel {
     }
 
 
-public String getAssistantId(String course, String year, String semester, String sec) {
-    String id = "";
-    String sql = "SELECT assistant_id FROM assist WHERE course_id = ? AND year = ? AND semester = ? AND sec_id = ? LIMIT 1";
+    public String getAssistantId(String course, String year, String semester, String sec) {
+        String id = "";
+        String sql = "SELECT assistant_id FROM assist WHERE course_id = ? AND year = ? AND semester = ? AND sec_id = ? LIMIT 1";
 
-    try (PreparedStatement st = con.prepareStatement(sql)) {
-        st.setString(1, course);
-        st.setInt(2, Integer.parseInt(year));
-        st.setString(3, semester);
-        st.setInt(4, Integer.parseInt(sec));
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, course);
+            st.setInt(2, Integer.parseInt(year));
+            st.setString(3, semester);
+            st.setInt(4, Integer.parseInt(sec));
 
-        ResultSet rs = st.executeQuery();
-        if (rs.next()) {
-            id = String.valueOf(rs.getInt(1));
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                id = String.valueOf(rs.getInt(1));
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-    } catch (SQLException ex) {
-        Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+        return id;
     }
-    return id;
-}
 
     public boolean isValidEmail(String email) {
         String sql = "SELECT check_email_format(?);";
@@ -756,7 +793,7 @@ public String getAssistantId(String course, String year, String semester, String
         }
     }
 
-    public ArrayList<Lectures> getLectures(String course_id, String year, String semester, int sec_id) {
+    public ArrayList<Lectures> getLectures(String course_id, int sec_id) {
         ArrayList<Lectures> lects = new ArrayList<>();
         String sql = "select course_id, lecture_id, lecture_title, lecture_time, lecture_date, lecture_location " +
                 "from lectures " +
@@ -777,11 +814,33 @@ public String getAssistantId(String course, String year, String semester, String
         }
     }
 
-    public boolean deleteCourse(String cid){
+    public boolean deleteCourse(String cid) {
         String sql = "DELETE FROM courses" +
                 " WHERE course_id = ? ;";
         try (PreparedStatement st = con.prepareStatement(sql)) {
             st.setString(1, cid);
+            int rowsDeleted = st.executeUpdate();
+            if (rowsDeleted > 0) {
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
+    public boolean deleteLecture(String lid, int year, String semester, String course_id, int sec_id) {
+        String sql = "DELETE FROM lectures " +
+                " WHERE lecture_id  = ? and  year = ? and semester = ? and course_id  = ? and sec_id = ? ;";
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, lid);
+            st.setInt(2, year);
+            st.setString(3, semester);
+            st.setString(4, course_id);
+            st.setInt(5, sec_id);
             int rowsDeleted = st.executeUpdate();
             if (rowsDeleted > 0) {
                 return true;
@@ -848,4 +907,115 @@ public String getAssistantId(String course, String year, String semester, String
         }
     }
 
+    public ArrayList<AttendanceSheet> attendanceSheet(String lid, String course_id, String year, String semester, String sec_id) {
+        ArrayList<AttendanceSheet> arr = new ArrayList<>();
+        String sql = "SELECT student_name, student_id, attendance_status " +
+                "FROM attendance NATURAL JOIN students " +
+                "WHERE lecture_id = ? " +
+                "      AND course_id = ? " +
+                "      AND year = CAST(? AS INTEGER) " +
+                "      AND semester = ? " +
+                "      AND sec_id = CAST(? AS INTEGER);";
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, lid);
+            st.setString(2, course_id);
+            st.setString(3, year);
+            st.setString(4, semester);
+            st.setString(5, sec_id);
+            System.out.println(lid+" "+course_id+" "+ year +" "+semester+" "+sec_id);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                arr.add(new AttendanceSheet(rs.getString(1) ,rs.getString(2) ,rs.getString(3)));
+            }
+        } catch (SQLException ex) {
+
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+        return arr ;
+    }
+    public String attendance_percentage(String lid, String course_id, String year, String semester, String sec_id){
+        String s = "";
+        String sql = "SELECT (COUNT(CASE WHEN attendance_status = 'yes' THEN 1 END) * 100 / COUNT(*)) " +
+                "FROM attendance " +
+                "WHERE lecture_id = ? " +
+                "      AND course_id = ? " +
+                "      AND year = CAST(? AS INTEGER) " +
+                "      AND semester = ? " +
+                "      AND sec_id = CAST(? AS INTEGER) " +
+                "GROUP BY lecture_id, course_id, year, semester, sec_id; ";
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, lid);
+            st.setString(2, course_id);
+            st.setString(3, year);
+            st.setString(4, semester);
+            st.setString(5, sec_id);
+
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                s = rs.getString(1);
+            }
+        } catch (SQLException ex) {
+
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+        return s ;
+    }
+    public String attendance_count(String lid, String course_id, String year, String semester, String sec_id){
+        String s = "";
+        String sql = "SELECT SUM(CASE WHEN attendance_status = 'yes' THEN 1 ELSE 0 END) AS attendance_count " +
+                "FROM attendance " +
+                "WHERE lecture_id = ? " +
+                "      AND course_id = ? " +
+                "      AND year = CAST(? AS INTEGER) " +
+                "      AND semester = ? " +
+                "      AND sec_id = CAST(? AS INTEGER) " +
+                "GROUP BY lecture_id, course_id, year, semester, sec_id; ";
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, lid);
+            st.setString(2, course_id);
+            st.setString(3, year);
+            st.setString(4, semester);
+            st.setString(5, sec_id);
+
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                s = rs.getString(1);
+            }
+        } catch (SQLException ex) {
+
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+        return s ;
+    }
+    public String student_count(String lid, String course_id, String year, String semester, String sec_id){
+        String s = "";
+        String sql = "SELECT COUNT(*) " +
+                "FROM attendance " +
+                "WHERE lecture_id = ? " +
+                "      AND course_id = ? " +
+                "      AND year = CAST(? AS INTEGER) " +
+                "      AND semester = ? " +
+                "      AND sec_id = CAST(? AS INTEGER) " +
+                "GROUP BY lecture_id, course_id, year, semester, sec_id; ";
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, lid);
+            st.setString(2, course_id);
+            st.setString(3, year);
+            st.setString(4, semester);
+            st.setString(5, sec_id);
+
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                s = rs.getString(1);
+            }
+        } catch (SQLException ex) {
+
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+        return s ;
+    }
 }

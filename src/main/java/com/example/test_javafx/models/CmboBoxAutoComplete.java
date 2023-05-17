@@ -9,13 +9,13 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
 public class CmboBoxAutoComplete  {
-    public static void cmboBoxAutoComplete(ComboBox<String> cb){
+    public static void cmboBoxAutoComplete(ComboBox<String> cb , ObservableList<String> obsList ){
         cb.setEditable(true);
         cb.setEditable(true);
 
         // Create a list with some dummy values.
         DBModel db = new DBModel();
-        ObservableList<String> ids = FXCollections.observableList(db.getCourseIDs());
+        ObservableList<String> ids = FXCollections.observableList(obsList);
 
         // Create a FilteredList wrapping the ObservableList.
         FilteredList<String> filteredItems = new FilteredList<>(ids, p -> true);
