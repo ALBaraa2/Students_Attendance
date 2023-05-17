@@ -19,19 +19,19 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class TAEnrollmentCourse implements Initializable {
+
     @FXML
     private ComboBox<String> sTAid;
 
     @FXML
     private Label xz;
 
-
     @FXML
     private Button close;
 
-
     @FXML
     private ComboBox<String> sCourse;
+
     @FXML
     private ComboBox<String> sYear;
 

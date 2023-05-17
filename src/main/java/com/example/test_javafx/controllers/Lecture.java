@@ -49,8 +49,6 @@ public class Lecture implements Initializable {
     @FXML
     public ComboBox<String> SIcom;
 
-    @FXML
-    private Label massege;
 
     @FXML
     private Label massege1;
@@ -61,7 +59,6 @@ public class Lecture implements Initializable {
     @FXML
     public ComboBox<String> Ycom;
 
-    private String selectedValue;
 
     DBModel db = DBModel.getModel();
     Navigation nav = new Navigation();
@@ -132,16 +129,32 @@ public class Lecture implements Initializable {
 
     @FXML
     void insert(ActionEvent event) {
-        SharedData.getInstance().setCourse_id(CIcom.getValue());
-        SharedData.getInstance().setYear(Ycom.getValue());
-        SharedData.getInstance().setSemester(Scom.getValue());
-        SharedData.getInstance().setSec_id(SIcom.getValue());
-        nav.navigateTo(root, nav.INSERT_LECTURSE_FXML);
+        if (CIcom.getValue() != null && Ycom.getValue() != null && Scom.getValue() != null && SIcom.getValue() != null) {
+            SharedData.getInstance().setCourse_id(CIcom.getValue());
+            SharedData.getInstance().setYear(Ycom.getValue());
+            SharedData.getInstance().setSemester(Scom.getValue());
+            SharedData.getInstance().setSec_id(SIcom.getValue());
+            nav.navigateTo(root, nav.INSERT_LECTURSE_FXML);
+        } else {
+            massege1.setText("Choose the course data you want to enter the lecture on");
+            massege1.setTextFill(Color.RED);
+            massege1.setVisible(true);
+        }
     }
 
     @FXML
     void modify(ActionEvent event) {
-
+        if (CIcom.getValue() != null && Ycom.getValue() != null && Scom.getValue() != null && SIcom.getValue() != null) {
+            SharedData.getInstance().setCourse_id(CIcom.getValue());
+            SharedData.getInstance().setYear(Ycom.getValue());
+            SharedData.getInstance().setSemester(Scom.getValue());
+            SharedData.getInstance().setSec_id(SIcom.getValue());
+            nav.navigateTo(root, nav.MODIFY_LECTURE_FXML);
+        } else {
+            massege1.setText("Choose the course data you want to modify");
+            massege1.setTextFill(Color.RED);
+            massege1.setVisible(true);
+        }
     }
 
     @FXML
@@ -151,12 +164,7 @@ public class Lecture implements Initializable {
             massege1.setTextFill(Color.RED);
             massege1.setVisible(true);
         } else {
-            lectures.setItems(FXCollections.observableArrayList(db.getLectures(CIcom.getValue(), Ycom.getValue(), Scom.getValue(),
-                    Integer.parseInt(SIcom.getValue()))));
-            CIcom.setValue(null);
-            Ycom.setValue(null);
-            Scom.setValue(null);
-            SIcom.setValue(null);
+            lectures.setItems(FXCollections.observableArrayList(db.getLectures(CIcom.getValue(), Integer.parseInt(SIcom.getValue()))));
         }
     }
 
