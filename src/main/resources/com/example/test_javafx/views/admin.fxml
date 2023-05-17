@@ -8,8 +8,8 @@
 
 <AnchorPane fx:id="anchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="bodybg1" stylesheets="@style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.test_javafx.controllers.Admin">
     <children>
-        <Label fx:id="Admin" alignment="CENTER" layoutX="132.0" layoutY="20.0" prefHeight="60.0" prefWidth="337.0" style="-fx-font-size: 40; -fx-text-fill: linear-gradient(from 0% 0% to 100% 200%, repeat, aqua 0%, red 50%); -fx-font-weight: BOLD; -fx-border-color: #31ebfc;" text="Admin Page" textFill="#31ebfc" />
-      <VBox layoutX="8.0" layoutY="119.0" prefHeight="200.0" prefWidth="162.0" spacing="57.0" AnchorPane.leftAnchor="8.0">
+        <Label fx:id="Admin" alignment="CENTER" layoutX="243.0" layoutY="8.0" prefHeight="60.0" prefWidth="337.0" style="-fx-font-size: 40; -fx-text-fill: linear-gradient(from 0% 0% to 100% 200%, repeat, aqua 0%, red 50%); -fx-font-weight: BOLD; -fx-border-color: #31ebfc;" text="Admin Page" textFill="#31ebfc" />
+      <VBox layoutX="14.0" layoutY="30.0" prefHeight="347.0" prefWidth="162.0" spacing="57.0" AnchorPane.leftAnchor="14.0">
          <children>
               <Button mnemonicParsing="false" onAction="#Courses" prefHeight="42.0" prefWidth="164.0" styleClass="Button" text="Courses">
                   <font>
@@ -21,11 +21,16 @@
                       <Font name="System Bold" size="13.0" />
                   </font>
               </Button>
-              <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#navToTAEnrollmentCourse" prefHeight="42.0" prefWidth="162.0" styleClass="Button" text="TAEnrollmentCourse">
+              <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#navToTAEnrollmentCourse" prefHeight="97.0" prefWidth="162.0" styleClass="Button" text="TAEnrollmentCourse">
                   <font>
                       <Font name="System Bold" size="13.0" />
                   </font>
               </Button>
+            <Button fx:id="back" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#back" prefHeight="97.0" prefWidth="162.0" styleClass="Button" text="Back">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
          </children>
       </VBox>
       <Button layoutX="505.0" layoutY="327.0" mnemonicParsing="false" onAction="#back" prefHeight="32.0" prefWidth="57.0" style="-fx-background-color: #000000;" text="Back" textFill="#f5eeee" />

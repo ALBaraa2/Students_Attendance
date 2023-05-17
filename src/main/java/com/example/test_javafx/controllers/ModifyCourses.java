@@ -19,7 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class ModifyCourses   implements  Initializable {
+public class ModifyCourses implements  Initializable {
 
     @FXML
     private BorderPane root;
@@ -69,7 +69,6 @@ public class ModifyCourses   implements  Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
         selectCourse_id.setValue("Select course");
         setComboBoxes();
     }

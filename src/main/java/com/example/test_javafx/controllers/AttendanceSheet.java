@@ -129,7 +129,7 @@ public class AttendanceSheet implements Initializable  {
                 String selectedCourseID = course_idCom.getSelectionModel().getSelectedItem();
                 String selecteSemester = semesterCom.getSelectionModel().getSelectedItem();
                 String selecteSec_Id = sec_idCom.getSelectionModel().getSelectedItem();
-                ObservableList<String> lectureIds = FXCollections.observableList(db.getLectureIds(selectedCourseID, selectedYear, selecteSemester ,selecteSec_Id));
+                ObservableList<String> lectureIds = FXCollections.observableList(db.getLectureId(selectedCourseID, selectedYear, selecteSemester ,selecteSec_Id));
                 lecture_idCom.setItems(lectureIds);
             }
         }

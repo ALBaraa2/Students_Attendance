@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.test_javafx.controllers.ModifyStudentData">
+   <children>
+      <Pane layoutY="-5.0" prefHeight="411.0" prefWidth="307.0" style="-fx-background-color: #da7227;">
+         <children>
+            <Text fill="WHITE" layoutX="26.0" layoutY="148.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Modify student data" textAlignment="CENTER" wrappingWidth="231.13671875">
+               <font>
+                  <Font name="System Bold Italic" size="36.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
+      <Pane layoutX="300.0" layoutY="-5.0" prefHeight="411.0" prefWidth="301.0" style="-fx-background-color: #98a49e;">
+         <children>
+            <ComboBox fx:id="s_id" layoutX="101.0" layoutY="31.0" prefWidth="150.0" />
+            <Label layoutX="6.0" layoutY="30.0" prefHeight="17.0" prefWidth="108.0" text="Select ID:">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="6.0" layoutY="86.0" prefHeight="17.0" prefWidth="108.0" text="Student name:">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="6.0" layoutY="129.0" prefHeight="17.0" prefWidth="108.0" text="student_phone:">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="6.0" layoutY="196.0" prefHeight="19.0" prefWidth="58.0" text="City">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="6.0" layoutY="230.0" prefHeight="19.0" prefWidth="58.0" text="Street">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="6.0" layoutY="273.0" prefHeight="19.0" prefWidth="58.0" text="Gender">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="s_ge" layoutX="101.0" layoutY="270.0" prefWidth="150.0" promptText="S_Gender" />
+            <TextField fx:id="tN" layoutX="102.0" layoutY="83.0" promptText="new Name" />
+            <TextField fx:id="tPh" layoutX="102.0" layoutY="159.0" promptText="new Phone" />
+            <TextField fx:id="tC" layoutX="102.0" layoutY="193.0" promptText="new City" />
+            <TextField fx:id="tS" layoutX="102.0" layoutY="227.0" promptText="new Street" />
+            <Button fx:id="dN" layoutX="251.0" layoutY="83.0" mnemonicParsing="false" onAction="#dN" prefHeight="25.0" prefWidth="44.0" text="Done">
+               <font>
+                  <Font name="System Bold Italic" size="11.0" />
+               </font>
+            </Button>
+            <Button fx:id="dPh" layoutX="251.0" layoutY="159.0" mnemonicParsing="false" onAction="#dPh" prefHeight="25.0" prefWidth="44.0" text="Done">
+               <font>
+                  <Font name="System Bold Italic" size="11.0" />
+               </font>
+            </Button>
+            <Button fx:id="dG" layoutX="251.0" layoutY="270.0" mnemonicParsing="false" onAction="#dG" prefHeight="25.0" prefWidth="44.0" text="Done">
+               <font>
+                  <Font name="System Bold Italic" size="11.0" />
+               </font>
+            </Button>
+            <Button fx:id="dS" layoutX="251.0" layoutY="227.0" mnemonicParsing="false" onAction="#dS" prefHeight="25.0" prefWidth="44.0" text="Done">
+               <font>
+                  <Font name="System Bold Italic" size="11.0" />
+               </font>
+            </Button>
+            <Button fx:id="dC" layoutX="251.0" layoutY="193.0" mnemonicParsing="false" onAction="#dC" prefHeight="25.0" prefWidth="44.0" text="Done">
+               <font>
+                  <Font name="System Bold Italic" size="11.0" />
+               </font>
+            </Button>
+            <Button fx:id="back" layoutX="208.0" layoutY="366.0" mnemonicParsing="false" onAction="#back" prefHeight="25.0" prefWidth="78.0" text="Back">
+               <font>
+                  <Font name="System Bold Italic" size="16.0" />
+               </font>
+            </Button>
+            <ComboBox fx:id="s_ph" layoutX="101.0" layoutY="126.0" prefWidth="150.0" promptText="S_Phone" />
+            <Label alignment="CENTER" layoutX="15.0" layoutY="309.0" prefHeight="45.0" prefWidth="256.0" textAlignment="CENTER" fx:id="xz">
+               <font>
+                  <Font name="System Bold Italic" size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
