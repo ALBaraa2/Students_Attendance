@@ -76,7 +76,7 @@ public class ModifyCourses implements  Initializable {
     private void setComboBoxes() {
         ObservableList<String> ids = FXCollections.observableList(db.getCourseIDs());
         selectCourse_id.setItems(ids);
-        CmboBoxAutoComplete.cmboBoxAutoComplete(selectCourse_id);
+        CmboBoxAutoComplete.cmboBoxAutoComplete(selectCourse_id , ids );
     }
 
     @FXML

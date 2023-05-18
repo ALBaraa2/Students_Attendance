@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="root" prefHeight="394.0" prefWidth="617.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.test_javafx.controllers.AttendanceSheet">
+   <children>
+      <TableView fx:id="sheet" layoutY="2.0" prefHeight="257.0" prefWidth="482.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="135.0" AnchorPane.topAnchor="0.0">
+        <columns>
+          <TableColumn fx:id="student_name" prefWidth="91.0" text="student_name" />
+          <TableColumn fx:id="student_id" prefWidth="75.0" text="student_id" />
+            <TableColumn fx:id="attendance_status" prefWidth="109.0" text="attendance_status" />
+        </columns>
+      </TableView>
+      <Button layoutX="314.0" layoutY="295.0" mnemonicParsing="false" onAction="#view" prefHeight="51.0" prefWidth="235.0" styleClass="big-yellow" stylesheets="@style.css" text="View Attendance Sheet" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="312.0" AnchorPane.rightAnchor="73.0">
+         <font>
+            <Font size="18.0" />
+         </font></Button>
+      <Label fx:id="massage" alignment="CENTER" layoutX="483.0" layoutY="265.0" prefHeight="25.0" prefWidth="128.0" AnchorPane.rightAnchor="7.0">
+         <font>
+            <Font size="16.0" />
+         </font></Label>
+      <VBox layoutY="265.0" prefHeight="122.0" prefWidth="308.0" spacing="19.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="265.0">
+         <children>
+            <HBox prefHeight="25.0" prefWidth="311.0">
+               <children>
+                  <Label prefHeight="26.0" prefWidth="241.0" text="attendance_percentage :">
+                     <font>
+                        <Font name="Algerian" size="17.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="attendance_percentage" alignment="CENTER" prefHeight="25.0" prefWidth="65.0" style="-fx-border-color: #b2aeae;" textFill="#c31b1b" />
+               </children>
+            </HBox>
+            <HBox prefHeight="25.0" prefWidth="247.0" spacing="62.0">
+               <children>
+                  <Label prefHeight="25.0" prefWidth="178.0" text="STUDENT_count :">
+                     <font>
+                        <Font name="Algerian" size="17.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="student_count" alignment="CENTER" prefHeight="25.0" prefWidth="65.0" style="-fx-border-color: #b2aeae;" textFill="#252323" />
+               </children>
+            </HBox>
+            <HBox prefHeight="25.0" prefWidth="247.0" spacing="61.0">
+               <children>
+                  <Label prefHeight="25.0" prefWidth="178.0" text="attendance_count :">
+                     <font>
+                        <Font name="Algerian" size="17.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="attendance_count" alignment="CENTER" prefHeight="25.0" prefWidth="65.0" style="-fx-border-color: #b2aeae;" textFill="#252323" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <VBox layoutX="483.0" prefHeight="200.0" prefWidth="137.0" spacing="33.0" AnchorPane.leftAnchor="483.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <ComboBox fx:id="course_idCom" prefHeight="25.0" prefWidth="137.0" promptText="course id" />
+            <ComboBox fx:id="yearCom" prefHeight="25.0" prefWidth="137.0" promptText="year" />
+            <ComboBox fx:id="semesterCom" prefHeight="25.0" prefWidth="137.0" promptText="semester" />
+            <ComboBox fx:id="sec_idCom" prefHeight="25.0" prefWidth="141.0" promptText="sec_id" />
+            <ComboBox fx:id="lecture_idCom" prefHeight="25.0" prefWidth="141.0" promptText="lecture_id" />
+         </children>
+      </VBox>
+      <Button layoutX="552.0" layoutY="359.0" mnemonicParsing="false" onAction="#back" prefHeight="32.0" prefWidth="57.0" style="-fx-background-color: #000000;" text="Back" textFill="#f5eeee" AnchorPane.bottomAnchor="9.0" AnchorPane.rightAnchor="11.0" />
+   </children>
+</AnchorPane>

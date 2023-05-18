@@ -93,7 +93,7 @@ public class ModifyLectuer implements Initializable {
         YL.setText(String.valueOf(year));
         SL.setText(semester);
         SIL.setText(String.valueOf(sec_id));
-        ObservableList<String> ids = FXCollections.observableList(db.getLectureIds(course_id, year, semester, sec_id));
+        ObservableList<String> ids = FXCollections.observableList(db.getLectureId(course_id, year, semester, sec_id));
         lecture_id.setItems(ids);
         minutes.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59, 0));
         houre.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 12, 0));
