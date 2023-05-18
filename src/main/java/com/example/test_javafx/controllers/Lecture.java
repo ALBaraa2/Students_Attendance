@@ -166,15 +166,11 @@ public class Lecture implements Initializable {
             massege1.setTextFill(Color.RED);
             massege1.setVisible(true);
         } else {
-<<<<<<< HEAD
             lectures.setItems(FXCollections.observableArrayList(db.getLectures(CIcom.getValue(),Integer.parseInt(SIcom.getValue()))));
 //            CIcom.setValue(null);
 //            Ycom.setValue(null);
 //            Scom.setValue(null);
 //            SIcom.setValue(null);
-=======
-            lectures.setItems(FXCollections.observableArrayList(db.getLectures(CIcom.getValue(), Integer.parseInt(SIcom.getValue()))));
->>>>>>> f55d7ce603cf21a755ca207c7703a15add69fab7
         }
     }
     public void doubleClick(TableView<Lectures> Lectures) {
