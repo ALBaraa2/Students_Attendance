@@ -32,6 +32,8 @@ public class Navigation {
     public final String REPORT_FXML = "views/report.fxml";
 
     public final String ATTENDANCE_SHEET_FXML = "views/attendancesheet.fxml";
+    public final String SHEET_OF_NON_COMPLIANT_FXML = "views/sheetofnoncompliant.fxml";
+
     public void navigateTo(Parent rootPane, String path) {
         try {
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(path)));

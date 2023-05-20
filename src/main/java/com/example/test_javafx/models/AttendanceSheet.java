@@ -5,6 +5,21 @@ public class AttendanceSheet {
     String student_id;
     String attendance_status;
 
+    double attendancePercentage;
+
+    public double getAttendancePercentage() {
+        return attendancePercentage;
+    }
+
+    public void setAttendancePercentage(double attendancePercentage) {
+        this.attendancePercentage = attendancePercentage;
+    }
+
+    public AttendanceSheet(String student_name, double attendancePercentage) {
+        this.student_name = student_name;
+        this.attendancePercentage = attendancePercentage;
+    }
+
     public AttendanceSheet(String student_name,String student_id,String attendance_status ){
         this.student_name = student_name;
         this.student_id = student_id;

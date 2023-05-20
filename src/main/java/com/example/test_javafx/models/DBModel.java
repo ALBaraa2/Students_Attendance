@@ -8,6 +8,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 
 public class DBModel {
     private static DBModel dbmodel = null;
@@ -795,14 +800,16 @@ public class DBModel {
         }
     }
 
-    public ArrayList<Lectures> getLectures(String course_id, int sec_id) {
+    public ArrayList<Lectures> getLectures(String course_id, int year, String semester, int sec_id) {
         ArrayList<Lectures> lects = new ArrayList<>();
         String sql = "select course_id, lecture_id, lecture_title, lecture_time, lecture_date, lecture_location " +
                 "from lectures " +
-                "where course_id = ? and sec_id = ? ;";
+                "where course_id = ? and year = ? and semester = ? and sec_id = ? ;";
         try (PreparedStatement st = con.prepareStatement(sql)) {
             st.setString(1, course_id);
-            st.setInt(2, sec_id);
+            st.setInt(2, year);
+            st.setString(3, semester);
+            st.setInt(4, sec_id);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 lects.add(new Lectures(rs.getString(1), rs.getString(2), rs.getString(3),
@@ -941,15 +948,12 @@ public class DBModel {
             st.setString(3, year);
             st.setString(4, semester);
             st.setString(5, sec_id);
-            System.out.println(lid+" "+course_id+" "+ year +" "+semester+" "+sec_id);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 arr.add(new AttendanceSheet(rs.getString(1) ,rs.getString(2) ,rs.getString(3)));
             }
         } catch (SQLException ex) {
-
             Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
-
         }
         return arr ;
     }
@@ -969,18 +973,16 @@ public class DBModel {
             st.setString(3, year);
             st.setString(4, semester);
             st.setString(5, sec_id);
-
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 s = rs.getString(1);
             }
         } catch (SQLException ex) {
-
             Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
-
         }
         return s ;
     }
+
     public String attendance_count(String lid, String course_id, String year, String semester, String sec_id){
         String s = "";
         String sql = "SELECT SUM(CASE WHEN attendance_status = 'yes' THEN 1 ELSE 0 END) AS attendance_count " +
@@ -997,15 +999,12 @@ public class DBModel {
             st.setString(3, year);
             st.setString(4, semester);
             st.setString(5, sec_id);
-
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 s = rs.getString(1);
             }
         } catch (SQLException ex) {
-
             Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
-
         }
         return s ;
     }
@@ -1025,7 +1024,6 @@ public class DBModel {
             st.setString(3, year);
             st.setString(4, semester);
             st.setString(5, sec_id);
-
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 s = rs.getString(1);
@@ -1037,9 +1035,6 @@ public class DBModel {
         }
         return s ;
     }
-
-
-
 
     public boolean checkStudentExists(String id) {
         String sql = "SELECT COUNT(*) FROM students WHERE student_id = ?";
@@ -1127,36 +1122,21 @@ public class DBModel {
         }
     }
 
-//    public boolean updateStudentCity(String studentId, String newCity) {
-//        String sql = "UPDATE students SET student_address = ROW(?, student_address.street) WHERE student_id = ?";
-//
-//        try (PreparedStatement st = con.prepareStatement(sql)) {
-//            st.setString(1, newCity);
-//            st.setString(2, studentId);
-//
-//            int rowsAffected = st.executeUpdate();
-//
-//            return rowsAffected > 0;
-//        } catch (SQLException ex) {
-//            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
-//            return false;
-//        }
-//    }
-public boolean updateStudentCity(String studentId, String newCity) {
-    String sql = "UPDATE students SET student_address.city = ? WHERE student_id = ?";
+    public boolean updateStudentCity(String studentId, String newCity) {
+        String sql = "UPDATE students SET student_address.city = ? WHERE student_id = ?";
 
-    try (PreparedStatement st = con.prepareStatement(sql)) {
-        st.setString(1, newCity);
-        st.setString(2, studentId);
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, newCity);
+            st.setString(2, studentId);
 
-        int rowsAffected = st.executeUpdate();
+            int rowsAffected = st.executeUpdate();
 
-        return rowsAffected > 0;
-    } catch (SQLException ex) {
-        Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
-        return false;
+            return rowsAffected > 0;
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
     }
-}
     public boolean updateStudentStreet(String studentId, String newStreet) {
         String sql = "UPDATE students SET student_address.street = ? WHERE student_id = ?";
 
@@ -1265,6 +1245,27 @@ public boolean updateStudentCity(String studentId, String newCity) {
         }
         return arr;
     }
+
+    public ArrayList<AttendanceSheet> SheetOfNonCompliant(String Cid) {
+        ArrayList<AttendanceSheet> arr = new ArrayList<>();
+        String sql = "SELECT student_name, SUM(CASE WHEN attendance_status = 'yes' THEN 1 ELSE 0 END) / COUNT(*) " +
+                "FROM attendance NATURAL JOIN students " +
+                "WHERE course_id = ? " +
+                "GROUP BY student_name " +
+                "HAVING (SUM(CASE WHEN attendance_status = 'yes' THEN 1 ELSE 0 END) * 100 / COUNT(*)) < 25;";
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, Cid);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                arr.add(new AttendanceSheet(rs.getString(1), rs.getDouble(2)));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return arr;
+    }
+
+
 }
 
 

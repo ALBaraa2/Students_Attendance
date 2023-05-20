@@ -13,11 +13,6 @@
    <children>
       <ButtonBar blendMode="DIFFERENCE" layoutX="63.0" layoutY="354.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="46.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0">
          <buttons>
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#delete" style="-fx-background-radius: 20;" text="delete" textFill="#15a4d0">
-               <font>
-                  <Font name="Algerian" size="12.0" />
-               </font>
-            </Button>
             <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#modify" style="-fx-background-radius: 20;" text="modify" textFill="#ae20ae">
                <font>
                   <Font name="Algerian" size="12.0" />

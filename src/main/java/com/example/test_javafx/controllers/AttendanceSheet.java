@@ -78,7 +78,6 @@ public class AttendanceSheet implements Initializable  {
     }
     private void setComboBoxes() {
         ObservableList<String> ids = FXCollections.observableList(db.getCourseIDsFromAttendance());
-        System.out.println(ids);
         course_idCom.setItems(ids);
         CmboBoxAutoComplete.cmboBoxAutoComplete(course_idCom , ids);
         course_idCom.setOnAction(this::handleCIcomAction);
@@ -147,25 +146,22 @@ public class AttendanceSheet implements Initializable  {
             massage.setVisible(false);
             sheet.setItems(FXCollections.observableArrayList(db.attendanceSheet(lecture_idCom.getValue(),course_idCom.getValue() ,yearCom.getValue(),semesterCom.getValue(), sec_idCom.getValue())));
             if (Integer.parseInt(db.attendance_percentage(lecture_idCom.getValue(),course_idCom.getValue() ,yearCom.getValue(),semesterCom.getValue(), sec_idCom.getValue()))> 25){
+                attendance_percentage.setStyle("-fx-border-color: green; -fx-border-width: 2px;");
                 attendance_percentage.setTextFill(Color.GREEN);
                 attendance_percentage.setText(db.attendance_percentage(lecture_idCom.getValue(),course_idCom.getValue() ,yearCom.getValue(),semesterCom.getValue(), sec_idCom.getValue()) + "%");
             }else {
-
+                attendance_percentage.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
                 attendance_percentage.setTextFill(Color.RED);
                 attendance_percentage.setText(db.attendance_percentage(lecture_idCom.getValue(),course_idCom.getValue() ,yearCom.getValue(),semesterCom.getValue(), sec_idCom.getValue())+ "%");
             }
             student_count.setText(db.student_count(lecture_idCom.getValue(),course_idCom.getValue() ,yearCom.getValue(),semesterCom.getValue(), sec_idCom.getValue()));
             attendance_count.setText(db.attendance_count(lecture_idCom.getValue(),course_idCom.getValue() ,yearCom.getValue(),semesterCom.getValue(), sec_idCom.getValue()));
-//            CIcom.setValue(null);
-//            Ycom.setValue(null);
-//            Scom.setValue(null);
-//            SIcom.setValue(null);
         }
 
     }
     @FXML
     void back(ActionEvent event) {
-        nav.navigateTo(root, nav.TEACH_ASSISTANT_FXML);
+        nav.navigateTo(root, nav.REPORT_FXML);
     }
 }
 
