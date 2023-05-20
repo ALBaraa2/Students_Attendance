@@ -21,6 +21,9 @@ public class Course implements Initializable {
     private AnchorPane root;
 
     @FXML
+    private Button view;
+
+    @FXML
     private TableColumn<Courses, String> course_id;
 
     @FXML
@@ -79,9 +82,11 @@ public class Course implements Initializable {
                         if (result.get() == ButtonType.OK) {
                             db.deleteCourse(rowData.getCourse_id());
                             nav.navigateTo(root, nav.COURSE_FXML);
+                            view.setOnAction(this::viewCourses);
                         } else if (result.get() == buttonCancel) {
                             nav.navigateTo(root, nav.COURSE_FXML);
                             courses.setItems(FXCollections.observableArrayList(db.getCourses()));
+//                            view.setOnAction(this::viewCourses);
                         }
                     }
                 }

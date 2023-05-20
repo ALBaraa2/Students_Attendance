@@ -37,7 +37,7 @@ public class TeachAssistant {
 
     @FXML
     void reports(ActionEvent event) {
-        nav.navigateTo(root, nav.ATTENDANCE_SHEET_FXML);
+        nav.navigateTo(root, nav.REPORT_FXML);
     }
 
 }

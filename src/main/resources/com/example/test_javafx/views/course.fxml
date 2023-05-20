@@ -8,21 +8,21 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="root" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.test_javafx.controllers.Course">
+<AnchorPane fx:id="root" prefHeight="400.0" prefWidth="600.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.test_javafx.controllers.Course">
    <children>
       <ButtonBar blendMode="DIFFERENCE" layoutX="63.0" layoutY="354.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="46.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0">
         <buttons>
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#modifyPage" style="-fx-background-radius: 20;" text="modify" textFill="#ae20ae">
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#modifyPage" style="-fx-background-radius: 20;" text="modify" textFill="#2cad21">
                <font>
                   <Font name="Algerian" size="12.0" />
                </font>
             </Button>
-            <Button alignment="CENTER" blendMode="LIGHTEN" contentDisplay="CENTER" mnemonicParsing="false" onAction="#insertPage" style="-fx-background-radius: 20;" text="insert" textFill="#ae20ae">
+            <Button alignment="CENTER" blendMode="LIGHTEN" contentDisplay="CENTER" mnemonicParsing="false" onAction="#insertPage" style="-fx-background-radius: 20;" text="insert" textFill="#2cad21">
                <font>
                   <Font name="Algerian" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="view" alignment="CENTER" blendMode="LIGHTEN" contentDisplay="CENTER" mnemonicParsing="false" onAction="#viewCourses" prefHeight="22.0" prefWidth="110.0" style="-fx-background-radius: 20;" text="View Courses" textFill="#ae20ae">
+            <Button fx:id="view" alignment="CENTER" blendMode="LIGHTEN" contentDisplay="CENTER" mnemonicParsing="false" onAction="#viewCourses" prefHeight="22.0" prefWidth="110.0" style="-fx-background-radius: 20;" stylesheets="@style.css" text="View Courses" textFill="#2cad21">
                <font>
                   <Font name="Algerian" size="12.0" />
                </font>

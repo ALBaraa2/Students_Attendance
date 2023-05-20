@@ -1,14 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.test_javafx.controllers.Report"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #b2aaaa;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.test_javafx.controllers.Report">
+   <children>
+      <Pane prefHeight="400.0" prefWidth="287.0" style="-fx-background-color: #da7227;">
+         <children>
+            <Text fill="WHITE" layoutY="162.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Extraction of reports and statements" textAlignment="CENTER" wrappingWidth="288.0">
+               <font>
+                  <Font name="System Bold Italic" size="30.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
+      <Pane layoutX="287.0" prefHeight="400.0" prefWidth="314.0" style="-fx-background-color: #7b9489;">
+         <children>
+            <Button layoutX="34.0" layoutY="129.0" mnemonicParsing="false" onAction="#sheetOfAttendance" prefHeight="56.0" prefWidth="239.0" text="Sheet of Attendance">
+               <font>
+                  <Font name="System Bold Italic" size="18.0" />
+               </font>
+            </Button>
+            <Button layoutX="34.0" layoutY="200.0" mnemonicParsing="false" onAction="#SheetOfNonCompliant" prefHeight="56.0" prefWidth="239.0" text="Sheet of non-compliant">
+               <font>
+                  <Font name="System Bold Italic" size="17.0" />
+               </font>
+            </Button>
+            <Button layoutX="212.0" layoutY="361.0" mnemonicParsing="false" onAction="#back" prefHeight="25.0" prefWidth="87.0" text="Back" textFill="RED">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+   </children>
 </AnchorPane>

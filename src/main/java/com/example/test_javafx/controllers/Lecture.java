@@ -125,11 +125,6 @@ public class Lecture implements Initializable {
     }
 
     @FXML
-    void delete(ActionEvent event) {
-
-    }
-
-    @FXML
     void insert(ActionEvent event) {
         if (CIcom.getValue() != null && Ycom.getValue() != null && Scom.getValue() != null && SIcom.getValue() != null) {
             SharedData.getInstance().setCourse_id(CIcom.getValue());
@@ -166,11 +161,11 @@ public class Lecture implements Initializable {
             massege1.setTextFill(Color.RED);
             massege1.setVisible(true);
         } else {
-            lectures.setItems(FXCollections.observableArrayList(db.getLectures(CIcom.getValue(),Integer.parseInt(SIcom.getValue()))));
-//            CIcom.setValue(null);
-//            Ycom.setValue(null);
-//            Scom.setValue(null);
-//            SIcom.setValue(null);
+            if ((db.getLectures(CIcom.getValue(), Integer.parseInt(Ycom.getValue()), Scom.getValue(), Integer.parseInt(SIcom.getValue()))).isEmpty()){
+                massege1.setText("There is no lecture in this course yet!");
+                massege1.setVisible(true);
+            }else
+                lectures.setItems(FXCollections.observableArrayList(db.getLectures(CIcom.getValue(), Integer.parseInt(Ycom.getValue()), Scom.getValue(), Integer.parseInt(SIcom.getValue()))));
         }
     }
     public void doubleClick(TableView<Lectures> Lectures) {
