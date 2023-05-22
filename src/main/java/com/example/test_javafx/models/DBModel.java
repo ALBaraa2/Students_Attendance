@@ -8,6 +8,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 
 public class DBModel {
     private static DBModel dbmodel = null;
@@ -15,7 +20,7 @@ public class DBModel {
 
     //here our queries method
     public DBModel() {
-        schemaConnect("attendance");
+        schemaConnect("proj");
     }
 
     public static DBModel getModel() {
@@ -28,9 +33,9 @@ public class DBModel {
     public void connect() {
         PGSimpleDataSource source = new PGSimpleDataSource();
         source.setServerName("localhost");
-        source.setDatabaseName("project_database");
+        source.setDatabaseName("project");
         source.setUser("postgres");
-        source.setPassword("feraskhaled30");
+        source.setPassword("120202789");
 
         try {
             con = source.getConnection();
