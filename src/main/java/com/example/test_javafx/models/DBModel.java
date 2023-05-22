@@ -1243,11 +1243,11 @@ public class DBModel {
 
     public ArrayList<AttendanceSheet> SheetOfNonCompliant(String Cid) {
         ArrayList<AttendanceSheet> arr = new ArrayList<>();
-        String sql = "SELECT student_name, SUM(CASE WHEN attendance_status = 'yes' THEN 1 ELSE 0 END) / COUNT(*) " +
+        String sql = "SELECT student_name, SUM(CASE WHEN attendance_status = 'yes' THEN 1 END) * 100 / COUNT(*) " +
                 "FROM attendance NATURAL JOIN students " +
                 "WHERE course_id = ? " +
                 "GROUP BY student_name " +
-                "HAVING (SUM(CASE WHEN attendance_status = 'yes' THEN 1 ELSE 0 END) * 100 / COUNT(*)) < 25;";
+                "HAVING (SUM(CASE WHEN attendance_status = 'yes' THEN 1 END) * 100 / COUNT(*)) < 25;";
         try (PreparedStatement st = con.prepareStatement(sql)) {
             st.setString(1, Cid);
             ResultSet rs = st.executeQuery();
@@ -1257,7 +1257,6 @@ public class DBModel {
         } catch (SQLException ex) {
             Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println(arr.get(0) + " " + arr.get(1));
         return arr;
     }
 
