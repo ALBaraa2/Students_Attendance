@@ -14,7 +14,6 @@ public class CmboBoxAutoComplete  {
         cb.setEditable(true);
 
         // Create a list with some dummy values.
-        DBModel db = new DBModel();
         ObservableList<String> ids = FXCollections.observableList(obsList);
 
         // Create a FilteredList wrapping the ObservableList.

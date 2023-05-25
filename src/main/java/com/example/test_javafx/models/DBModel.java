@@ -15,7 +15,7 @@ public class DBModel {
 
     //here our queries method
     public DBModel() {
-        schemaConnect("attendance");
+        schemaConnect("project");
     }
 
     public static DBModel getModel() {
@@ -28,9 +28,9 @@ public class DBModel {
     public void connect() {
         PGSimpleDataSource source = new PGSimpleDataSource();
         source.setServerName("localhost");
-        source.setDatabaseName("project_database");
+        source.setDatabaseName("project");
         source.setUser("postgres");
-        source.setPassword("feraskhaled30");
+        source.setPassword("123");
 
         try {
             con = source.getConnection();
@@ -514,12 +514,27 @@ public class DBModel {
         }
     }
 
-    public boolean insertCourse(String cId, String iName, String cName, String cLocation) {
-        String sql = "insert into courses (course_id, instructor_name, course_name, course_location) values (?,?,?,?);";
+    public boolean insertCourse(String cId, String iName, String cName) {
+        String sql = "insert into courses (course_id, instructor_name, course_name) values (?,?,?);";
         try (PreparedStatement st = con.prepareStatement(sql)) {
             st.setString(1, cId);
             st.setString(2, iName);
             st.setString(3, cName);
+            if (st.executeUpdate() > 0) {
+                return true;
+            } else return false;
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+
+    public boolean insertCourseInS(String cId, String cLocation, String year, String semester) {
+        String sql = "insert into section (course_id, year, semester, course_location) values (?,?,?,?);";
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, cId);
+            st.setString(2, year);
+            st.setString(3, semester);
             st.setString(4, cLocation);
             if (st.executeUpdate() > 0) {
                 return true;
@@ -530,11 +545,14 @@ public class DBModel {
         }
     }
 
-    public ArrayList<Courses> getCourses() {
+    public ArrayList<Courses> getCourses(String year, String semester) {
         ArrayList<Courses> c = new ArrayList<>();
         String sql = "select course_id, instructor_name, course_name, course_location"
-                + " from courses ;";
+                + " from courses natural join section"
+                + " where year = CAST(? as INTEGER) and semester = ? ;";
         try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, year);
+            st.setString(2, semester);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 c.add(new Courses(rs.getString(1), rs.getString(2), rs.getString(3),
@@ -594,6 +612,40 @@ public class DBModel {
             return null;
         }
         return years;
+    }
+
+    public ArrayList<String> getYears() {
+        String sql = "select distinct year from section " +
+                "GROUP BY year ;";
+        ArrayList<String> years = new ArrayList<>();
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                years.add(rs.getString(1));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+        return years;
+    }
+
+    public ArrayList<String> getSemesters(String year) {
+        String sql = "select distinct semester from section" +
+                " WHERE year = CAST(? AS INTEGER) " +
+                "GROUP BY semester ;";
+        ArrayList<String> semesters = new ArrayList<>();
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, year);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                semesters.add(rs.getString(1));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+        return semesters;
     }
 
     public ArrayList<String> getTA_id() {
@@ -1253,15 +1305,12 @@ public class DBModel {
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 arr.add(new AttendanceSheet(rs.getString(1), rs.getDouble(2)));
-            }
-        } catch (SQLException ex) {
+        }
+    } catch (SQLException ex) {
             Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println(arr.get(0) + " " + arr.get(1));
         return arr;
     }
-
-
 }
 
 

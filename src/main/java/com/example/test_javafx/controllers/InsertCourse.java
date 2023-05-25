@@ -12,6 +12,9 @@ import javafx.scene.paint.Color;
 public class InsertCourse {
 
     @FXML
+    private BorderPane root;
+
+    @FXML
     private TextField course_id;
 
     @FXML
@@ -27,7 +30,10 @@ public class InsertCourse {
     private TextField instructor_name;
 
     @FXML
-    private BorderPane root;
+    private TextField semester;
+
+    @FXML
+    private TextField year;
 
     DBModel db = DBModel.getModel();
     Navigation nav = new Navigation();
@@ -40,7 +46,8 @@ public class InsertCourse {
     @FXML
     void DONE(ActionEvent event) {
         if (!course_id.getText().equals("") && !course_name.getText().equals("") && !course_location.getText().equals("") && !instructor_name.getText().equals("")) {
-            if (db.insertCourse(course_id.getText(), instructor_name.getText(), course_name.getText(), course_location.getText())) {
+            if (db.insertCourse(course_id.getText(), instructor_name.getText(), course_name.getText())
+                    && db.insertCourseInS(course_name.getText(), course_location.getText() , year.getText(), semester.getText())) {
                 faild.setText("Course added successfully");
                 faild.setTextFill(Color.GREEN);
                 faild.setVisible(true);

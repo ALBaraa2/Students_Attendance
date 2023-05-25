@@ -1,9 +1,11 @@
 package com.example.test_javafx.controllers;
 
 import com.example.test_javafx.Navigation;
+import com.example.test_javafx.models.CmboBoxAutoComplete;
 import com.example.test_javafx.models.Courses;
 import com.example.test_javafx.models.DBModel;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -38,6 +40,12 @@ public class Course implements Initializable {
     @FXML
     private TableView<Courses> courses;
 
+    @FXML
+    private ComboBox<String> semester;
+
+    @FXML
+    private ComboBox<String> year;
+
 
     DBModel db = DBModel.getModel();
     Navigation nav = new Navigation();
@@ -49,6 +57,22 @@ public class Course implements Initializable {
         course_location.setCellValueFactory(new PropertyValueFactory<>("course_location"));
         course_name.setCellValueFactory(new PropertyValueFactory<>("course_name"));
         doubleClick(courses);
+        setComboBoxes();
+    }
+
+    private void setComboBoxes() {
+        ObservableList<String> years = FXCollections.observableList(db.getYears());
+        year.setItems(years);
+        year.setOnAction(this::handleSAction);
+    }
+
+    @FXML
+    private void handleSAction(ActionEvent event) {
+        if (year.getValue() != null) {
+            String selectedYear = year.getSelectionModel().getSelectedItem();
+            ObservableList<String> semesters = FXCollections.observableList(db.getSemesters(selectedYear));
+            semester.setItems(semesters);
+        }
     }
     @FXML
     void backFromCourse(ActionEvent event) {
@@ -67,7 +91,7 @@ public class Course implements Initializable {
 
     @FXML
     void viewCourses(ActionEvent event) {
-        courses.setItems(FXCollections.observableArrayList(db.getCourses()));
+        courses.setItems(FXCollections.observableArrayList(db.getCourses(year.getValue(), semester.getValue())));
     }
 
     public void doubleClick(TableView<Courses> courses) {
@@ -85,8 +109,7 @@ public class Course implements Initializable {
                             view.setOnAction(this::viewCourses);
                         } else if (result.get() == buttonCancel) {
                             nav.navigateTo(root, nav.COURSE_FXML);
-                            courses.setItems(FXCollections.observableArrayList(db.getCourses()));
-//                            view.setOnAction(this::viewCourses);
+                            courses.setItems(FXCollections.observableArrayList(db.getCourses(year.getValue(), semester.getValue())));
                         }
                     }
                 }
