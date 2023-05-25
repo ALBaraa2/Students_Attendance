@@ -161,6 +161,7 @@ public class Lecture implements Initializable {
             massege1.setTextFill(Color.RED);
             massege1.setVisible(true);
         } else {
+
             if ((db.getLectures(CIcom.getValue(), Integer.parseInt(Ycom.getValue()), Scom.getValue(), Integer.parseInt(SIcom.getValue()))).isEmpty()){
                 massege1.setText("There is no lecture in this course yet!");
                 massege1.setVisible(true);

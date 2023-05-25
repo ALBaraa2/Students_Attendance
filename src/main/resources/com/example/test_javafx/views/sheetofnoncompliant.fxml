@@ -26,5 +26,10 @@
          </font>
       </Button>
       <ComboBox fx:id="courseIdCom" layoutY="14.0" prefWidth="150.0" promptText="Course_Id" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="14.0" />
+      <Button layoutX="107.0" layoutY="353.0" mnemonicParsing="false" onAction="#XLSX" prefHeight="25.0" prefWidth="87.0" text="XLSX" textFill="RED">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

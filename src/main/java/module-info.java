@@ -5,6 +5,8 @@ module com.example.test_javafx {
     requires org.postgresql.jdbc;
     requires java.naming;
     requires org.controlsfx.controls;
+    requires poi.ooxml;
+    requires poi;
 
 
     exports com.example.test_javafx;
