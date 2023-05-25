@@ -144,12 +144,11 @@
 .table-view > .virtual-flow > .scroll-bar > .increment-button,
 .table-view > .virtual-flow > .scroll-bar > .decrement-button {
     -fx-opacity: 0;
-}*
-.combo-box .list-cell
-{
-    -fx-background: black;
-    -fx-background-color: transparent;
-    -fx-text-fill: -fx-text-base-color;
-    -fx-padding: 3 0 2 7;
-    -fx-cell-size: 1.66667em;
 }
+ .combo-box .list-cell {
+     -fx-background: black;
+     -fx-background-color: transparent;
+     -fx-text-fill: -fx-text-base-color;
+     -fx-padding: 3 0 2 7;
+     -fx-cell-size: 1.66667em;
+ }
