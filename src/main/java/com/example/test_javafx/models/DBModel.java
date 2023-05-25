@@ -20,7 +20,7 @@ public class DBModel {
 
     //here our queries method
     public DBModel() {
-        schemaConnect("proj");
+        schemaConnect("attendance");
     }
 
     public static DBModel getModel() {
@@ -33,9 +33,9 @@ public class DBModel {
     public void connect() {
         PGSimpleDataSource source = new PGSimpleDataSource();
         source.setServerName("localhost");
-        source.setDatabaseName("project");
+        source.setDatabaseName("project_database");
         source.setUser("postgres");
-        source.setPassword("120202789");
+        source.setPassword("feraskhaled30");
 
         try {
             con = source.getConnection();
@@ -1248,11 +1248,11 @@ public class DBModel {
 
     public ArrayList<AttendanceSheet> SheetOfNonCompliant(String Cid) {
         ArrayList<AttendanceSheet> arr = new ArrayList<>();
-        String sql = "SELECT student_name, SUM(CASE WHEN attendance_status = 'yes' THEN 1 END) * 100 / COUNT(*) " +
+        String sql = "SELECT student_name, SUM(CASE WHEN attendance_status = 'yes' THEN 1 ELSE 0 END) * 100 / COUNT(*) " +
                 "FROM attendance NATURAL JOIN students " +
                 "WHERE course_id = ? " +
                 "GROUP BY student_name " +
-                "HAVING (SUM(CASE WHEN attendance_status = 'yes' THEN 1 END) * 100 / COUNT(*)) < 25;";
+                "HAVING (SUM(CASE WHEN attendance_status = 'yes' THEN 1 ELSE 0 END) * 100 / COUNT(*)) < 25;";
         try (PreparedStatement st = con.prepareStatement(sql)) {
             st.setString(1, Cid);
             ResultSet rs = st.executeQuery();
