@@ -18,6 +18,8 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.paint.Color;
+
 public class Course implements Initializable {
     @FXML
     private AnchorPane root;
@@ -45,6 +47,9 @@ public class Course implements Initializable {
 
     @FXML
     private ComboBox<String> year;
+
+    @FXML
+    private Label massege;
 
 
     DBModel db = DBModel.getModel();
@@ -91,7 +96,14 @@ public class Course implements Initializable {
 
     @FXML
     void viewCourses(ActionEvent event) {
-        courses.setItems(FXCollections.observableArrayList(db.getCourses(year.getValue(), semester.getValue())));
+        if (year.getValue() != null && semester.getValue() != null) {
+            massege.setVisible(false);
+            courses.setItems(FXCollections.observableArrayList(db.getCourses(year.getValue(), semester.getValue())));
+        } else {
+            massege.setText("Select Year and Semester");
+            massege.setTextFill(Color.RED);
+            massege.setVisible(true);
+        }
     }
 
     public void doubleClick(TableView<Courses> courses) {

@@ -551,7 +551,7 @@ public class DBModel {
 
     public ArrayList<Courses> getCourses(String year, String semester) {
         ArrayList<Courses> c = new ArrayList<>();
-        String sql = "select course_id, instructor_name, course_name, course_location"
+        String sql = "select distinct course_id, instructor_name, course_name, course_location"
                 + " from courses natural join section"
                 + " where year = CAST(? as INTEGER) and semester = ? ;";
         try (PreparedStatement st = con.prepareStatement(sql)) {
