@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -15,21 +16,26 @@
             <TableColumn fx:id="attendancePercentage" prefWidth="183.0" text="Attendance_Percentage" />
          </columns>
       </TableView>
-      <Button layoutX="513.0" layoutY="353.0" mnemonicParsing="false" onAction="#back" prefHeight="25.0" prefWidth="87.0" text="Back" textFill="RED" AnchorPane.bottomAnchor="16.0" AnchorPane.rightAnchor="0.0">
+      <Button layoutX="513.0" layoutY="353.0" mnemonicParsing="false" onAction="#back" prefHeight="25.0" prefWidth="87.0" text="Back" textFill="#2c2929" AnchorPane.bottomAnchor="16.0" AnchorPane.rightAnchor="0.0">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </Button>
-      <Button layoutY="353.0" mnemonicParsing="false" onAction="#view" prefHeight="25.0" prefWidth="87.0" text="View" textFill="RED" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="0.0">
+      <Button layoutY="353.0" mnemonicParsing="false" onAction="#view" prefHeight="25.0" prefWidth="87.0" text="View" textFill="#429e42" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="0.0">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </Button>
       <ComboBox fx:id="courseIdCom" layoutY="14.0" prefWidth="150.0" promptText="Course_Id" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="14.0" />
-      <Button layoutX="107.0" layoutY="353.0" mnemonicParsing="false" onAction="#XLSX" prefHeight="25.0" prefWidth="87.0" text="XLSX" textFill="RED">
+      <Button layoutX="107.0" layoutY="353.0" mnemonicParsing="false" onAction="#XLSX" prefHeight="25.0" prefWidth="87.0" text="XLSX" textFill="#429e42">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </Button>
+      <Label fx:id="error" alignment="CENTER" layoutX="200.0" layoutY="360.0" prefHeight="25.0" prefWidth="298.0" textFill="#f50a0a">
+         <font>
+            <Font name="Algerian" size="15.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

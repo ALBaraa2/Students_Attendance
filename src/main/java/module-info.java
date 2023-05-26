@@ -7,6 +7,7 @@ module com.example.test_javafx {
     requires org.controlsfx.controls;
     requires poi.ooxml;
     requires poi;
+    requires java.desktop;
 
 
     exports com.example.test_javafx;
