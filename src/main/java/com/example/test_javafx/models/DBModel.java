@@ -11,7 +11,7 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
+import org.mindrot.jbcrypt.BCrypt;
 
 public class DBModel {
     private static DBModel dbmodel = null;
@@ -19,7 +19,7 @@ public class DBModel {
 
     //here our queries method
     public DBModel() {
-        schemaConnect("project");
+        schemaConnect("attendance");
 
     }
 
@@ -33,9 +33,9 @@ public class DBModel {
     public void connect() {
         PGSimpleDataSource source = new PGSimpleDataSource();
         source.setServerName("localhost");
-        source.setDatabaseName("project");
+        source.setDatabaseName("project_database");
         source.setUser("postgres");
-        source.setPassword("123");
+        source.setPassword("feraskhaled30");
         try {
             con = source.getConnection();
             System.out.println("Connected to database");
@@ -421,18 +421,16 @@ public class DBModel {
     }
 
     //============================================================================================================//
-    public boolean getEmailPassword(String e, String p) {
-        String sql = "select email, password" +
+    public boolean getEmail(String e) {
+        String sql = "select email" +
                 " from users" +
-                " where email = ? and password = ? ;";
+                " where email = ? ;";
         try (PreparedStatement st = con.prepareStatement(sql)) {
             st.setString(1, e);
-            st.setString(2, p);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
                 String email = rs.getString(1);
-                String password = rs.getString(2);
-                if (email.equals(e) && password.equals(p)) {
+                if (email.equals(e)) {
                     return true;
                 } else {
                     return false;
@@ -1331,13 +1329,38 @@ public class DBModel {
             if (st.executeUpdate() > 0) {
                 System.out.println("\tsection added successfully\n\tsec_id = " + maxSecID(c, s, y) + 1);
                 return " section added successfully\n sec_id = " + maxSecID(c, s, y) + 1;
-
             } else return "";
 
         } catch (SQLException ex) {
             Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
             return "";
         }
+    }
+    public String getPassword(String email) {
+        String sql = "select password from users where email = ? ;";
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, email);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                return rs.getString(1);
+            }
+            return null;
+        } catch (SQLException ex) {
+
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+
+    }
+    public static String hashPassword(String password) {
+        String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
+        return hashedPassword;
+    }
+
+    // التحقق من كلمة المرور
+    public static boolean verifyPassword(String password, String hashedPassword) {
+        boolean passwordMatch = BCrypt.checkpw(password, hashedPassword);
+        return passwordMatch;
     }
 }
 
