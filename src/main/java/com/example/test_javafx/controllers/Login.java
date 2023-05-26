@@ -7,12 +7,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
-
+import org.mindrot.jbcrypt.BCrypt;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class Login implements Initializable {
-
 
     @FXML
     public BorderPane root;
@@ -34,8 +33,10 @@ public class Login implements Initializable {
 
     }
 
+
     public void ass() {
-        if (db.getEmailPassword(email.getText(), passwoed.getText())){
+        if(db.verifyPassword(passwoed.getText() , db.getPassword(email.getText())))
+        if (db.getEmail(email.getText())){
             if (db.isAdmin(email.getText())) {
                 nav.navigateTo(root, nav.ADMIN_FXML);
             }else
