@@ -1,14 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.test_javafx.controllers.Attendance"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TableView prefHeight="300.0" prefWidth="400.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="0.0">
+        <columns>
+          <TableColumn prefWidth="75.0" text="Name" />
+          <TableColumn prefWidth="75.0" text="ID" />
+            <TableColumn prefWidth="188.79998779296875" text="Lecture name" />
+            <TableColumn prefWidth="60.0" text="Status" />
+        </columns>
+      </TableView>
+      <ComboBox layoutX="400.0" layoutY="1.0" prefWidth="200.0" promptText="ID or Name or Phone number" AnchorPane.bottomAnchor="373.4" AnchorPane.leftAnchor="400.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="1.0" />
+      <ComboBox layoutX="400.0" layoutY="187.0" prefWidth="200.0" promptText="Lecture name" AnchorPane.bottomAnchor="187.4" AnchorPane.leftAnchor="400.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="187.0" />
+      <Button alignment="CENTER" blendMode="MULTIPLY" contentDisplay="CENTER" layoutX="426.0" layoutY="326.0" mnemonicParsing="false" onAction="#backFromCourse" prefHeight="26.0" prefWidth="60.0" text="Back" textFill="#030303" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0">
+         <font>
+            <Font name="Algerian" size="12.0" />
+         </font>
+      </Button>
+      <ButtonBar blendMode="DIFFERENCE" layoutX="7.0" layoutY="348.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="46.0" prefWidth="373.0" AnchorPane.bottomAnchor="5.600000000000023" AnchorPane.leftAnchor="7.0">
+         <buttons>
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#modifyPage" style="-fx-background-radius: 20;" text="modify" textFill="#2cad21">
+               <font>
+                  <Font name="Algerian" size="12.0" />
+               </font>
+            </Button>
+            <Button alignment="CENTER" blendMode="LIGHTEN" contentDisplay="CENTER" mnemonicParsing="false" onAction="#insertPage" style="-fx-background-radius: 20;" text="insert" textFill="#2cad21">
+               <font>
+                  <Font name="Algerian" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="view" alignment="CENTER" blendMode="LIGHTEN" contentDisplay="CENTER" mnemonicParsing="false" onAction="#viewCourses" prefHeight="22.0" prefWidth="110.0" style="-fx-background-radius: 20;" stylesheets="@style.css" text="View Courses" textFill="#2cad21">
+               <font>
+                  <Font name="Algerian" size="12.0" />
+               </font>
+            </Button>
+         </buttons>
+         <effect>
+            <DropShadow radius="4.75" width="0.0" />
+         </effect>
+      </ButtonBar>
+   </children>
 </AnchorPane>
