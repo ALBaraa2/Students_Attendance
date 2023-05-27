@@ -46,8 +46,8 @@
       </ButtonBar>
       <HBox layoutX="99.0" layoutY="14.0" prefHeight="26.0" prefWidth="600.0" spacing="12.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <ComboBox fx:id="student" prefWidth="200.0" promptText="ID or Name or Phone number" />
-            <ComboBox fx:id="LName" prefWidth="200.0" promptText="Lecture name" />
+            <ComboBox fx:id="courseID" prefWidth="200.0" promptText="Courses id" />
+            <ComboBox fx:id="sec_id" prefWidth="200.0" promptText="Sections" />
             <Label fx:id="massege" alignment="CENTER" prefHeight="26.0" prefWidth="166.0" visible="false">
                <font>
                   <Font size="16.0" />
@@ -60,8 +60,8 @@
       </HBox>
       <HBox layoutY="53.0" prefHeight="26.0" prefWidth="600.0" spacing="12.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <ComboBox fx:id="courseID" prefWidth="200.0" promptText="Courses id" />
-            <ComboBox fx:id="sec_id" prefWidth="200.0" promptText="Sections" />
+            <ComboBox fx:id="LName" prefWidth="200.0" promptText="Lecture name" />
+            <ComboBox fx:id="student" prefWidth="200.0" promptText="ID or Name or Phone number" />
          </children>
          <padding>
             <Insets left="7.0" />

@@ -6,6 +6,7 @@ public class SharedData {
     private String year;
     private String semester;
     private String sec_id;
+    private String email;
 
     private SharedData() {
     }
@@ -15,6 +16,14 @@ public class SharedData {
             instance = new SharedData();
         }
         return instance;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getCourse_id() {

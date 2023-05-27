@@ -3,14 +3,10 @@ package com.example.test_javafx.models;
 import org.postgresql.ds.PGSimpleDataSource;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import java.io.FileOutputStream;
-import java.io.IOException;
+
 import org.mindrot.jbcrypt.BCrypt;
 
 public class DBModel {
@@ -651,7 +647,7 @@ public class DBModel {
     }
 
     public ArrayList<String> getTA_id() {
-        String sql = "select DISTINCT id from teach_assistant;";
+        String sql = "select id from teach_assistant;";
         ArrayList<String> ids = new ArrayList<>();
         try (Statement st = con.createStatement();
              ResultSet rs = st.executeQuery(sql)
@@ -1294,7 +1290,7 @@ public class DBModel {
         }
         return arr;
     }
-
+    // عرض الطلاب اللذين نسبة حضورهم اقل من 25%
     public ArrayList<AttendanceSheet> SheetOfNonCompliant(String Cid) {
         ArrayList<AttendanceSheet> arr = new ArrayList<>();
         String sql = "SELECT student_name, SUM(CASE WHEN attendance_status = 'yes' THEN 1 ELSE 0 END) * 100 / COUNT(*) " +
@@ -1313,24 +1309,45 @@ public class DBModel {
         }
         return arr;
     }
+    //ايجاد السنة والفصل التي يقوم بالاشراف عليها من قبل المعيد الذي يدخل البرنامج
+    public String[] getYearSemester(String email) {
+        String sql = "select year, semester from users natural join assist where email = ? limit 1;";
+        String[] s = new String[2];
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, email);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                s[0] = rs.getString(1);
+                s[1] = rs.getString(2);
+                return s;
+            }
+            return null;
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
 
-    public boolean attendance(String id, String name, String phone, String course_id, String year, String sec_id,
+    public boolean attendance(String student, String course_id, String email, String sec_id,
                              String lecture_name) {
         String sql = "UPDATE attendance " +
                 "SET attendance_status = 'yes' " +
                 "WHERE course_id = ?" +
                 "  AND year = CAST(? as INTEGER)" +
+                " AND semester = ?" +
                 "  AND sec_id = CAST(? as INTEGER)" +
                 "  AND lecture_id = ?" +
-                "  AND (students.student_id = CAST(? as INTEGER) OR students.student_name = ? OR phone.student_phone = CAST(? as INTEGER));";
+                "  AND (students.student_id = ? OR students.student_name = ? OR phone.student_phone = ?);";
         try (PreparedStatement st = con.prepareStatement(sql)) {
             st.setString(1, course_id);
-            st.setString(2, year);
-            st.setString(3, sec_id);
-            st.setString(4, getLectureID(lecture_name, course_id, year, sec_id));
-            st.setString(5, id);
-            st.setString(6, name);
-            st.setString(7, phone);
+            st.setString(2, getYearSemester(email)[0]);
+            st.setString(3, getYearSemester(email)[1]);
+            st.setString(4, sec_id);
+            st.setString(5, getLectureID(lecture_name, course_id, getYearSemester(email)[0],
+                    getYearSemester(email)[1], sec_id));
+            st.setString(6, student);
+            st.setString(7, student);
+            st.setInt(8, Integer.parseInt(student));
             if (st.executeUpdate() > 0) {
                 return true;
             } else return false;
@@ -1340,15 +1357,18 @@ public class DBModel {
             return false;
         }
     }
-    private String getLectureID(String name, String course_id, String year, String sec_id) {
+
+    private String getLectureID(String name, String course_id, String year, String semester, String sec_id) {
         String sql = "select lecture_id from lectures where lecture_title = ? and course_id = ? " +
                 "AND year = CAST(? as INTEGER) " +
+                "AND semester = ? " +
                 "AND sec_id = CAST(? as INTEGER);";
         try (PreparedStatement st = con.prepareStatement(sql)) {
             st.setString(1, name);
             st.setString(2, course_id);
             st.setString(3, year);
-            st.setString(4, sec_id);
+            st.setString(4, semester);
+            st.setString(5, sec_id);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
                 return rs.getString(1);
@@ -1378,7 +1398,7 @@ public class DBModel {
         }
 
     }
-
+    // تشفير كلمة المرور
     public static String hashPassword(String password) {
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
         return hashedPassword;
@@ -1388,6 +1408,68 @@ public class DBModel {
     public static boolean verifyPassword(String password, String hashedPassword) {
         boolean passwordMatch = BCrypt.checkpw(password, hashedPassword);
         return passwordMatch;
+    }
+
+    public ArrayList<String> getStudents(String course_id, String email, String sec_id, String lecture_name) {
+        ArrayList<String> arr = new ArrayList<>();
+        String sql = "select student_id, student_phone, student_name" +
+                " from attendace natural join phone" +
+                " where course_id = ? and year = CAST(? as INTEGER) and semester = ? and sec_id = CAST(? as INTEGER)" +
+                "and lecture_id = ?";
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, course_id);
+            st.setString(2, getYearSemester(email)[0]);
+            st.setString(3, getYearSemester(email)[1]);
+            st.setString(4, sec_id);
+            st.setString(5, getLectureID(lecture_name, course_id, getYearSemester(email)[0],
+                    getYearSemester(email)[1], sec_id));
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                arr.add(rs.getString(1));
+                arr.add(rs.getString(2));
+                arr.add(rs.getString(3));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return arr;
+    }
+
+    public ArrayList<String> getCourseIDs(String email) {
+        ArrayList<String> ids = new ArrayList<>();
+        String sql = "select distinct course_id from assist join users on (users.id = assist.assistant_id)"
+                + " where email = ?;";
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, email);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                ids.add(rs.getString(1));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return ids;
+    }
+//عرض تايتل ليكتشر
+    public ArrayList<String> getLecturesTitle(String course_id, int year, String semester, int sec_id) {
+        ArrayList<String> lects = new ArrayList<>();
+        String sql = "select lecture_title " +
+                "from lectures " +
+                "where course_id = ? and year = ? and semester = ? and sec_id = ? ;";
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, course_id);
+            st.setInt(2, year);
+            st.setString(3, semester);
+            st.setInt(4, sec_id);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                lects.add(rs.getString(1));
+            }
+            return lects;
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
     }
 }
 

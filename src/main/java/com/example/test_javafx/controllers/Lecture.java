@@ -107,15 +107,15 @@ public class Lecture implements Initializable {
     private void handleScomAction(ActionEvent event) {
         int selectedYear;
         if (Ycom.getValue() != null) {
-        selectedYear = Integer.parseInt(Ycom.getSelectionModel().getSelectedItem());
-        if (CIcom.getValue() != null && Scom.getValue() != null) {
-            String selectedCourseID = CIcom.getSelectionModel().getSelectedItem();
-            String selecteSemester = Scom.getSelectionModel().getSelectedItem();
-            ObservableList<String> SecIds = FXCollections.observableList(db.getSecIds(selectedCourseID, selectedYear, selecteSemester));
-            SIcom.setItems(SecIds);
+            selectedYear = Integer.parseInt(Ycom.getSelectionModel().getSelectedItem());
+            if (CIcom.getValue() != null && Scom.getValue() != null) {
+                String selectedCourseID = CIcom.getSelectionModel().getSelectedItem();
+                String selecteSemester = Scom.getSelectionModel().getSelectedItem();
+                ObservableList<String> SecIds = FXCollections.observableList(db.getSecIds(selectedCourseID, selectedYear, selecteSemester));
+                SIcom.setItems(SecIds);
+            }
         }
     }
-}
 
 
 
