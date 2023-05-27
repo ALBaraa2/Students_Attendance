@@ -1294,7 +1294,7 @@ public class DBModel {
         }
         return arr;
     }
-
+    // عرض الطلاب اللذين نسبة حضورهم اقل من 25%
     public ArrayList<AttendanceSheet> SheetOfNonCompliant(String Cid) {
         ArrayList<AttendanceSheet> arr = new ArrayList<>();
         String sql = "SELECT student_name, SUM(CASE WHEN attendance_status = 'yes' THEN 1 ELSE 0 END) * 100 / COUNT(*) " +
@@ -1329,6 +1329,7 @@ public class DBModel {
         }
 
     }
+    // تشفير كلمة المرور
     public static String hashPassword(String password) {
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
         return hashedPassword;

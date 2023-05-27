@@ -35,14 +35,19 @@ public class Login implements Initializable {
 
 
     public void ass() {
-        if(db.verifyPassword(passwoed.getText() , db.getPassword(email.getText())))
-        if (db.getEmail(email.getText())){
-            if (db.isAdmin(email.getText())) {
-                nav.navigateTo(root, nav.ADMIN_FXML);
-            }else
-                nav.navigateTo(root, nav.TEACH_ASSISTANT_FXML);
-        }else
+        if (db.getEmail(email.getText())) {
+            if (db.verifyPassword(passwoed.getText(), db.getPassword(email.getText()))) {
+                    if (db.isAdmin(email.getText())) {
+                        nav.navigateTo(root, nav.ADMIN_FXML);
+                    } else
+                        nav.navigateTo(root, nav.TEACH_ASSISTANT_FXML);
+                } else {
+                    faild.setText("wrong password");
+                    faild.setVisible(true);
+                }
+        }else{
+            faild.setText("wrong email");
             faild.setVisible(true);
-
+        }
     }
 }
