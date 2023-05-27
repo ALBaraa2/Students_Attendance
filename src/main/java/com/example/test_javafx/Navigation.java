@@ -20,6 +20,8 @@ public class Navigation {
     public final String ModifyStudentData = "views/ModifyStudentData.fxml";
     public final String INSERT_COURSE_FXML = "views/insertcourse.fxml";
     public final String MODIFY_COURSE_FXML = "views/modifycourse.fxml";
+    public final String StudentEnrollmentsInCourse = "views/studentenrollmentsincourse.fxml";
+    public final String ModifyAStudentSDataInACourse = "views/ModifyAStudent'sDataInACourse.fxml";
     public final String CREATE_USER_ACCOUNT_FXML = "views/createuseraccount.fxml";
     public final String TA_Enrollment_Course_FXML = "views/taenrollmentcourse.fxml";
     public final String ATTENDANCE_FXML = "views/attendance.fxml";

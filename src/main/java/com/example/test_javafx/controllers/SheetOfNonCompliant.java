@@ -74,7 +74,8 @@ public class SheetOfNonCompliant implements Initializable {
 
     @FXML
     void XLSX(ActionEvent event) throws IOException {
-        String filePath = "C:\\Users\\albaraa\\Downloads\\s_1.xlsx";
+        String filePath = "C:\\Users\\HP\\Desktop\\New folder\\s_1.xlsx";
+
         String newSheetName = courseIdCom.getValue();
         File file = new File(filePath);
 
@@ -98,9 +99,14 @@ public class SheetOfNonCompliant implements Initializable {
                 } else {
                     error.setText("this course is already exsist");
                 }
-                // Save the changes to the existing file
-                try (FileOutputStream fos = new FileOutputStream(filePath)) {
-                    workbook.write(fos);
+                try (FileOutputStream outputStream = new FileOutputStream("C:\\Users\\HP\\Desktop\\New folder\\s_1.xlsx")) {
+                    workbook.write(outputStream);
+                    workbook.close();
+                } catch (FileNotFoundException e) {
+                    throw new RuntimeException(e);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+
                 }
             } catch (IOException e) {
                 e.printStackTrace();

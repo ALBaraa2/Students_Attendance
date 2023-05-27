@@ -97,18 +97,11 @@ public class StudentRegistration  implements Initializable {
         String street = Sstreet.getText();
         String city = Scity.getText();
         String gender = Sgender.getValue();
+        String num1 = Sph1.getText().trim();
+        String num2 = Sph11.getText().trim();
+        String num3 = Sph12.getText().trim();
 
-        List<String> phoneNumbers = new ArrayList<>();
-
-        if (!Sph1.getText().isEmpty()) {
-            phoneNumbers.add(Sph1.getText().trim());
-        }else Sph1.setText("");
-        if (!Sph11.getText().isEmpty()) {
-            phoneNumbers.add(Sph11.getText().trim());
-        }else Sph11.setText("");
-        if (!Sph12.getText().isEmpty()) {
-            phoneNumbers.add(Sph12.getText().trim());
-        }else Sph12.setText("");
+        
 
 
         if (studentId.isEmpty()) {
@@ -126,15 +119,31 @@ public class StudentRegistration  implements Initializable {
         } else if (gender == null || gender.isEmpty() || gender.equals("Gender")) {
             xz.setTextFill(Color.RED);
             xz.setText("Please select your gender");
-        } else {
+        }else if(num1.isEmpty() && num2.isEmpty() && num3.isEmpty()) {
+            xz.setTextFill(Color.RED);
+            xz.setText("Please select your phone");
+        }else {
             if(validateStudentId(studentId)){
                 if(db.checkStudentExists(studentId)){
                     xz.setTextFill(Color.RED);
                     xz.setText("This id is already exist");
                 }else{
-                    db.addStudent(studentId,studentName,street,city,gender,phoneNumbers);
-                    xz.setTextFill(Color.GREEN);
-                    xz.setText("successfully registered");
+                    if(!num1.isEmpty() && num2.isEmpty() && num3.isEmpty()) {
+                        db.addStudent(studentId,studentName,street,city,gender);
+                        db.insertPhone(studentId,num1);
+                        xz.setTextFill(Color.GREEN);
+                        xz.setText("successfully registered");
+                    }else if (!num1.isEmpty() && !num2.isEmpty() && num3.isEmpty()){
+                        db.addStudent(studentId,studentName,street,city,gender);
+                        db.insertPhone2(studentId,num1,num2);
+                        xz.setTextFill(Color.GREEN);
+                        xz.setText("successfully registered");
+                    } else if (!num1.isEmpty() && !num2.isEmpty() && !num3.isEmpty()) {
+                        db.addStudent(studentId,studentName,street,city,gender);
+                        db.insertPhone3(studentId,num1,num2,num3);
+                        xz.setTextFill(Color.GREEN);
+                        xz.setText("successfully registered");
+                    }
                 }
             }else{
                 xz.setTextFill(Color.RED);
