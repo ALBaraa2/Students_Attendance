@@ -81,8 +81,8 @@ public class Attendance implements Initializable {
     private void setComboBoxesLecturename(ActionEvent event) {
         String course_id = courseID.getSelectionModel().getSelectedItem();
         String secid = sec_id.getSelectionModel().getSelectedItem();
-        ObservableList<String> lectureNames = FXCollections.observableList(db.getSecIds(course_id,
-                Integer.parseInt(year), semester));
+        ObservableList<String> lectureNames = FXCollections.observableList(db.getLecturesTitle(course_id,
+                Integer.parseInt(year), semester, secid));
         LName.setItems(lectureNames);
         CmboBoxAutoComplete.cmboBoxAutoComplete(LName, lectureNames);
         LName.setOnAction(this::setComboBoxesStudent);
