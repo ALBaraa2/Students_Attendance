@@ -19,7 +19,7 @@ public class DBModel {
 
     //here our queries method
     public DBModel() {
-        schemaConnect("attendance");
+        schemaConnect("project");
 
     }
 
@@ -33,9 +33,9 @@ public class DBModel {
     public void connect() {
         PGSimpleDataSource source = new PGSimpleDataSource();
         source.setServerName("localhost");
-        source.setDatabaseName("project_database");
+        source.setDatabaseName("project");
         source.setUser("postgres");
-        source.setPassword("feraskhaled30");
+        source.setPassword("123");
         try {
             con = source.getConnection();
             System.out.println("Connected to database");
@@ -1314,28 +1314,54 @@ public class DBModel {
         return arr;
     }
 
-    public String attendance(String id, String name, String phone, String course_id, String year, String sec_id,
+    public boolean attendance(String id, String name, String phone, String course_id, String year, String sec_id,
                              String lecture_name) {
-        String sql = "insert into section (course_id,sec_id,building,room_number,semester,"
-                + "year,time_slot_id) values (?,?,?,?,?,?,?);";
+        String sql = "UPDATE attendance " +
+                "SET attendance_status = 'yes' " +
+                "WHERE course_id = ?" +
+                "  AND year = CAST(? as INTEGER)" +
+                "  AND sec_id = CAST(? as INTEGER)" +
+                "  AND lecture_id = ?" +
+                "  AND (students.student_id = CAST(? as INTEGER) OR students.student_name = ? OR phone.student_phone = CAST(? as INTEGER));";
         try (PreparedStatement st = con.prepareStatement(sql)) {
-            st.setString(1, c);
-            st.setString(2, String.valueOf(maxSecID(c, s, y) + 1));
-            st.setString(3, b);
-            st.setString(4, r);
-            st.setString(5, s);
-            st.setInt(6, y);
-            st.setString(7, t);
+            st.setString(1, course_id);
+            st.setString(2, year);
+            st.setString(3, sec_id);
+            st.setString(4, getLectureID(lecture_name, course_id, year, sec_id));
+            st.setString(5, id);
+            st.setString(6, name);
+            st.setString(7, phone);
             if (st.executeUpdate() > 0) {
-                System.out.println("\tsection added successfully\n\tsec_id = " + maxSecID(c, s, y) + 1);
-                return " section added successfully\n sec_id = " + maxSecID(c, s, y) + 1;
-            } else return "";
+                return true;
+            } else return false;
 
         } catch (SQLException ex) {
             Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
-            return "";
+            return false;
         }
     }
+    private String getLectureID(String name, String course_id, String year, String sec_id) {
+        String sql = "select lecture_id from lectures where lecture_title = ? and course_id = ? " +
+                "AND year = CAST(? as INTEGER) " +
+                "AND sec_id = CAST(? as INTEGER);";
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, name);
+            st.setString(2, course_id);
+            st.setString(3, year);
+            st.setString(4, sec_id);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                return rs.getString(1);
+            }
+            return null;
+        } catch (SQLException ex) {
+
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+
+    }
+
     public String getPassword(String email) {
         String sql = "select password from users where email = ? ;";
         try (PreparedStatement st = con.prepareStatement(sql)) {
@@ -1352,6 +1378,7 @@ public class DBModel {
         }
 
     }
+
     public static String hashPassword(String password) {
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
         return hashedPassword;

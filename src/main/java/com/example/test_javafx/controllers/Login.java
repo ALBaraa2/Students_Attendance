@@ -43,6 +43,5 @@ public class Login implements Initializable {
                 nav.navigateTo(root, nav.TEACH_ASSISTANT_FXML);
         }else
             faild.setVisible(true);
-
     }
 }
