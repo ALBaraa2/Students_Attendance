@@ -8,6 +8,7 @@ module com.example.test_javafx {
     requires poi.ooxml;
     requires poi;
     requires java.desktop;
+    requires jbcrypt;
 
 
     exports com.example.test_javafx;

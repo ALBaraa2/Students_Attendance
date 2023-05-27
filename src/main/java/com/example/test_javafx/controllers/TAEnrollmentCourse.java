@@ -102,7 +102,6 @@ public class TAEnrollmentCourse implements Initializable {
         String semester = sSemester.getValue().trim();
         String sec = sSeId.getValue().trim();
 
-
         if(db.checkEnrollments(course,year,semester,sec)){
             xz.setTextFill(Color.RED);
             xz.setText("this course is already enrollments by " + db.getAssistantId(course,year,semester,sec));

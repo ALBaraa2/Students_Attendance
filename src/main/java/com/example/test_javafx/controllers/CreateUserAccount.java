@@ -14,7 +14,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
-
+import org.mindrot.jbcrypt.BCrypt;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -74,6 +74,7 @@ public class CreateUserAccount implements Initializable {
 
     @FXML
     void regisert(ActionEvent event) {
+
         if (!name.getText().equals("") && !email.getText().equals("") && !password.getText().equals("") && UT.getValue() != null) {
             if (UT.getValue().equals("Admin") || UT.getValue().equals("Teach assistant")) {
                 String usertype;
@@ -84,7 +85,7 @@ public class CreateUserAccount implements Initializable {
                 if (password.getText().length() >= 6) {
                     if (!db.isPre_Registered(email.getText())) {
                         if (db.isValidEmail(email.getText())) {
-                            if (db.creatUser(name.getText(), email.getText(), password.getText(), usertype)) {
+                            if (db.creatUser(name.getText(), email.getText(), db.hashPassword(password.getText()), usertype)) {
                                 massege.setText("Registration Successful");
                                 massege.setTextFill(Color.GREEN);
                                 massege.setVisible(true);
