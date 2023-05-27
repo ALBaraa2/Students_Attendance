@@ -7,6 +7,10 @@ public class AttendanceSheet {
 
     double attendancePercentage;
 
+    public AttendanceSheet(String attendance_status){
+        this.attendance_status = attendance_status;
+    }
+
     public double getAttendancePercentage() {
         return attendancePercentage;
     }

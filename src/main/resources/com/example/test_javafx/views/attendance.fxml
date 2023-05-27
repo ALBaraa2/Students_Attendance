@@ -16,9 +16,6 @@
    <children>
       <TableView fx:id="table" layoutY="80.0" prefHeight="276.0" prefWidth="600.0" AnchorPane.bottomAnchor="44.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0">
         <columns>
-          <TableColumn fx:id="name" prefWidth="152.0" text="Name" />
-          <TableColumn fx:id="id" prefWidth="117.60003662109375" text="ID" />
-            <TableColumn fx:id="lectureName" prefWidth="208.0" text="Lecture name" />
             <TableColumn fx:id="status" prefWidth="120.79998779296875" text="Attendance Status" />
         </columns>
       </TableView>
@@ -29,7 +26,7 @@
       </Button>
       <ButtonBar blendMode="DIFFERENCE" layoutX="6.0" layoutY="344.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="42.0" prefWidth="464.0" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="6.0">
          <buttons>
-            <Button alignment="CENTER" blendMode="LIGHTEN" contentDisplay="CENTER" minWidth="74.0" mnemonicParsing="false" onAction="#AttendanceReport" prefHeight="22.0" style="-fx-background-radius: 20;" text="insert" textFill="#2cad21">
+            <Button alignment="CENTER" blendMode="LIGHTEN" contentDisplay="CENTER" minWidth="74.0" mnemonicParsing="false" onAction="#AttendanceReport" prefHeight="22.0" style="-fx-background-radius: 20;" text="Attendance report" textFill="#2cad21">
                <font>
                   <Font name="Algerian" size="12.0" />
                </font>
