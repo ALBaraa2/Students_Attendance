@@ -4,6 +4,7 @@ import com.example.test_javafx.Navigation;
 import com.example.test_javafx.models.AttendanceSheet;
 import com.example.test_javafx.models.CmboBoxAutoComplete;
 import com.example.test_javafx.models.DBModel;
+import com.example.test_javafx.models.Lectures;
 import com.example.test_javafx.models.SharedData;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -30,7 +31,16 @@ public class Attendance implements Initializable {
     private ComboBox<String> courseID;
 
     @FXML
+    private TableColumn<?, ?> id;
+
+    @FXML
+    private TableColumn<?, ?> lectureName;
+
+    @FXML
     private Label massege;
+
+    @FXML
+    private TableColumn<?, ?> name;
 
     @FXML
     private AnchorPane root;
@@ -40,9 +50,6 @@ public class Attendance implements Initializable {
 
     @FXML
     private TableColumn<AttendanceSheet,String> status;
-
-    @FXML
-    private TableColumn<AttendanceSheet,String> lecture_title;
 
     @FXML
     private ComboBox<String> student;
@@ -58,12 +65,9 @@ public class Attendance implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
         status.setCellValueFactory(new PropertyValueFactory<>("attendance_status"));
-        lecture_title.setCellValueFactory(new PropertyValueFactory<>("lecture_title"));
         setComboBoxes();
-        System.out.println(email);
-        System.out.println(year);
-        System.out.println(semester);
     }
     private void setComboBoxes() {
         ObservableList<String> ids = FXCollections.observableList(db.getCourseIDs(email));
@@ -77,7 +81,6 @@ public class Attendance implements Initializable {
         ObservableList<String> sec_ids = FXCollections.observableList(db.getSecIds(course_id,
                 Integer.parseInt(year), semester));
         sec_id.setItems(sec_ids);
-        sec_id.setOnAction(this::setComboBoxesStudent);
         sec_id.setOnAction(this::setComboBoxesLecturename);
     }
     private void setComboBoxesLecturename(ActionEvent event) {
@@ -87,12 +90,13 @@ public class Attendance implements Initializable {
                 Integer.parseInt(year), semester, Integer.parseInt(secid)));
         LName.setItems(lectureNames);
         CmboBoxAutoComplete.cmboBoxAutoComplete(LName, lectureNames);
+        LName.setOnAction(this::setComboBoxesStudent);
     }
     private void setComboBoxesStudent(ActionEvent event) {
         String course_id = courseID.getSelectionModel().getSelectedItem();
         String secid = sec_id.getSelectionModel().getSelectedItem();
         ObservableList<String> students = FXCollections.observableList(db.getStudents(course_id,
-                email, secid));
+                email, secid, LName.getValue()));
         student.setItems(students);
         CmboBoxAutoComplete.cmboBoxAutoComplete(student, students);
     }
@@ -101,9 +105,10 @@ public class Attendance implements Initializable {
     void AttendanceReport(ActionEvent event) {
         String course_id = courseID.getSelectionModel().getSelectedItem();
         String secid = sec_id.getSelectionModel().getSelectedItem();
+        String lectureName = LName.getSelectionModel().getSelectedItem();
         String Student = student.getSelectionModel().getSelectedItem();
         table.setItems(FXCollections.observableArrayList(db.getAttendanceReport
-                (course_id,Integer.parseInt(year), semester,Integer.parseInt(secid),Student)));
+                (course_id,Integer.parseInt(year), semester,Integer.parseInt(secid),lectureName,Student)));
     }
 
     @FXML

@@ -1524,14 +1524,17 @@ public class DBModel {
 
     public boolean attendance(String student, String course_id, String email, String sec_id,
                              String lecture_name) {
-        String sql = "UPDATE attendance " +
-                "SET attendance_status = 'yes' " +
-                "WHERE course_id = ?" +
-                "  AND year = CAST(? as INTEGER)" +
-                " AND semester = ?" +
-                "  AND sec_id = CAST(? as INTEGER)" +
-                "  AND lecture_id = ?" +
-                "  AND (students.student_id = ? OR students.student_name = ? OR phone.student_phone = CAST(? as INTEGER));";
+        String sql = "UPDATE attendance" +
+                " SET attendance_status = 'yes'" +
+                "FROM students, phone " +
+                "WHERE attendance.course_id = ? " +
+                "  AND attendance.year = CAST(? as INTEGER) " +
+                "  AND attendance.semester = ? " +
+                "  AND attendance.sec_id = CAST(? as INTEGER) " +
+                "  AND attendance.lecture_id = ? " +
+                "  AND (students.student_id = ? OR students.student_name = ? OR phone.student_phone = ?) " +
+                "  AND students.student_id = attendance.student_id " +
+                "  AND students.student_id = phone.student_id;";
         try (PreparedStatement st = con.prepareStatement(sql)) {
             st.setString(1, course_id);
             st.setString(2, getYearSemester(email)[0]);
@@ -1573,6 +1576,7 @@ public class DBModel {
             Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
+
     }
 
     public String getPassword(String email) {
@@ -1603,16 +1607,19 @@ public class DBModel {
         return passwordMatch;
     }
 
-    public ArrayList<String> getStudents(String course_id, String email, String sec_id) {
+    public ArrayList<String> getStudents(String course_id, String email, String sec_id, String lecture_name) {
         ArrayList<String> arr = new ArrayList<>();
         String sql = "select student_id, student_phone, student_name" +
                 " from attendance natural join phone natural join students" +
-                " where course_id = ? and year = CAST(? as INTEGER) and semester = ? and sec_id = CAST(? as INTEGER);";
+                " where course_id = ? and year = CAST(? as INTEGER) and semester = ? and sec_id = CAST(? as INTEGER)" +
+                "and lecture_id = ?";
         try (PreparedStatement st = con.prepareStatement(sql)) {
             st.setString(1, course_id);
             st.setString(2, getYearSemester(email)[0]);
             st.setString(3, getYearSemester(email)[1]);
             st.setString(4, sec_id);
+            st.setString(5, getLectureID(lecture_name, course_id, getYearSemester(email)[0],
+                    getYearSemester(email)[1], sec_id));
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 arr.add(rs.getString(1));
@@ -1662,9 +1669,10 @@ public class DBModel {
         }
     }
 //حالة الحضور لطالب في مساق معين
-public ArrayList<AttendanceSheet> getAttendanceReport(String course_id, int year, String semester, int sec_id, String student) {
+public ArrayList<AttendanceSheet> getAttendanceReport(String course_id, int year, String semester, int sec_id,
+                                                      String lectuerName, String student) {
     ArrayList<AttendanceSheet> lects = new ArrayList<>();
-    String sql = "SELECT lecture_title, attendance_status " +
+    String sql = "SELECT distinct attendance_status " +
             "FROM attendance " +
             "JOIN students USING (student_id) " +
             "JOIN phone USING (student_id) " +
@@ -1673,18 +1681,20 @@ public ArrayList<AttendanceSheet> getAttendanceReport(String course_id, int year
             "AND year = ? " +
             "AND semester = ? " +
             "AND sec_id = ? " +
+            "AND lecture_title = ? " +
             "AND (student_name = ? OR student_phone = ? OR student_id = ?);";
     try (PreparedStatement st = con.prepareStatement(sql)) {
         st.setString(1, course_id);
         st.setInt(2, year);
         st.setString(3, semester);
         st.setInt(4, sec_id);
-        st.setString(5, student);
+        st.setString(5, lectuerName);
         st.setString(6, student);
         st.setString(7, student);
+        st.setString(8, student);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
-            lects.add(new AttendanceSheet(rs.getString(1), rs.getString(2)));
+            lects.add(new AttendanceSheet(rs.getString(1)));
         }
         return lects;
     } catch (SQLException ex) {

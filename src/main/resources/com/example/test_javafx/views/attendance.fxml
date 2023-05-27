@@ -16,7 +16,6 @@
    <children>
       <TableView fx:id="table" layoutY="80.0" prefHeight="276.0" prefWidth="600.0" AnchorPane.bottomAnchor="44.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0">
         <columns>
-            <TableColumn fx:id="lecture_title" prefWidth="247.20001220703125" text="Lecture title" />
             <TableColumn fx:id="status" prefWidth="115.20001220703125" text="Attendance Status" />
         </columns>
       </TableView>
