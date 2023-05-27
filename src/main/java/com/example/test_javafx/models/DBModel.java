@@ -19,7 +19,7 @@ public class DBModel {
 
     //here our queries method
     public DBModel() {
-        schemaConnect("project");
+        schemaConnect("proj");
 
     }
 
@@ -35,7 +35,7 @@ public class DBModel {
         source.setServerName("localhost");
         source.setDatabaseName("project");
         source.setUser("postgres");
-        source.setPassword("123");
+        source.setPassword("120202789");
         try {
             con = source.getConnection();
             System.out.println("Connected to database");
@@ -584,6 +584,23 @@ public class DBModel {
             return null;
         }
     }
+    public ArrayList<String> getStudentCourses(String studentID) {
+        ArrayList<String> courses = new ArrayList<>();
+        String sql = "SELECT DISTINCT course_id FROM enrollments WHERE student_id = ?;";
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, studentID);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                courses.add(rs.getString(1));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+        return courses;
+    }
+
+
     public ArrayList<String> getCourseIDsFromAttendance() {
         ArrayList<String> ids = new ArrayList<>();
         String sql = "select distinct course_id from attendance;";
@@ -617,6 +634,26 @@ public class DBModel {
         }
         return years;
     }
+
+    public ArrayList<String> getYearsStudent(String student_id, String course_id) {
+        String sql = "SELECT DISTINCT year FROM enrollments " +
+                "WHERE student_id = ? AND course_id = ? " +
+                "GROUP BY year;";
+        ArrayList<String> years = new ArrayList<>();
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, student_id);
+            st.setString(2, course_id);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                years.add(rs.getString(1));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+        return years;
+    }
+
 
     public ArrayList<String> getYears() {
         String sql = "select distinct year from section " +
@@ -667,6 +704,22 @@ public class DBModel {
             return null;
         }
     }
+    public ArrayList<String> getStudentID() { //ترجع id طالب من جدول الstudent
+        String sql = "select DISTINCT student_id from students;";
+        ArrayList<String> ids = new ArrayList<>();
+        try (Statement st = con.createStatement();
+             ResultSet rs = st.executeQuery(sql)
+        ) {
+            while (rs.next()) {
+                ids.add(rs.getString(1));
+            }
+            return ids;
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+
 
 
     public ArrayList<String> getSemesters(String course_id, int year) {
@@ -687,6 +740,26 @@ public class DBModel {
         }
         return semesters;
     }
+    public ArrayList<String> getSemestersStudent(String student_id, String course_id, int year) {
+        String sql = "SELECT DISTINCT semester FROM enrollments " +
+                "WHERE student_id = ? AND course_id = ? AND year = ? " +
+                "GROUP BY semester;";
+        ArrayList<String> semesters = new ArrayList<>();
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, student_id);
+            st.setString(2, course_id);
+            st.setInt(3, year);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                semesters.add(rs.getString(1));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+        return semesters;
+    }
+
 
     public ArrayList<String> getSecIds(String course_id, int year, String semester) {
         String sql = "select distinct sec_id from section" +
@@ -707,6 +780,27 @@ public class DBModel {
         }
         return semesters;
     }
+    public ArrayList<String> getSecIdsStudent(String student_id, String course_id, int year, String semester) {
+        String sql = "SELECT DISTINCT sec_id FROM enrollments " +
+                "WHERE student_id = ? AND course_id = ? AND year = ? AND semester = ? " +
+                "GROUP BY sec_id;";
+        ArrayList<String> secIds = new ArrayList<>();
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, student_id);
+            st.setString(2, course_id);
+            st.setInt(3, year);
+            st.setString(4, semester);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                secIds.add(rs.getString(1));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+        return secIds;
+    }
+
     public ArrayList<String> getLectureIds(String course_id, String year, String semester , String sec_id) {
         ArrayList<String> arr = new ArrayList<>();
         String sql = "select distinct lecture_id from lectures" +
@@ -775,6 +869,36 @@ public class DBModel {
         }
     }
 
+    public void addEnrollmentStudent(String course, String year, String semester, String sec, String studentID) { //ربط طالب بمساق
+        String sql = "INSERT INTO enrollments (course_id, year, semester, sec_id, student_id) VALUES (?, ?, ?, ?,?)";
+
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, course);
+            st.setInt(2, Integer.parseInt(year));
+            st.setString(3, semester);
+            st.setInt(4, Integer.parseInt(sec));
+            st.setString(5, studentID);
+            st.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public void deleteEnrollmentStudent(String course, String year, String semester, String sec, String studentID) { // حذف ربط الطالب بالمساق
+        String sql = "DELETE FROM enrollments WHERE course_id = ? AND year = ? AND semester = ? AND sec_id = ? AND student_id = ?";
+
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, course);
+            st.setInt(2, Integer.parseInt(year));
+            st.setString(3, semester);
+            st.setInt(4, Integer.parseInt(sec));
+            st.setString(5, studentID);
+            st.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+
 
     public boolean isPre_Registered(String email) {
         String sql = "select email from users where email = ? ;";
@@ -811,6 +935,28 @@ public class DBModel {
 
         return false;
     }
+    public boolean checkEnrollmentsStudent(String Studentid,String course, String year, String semester, String sec) {//تفحص هل طالب موجود بنفس الidوالCidو yearو semesterوsecفى جدول الenrollments
+        String sql = "SELECT COUNT(*) FROM enrollments WHERE student_id = ? AND course_id = ? AND year = ? AND semester = ? AND sec_id = ?";
+
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, Studentid);
+            st.setString(2, course);
+            st.setInt(3, Integer.parseInt(year));
+            st.setString(4, semester);
+            st.setInt(5, Integer.parseInt(sec));
+
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                return count == 1;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return false;
+    }
+
 
 
     public String getAssistantId(String course, String year, String semester, String sec) {

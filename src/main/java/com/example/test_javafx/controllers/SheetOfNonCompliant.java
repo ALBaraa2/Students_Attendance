@@ -74,7 +74,7 @@ public class SheetOfNonCompliant implements Initializable {
 
     @FXML
     void XLSX(ActionEvent event) throws IOException {
-        String filePath = "C:\\Users\\Almajd-PC\\Desktop\\feras\\jdbc\\s_1.xlsx";
+        String filePath = "C:\\Users\\HP\\Desktop\\New folder\\s_1.xlsx";
         String newSheetName = courseIdCom.getValue();
         File file = new File(filePath);
 
@@ -121,7 +121,7 @@ public class SheetOfNonCompliant implements Initializable {
                     cell1.setCellValue(x.get(i).getStudent_name());
                     cell2.setCellValue(x.get(i).getAttendancePercentage() + "%");
                 }
-                try (FileOutputStream outputStream = new FileOutputStream("C:\\Users\\Almajd-PC\\Desktop\\feras\\jdbc\\s_1.xlsx")) {
+                try (FileOutputStream outputStream = new FileOutputStream("C:\\Users\\HP\\Desktop\\New folder\\s_1.xlsx")) {
                     workbook.write(outputStream);
                     workbook.close();
                 } catch (FileNotFoundException e) {
