@@ -1313,6 +1313,29 @@ public class DBModel {
         }
         return arr;
     }
+
+    public String attendance(String id, String name, String phone, String course_id, String year, String sec_id,
+                             String lecture_name) {
+        String sql = "insert into section (course_id,sec_id,building,room_number,semester,"
+                + "year,time_slot_id) values (?,?,?,?,?,?,?);";
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, c);
+            st.setString(2, String.valueOf(maxSecID(c, s, y) + 1));
+            st.setString(3, b);
+            st.setString(4, r);
+            st.setString(5, s);
+            st.setInt(6, y);
+            st.setString(7, t);
+            if (st.executeUpdate() > 0) {
+                System.out.println("\tsection added successfully\n\tsec_id = " + maxSecID(c, s, y) + 1);
+                return " section added successfully\n sec_id = " + maxSecID(c, s, y) + 1;
+            } else return "";
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+            return "";
+        }
+    }
     public String getPassword(String email) {
         String sql = "select password from users where email = ? ;";
         try (PreparedStatement st = con.prepareStatement(sql)) {
@@ -1340,7 +1363,6 @@ public class DBModel {
         boolean passwordMatch = BCrypt.checkpw(password, hashedPassword);
         return passwordMatch;
     }
-
 }
 
 
