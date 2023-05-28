@@ -29,6 +29,9 @@ public class LectureSheet implements Initializable {
     private ComboBox<String> LnameCom;
 
     @FXML
+    private ComboBox<String> courseIDcom;
+
+    @FXML
     private TableColumn<Lectures, String> course_id;
 
     @FXML
@@ -76,9 +79,17 @@ public class LectureSheet implements Initializable {
         setComboBoxes();
     }
     private void setComboBoxes() {
-        ObservableList<String> lname = FXCollections.observableList(db.getLecturesTitle(l.getCourse_id(),Integer.parseInt(y) , s , l.getSec_id()));
+        ObservableList<String> ids = FXCollections.observableList(db.getCourseIDs(email));
+        courseIDcom.setItems(ids);
+        CmboBoxAutoComplete.cmboBoxAutoComplete(courseIDcom, ids);
+        courseIDcom.setOnAction(this::setComboBoxesLecture_name);
+    }
+    private void setComboBoxesLecture_name(ActionEvent event) {
+        String course_id = courseIDcom.getSelectionModel().getSelectedItem();
+        ObservableList<String> lname = FXCollections.observableList(db.getLecturesName(course_id,
+                Integer.parseInt(y), s));
         LnameCom.setItems(lname);
-        CmboBoxAutoComplete.cmboBoxAutoComplete(LnameCom, lname);
+
     }
     @FXML
     void viewLName(ActionEvent event) {

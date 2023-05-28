@@ -1632,6 +1632,25 @@ public class DBModel {
             return null;
         }
     }
+    public ArrayList<String> getLecturesName(String course_id, int year, String semester) {
+        ArrayList<String> lects = new ArrayList<>();
+        String sql = "select lecture_title " +
+                "from lectures " +
+                "where course_id = ? and year = ? and semester = ?;";
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, course_id);
+            st.setInt(2, year);
+            st.setString(3, semester);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                lects.add(rs.getString(1));
+            }
+            return lects;
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
 //حالة الحضور لطالب في مساق معين
 public ArrayList<AttendanceSheet> getAttendanceReport(String course_id, int year, String semester, int sec_id,
                                                       String lectuerName, String student) {
