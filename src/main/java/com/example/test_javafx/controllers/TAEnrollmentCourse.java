@@ -71,23 +71,10 @@ public class TAEnrollmentCourse implements Initializable {
                 String selectedCourseID = sCourse.getSelectionModel().getSelectedItem();
                 ObservableList<String> semesters = FXCollections.observableList(db.getSemesters(selectedCourseID, selectedYear));
                 sSemester.setItems(semesters);
-                sSemester.setOnAction(this::handleScomAction);
             }
         }
     }
 
-    private void handleScomAction(ActionEvent event) {
-        int selectedYear;
-        if (sYear.getValue() != null) {
-            selectedYear = Integer.parseInt(sYear.getSelectionModel().getSelectedItem());
-            if (sCourse.getValue() != null && sSemester.getValue() != null) {
-                String selectedCourseID = sCourse.getSelectionModel().getSelectedItem();
-                String selecteSemester = sSemester.getSelectionModel().getSelectedItem();
-                ObservableList<String> SecIds = FXCollections.observableList(db.getSecIds(selectedCourseID, selectedYear, selecteSemester));
-                sSeId.setItems(SecIds);
-            }
-        }
-    }
     Navigation nav = new Navigation();
     @FXML
     void backToCourse(ActionEvent event) {
@@ -100,13 +87,12 @@ public class TAEnrollmentCourse implements Initializable {
         String course = sCourse.getValue().trim();
         String year = sYear.getValue().trim();
         String semester = sSemester.getValue().trim();
-        String sec = sSeId.getValue().trim();
 
-        if(db.checkEnrollments(course,year,semester,sec)){
+        if(db.checkEnrollments(course,year,semester)){
             xz.setTextFill(Color.RED);
-            xz.setText("this course is already enrollments by " + db.getAssistantId(course,year,semester,sec));
+            xz.setText("this course is already enrollments by " + db.getAssistantId(course,year,semester));
         }else{
-            db.addEnrollment(course,year,semester,sec,id);
+            db.addEnrollment(course,year,semester,id);
                 xz.setTextFill(Color.GREEN);
                 xz.setText("                   successfully Enrollments");
 

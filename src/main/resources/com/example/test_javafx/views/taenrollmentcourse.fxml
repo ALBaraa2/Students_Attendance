@@ -23,7 +23,7 @@
    <center>
       <AnchorPane prefHeight="524.0" prefWidth="324.0" style="-fx-background-color: #a89696;" BorderPane.alignment="CENTER">
          <children>
-            <ComboBox fx:id="sCourse" layoutX="100.0" layoutY="94.0" prefWidth="150.0" promptText="Select Course" />
+            <ComboBox fx:id="sCourse" layoutX="101.0" layoutY="126.0" prefWidth="150.0" promptText="Select Course" />
             <Button fx:id="done" layoutX="27.0" layoutY="375.0" mnemonicParsing="false" onAction="#done" prefHeight="33.0" prefWidth="76.0" style="-fx-background-color: #494a3e; -fx-background-radius: 10;" text="Done" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="15.0" />
@@ -34,10 +34,9 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Button>
-            <ComboBox fx:id="sSemester" layoutX="101.0" layoutY="225.0" prefWidth="150.0" promptText="Select Semester" />
-            <ComboBox fx:id="sYear" layoutX="100.0" layoutY="158.0" prefWidth="150.0" promptText="Select Year" />
-            <ComboBox fx:id="sSeId" layoutX="101.0" layoutY="287.0" prefWidth="150.0" promptText="Select se-id" />
-            <ComboBox fx:id="sTAid" layoutX="101.0" layoutY="29.0" prefWidth="150.0" promptText="Select Id" />
+            <ComboBox fx:id="sSemester" layoutX="102.0" layoutY="257.0" prefWidth="150.0" promptText="Select Semester" />
+            <ComboBox fx:id="sYear" layoutX="101.0" layoutY="190.0" prefWidth="150.0" promptText="Select Year" />
+            <ComboBox fx:id="sTAid" layoutX="102.0" layoutY="61.0" prefWidth="150.0" promptText="Select Id" />
             <Label layoutX="25.0" layoutY="313.0" prefHeight="50.0" prefWidth="302.0" textAlignment="CENTER" textFill="#198600" fx:id="xz">
                <font>
                   <Font name="System Italic" size="15.0" />

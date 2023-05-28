@@ -850,15 +850,14 @@ public class DBModel {
         }
     }
 
-    public void addEnrollment(String course, String year, String semester, String sec, String assistantId) {
-        String sql = "INSERT INTO assist (course_id, year, semester, sec_id, assistant_id) VALUES (?, ?, ?, ?, ?)";
+    public void addEnrollment(String course, String year, String semester, String assistantId) {
+        String sql = "INSERT INTO assist (course_id, year, semester, assistant_id) VALUES (?, ?, ?, ?)";
 
         try (PreparedStatement st = con.prepareStatement(sql)) {
             st.setString(1, course);
             st.setInt(2, Integer.parseInt(year));
             st.setString(3, semester);
-            st.setInt(4, Integer.parseInt(sec));
-            st.setInt(5, Integer.parseInt(assistantId));
+            st.setInt(4, Integer.parseInt(assistantId));
             st.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
@@ -911,14 +910,13 @@ public class DBModel {
         }
     }
 
-    public boolean checkEnrollments(String course, String year, String semester, String sec) {
-        String sql = "SELECT COUNT(*) FROM assist WHERE course_id = ? AND year = ? AND semester = ? AND sec_id = ?";
+    public boolean checkEnrollments(String course, String year, String semester) {
+        String sql = "SELECT COUNT(*) FROM assist WHERE course_id = ? AND year = ? AND semester = ?";
 
         try (PreparedStatement st = con.prepareStatement(sql)) {
             st.setString(1, course);
             st.setInt(2, Integer.parseInt(year));
             st.setString(3, semester);
-            st.setInt(4, Integer.parseInt(sec));
 
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
@@ -931,6 +929,7 @@ public class DBModel {
 
         return false;
     }
+
     public boolean checkEnrollmentsStudent(String Studentid,String course, String year, String semester, String sec) {//تفحص هل طالب موجود بنفس الidوالCidو yearو semesterوsecفى جدول الenrollments
         String sql = "SELECT COUNT(*) FROM enrollments WHERE student_id = ? AND course_id = ? AND year = ? AND semester = ? AND sec_id = ?";
 
@@ -955,15 +954,14 @@ public class DBModel {
 
 
 
-    public String getAssistantId(String course, String year, String semester, String sec) {
+    public String getAssistantId(String course, String year, String semester) {
         String id = "";
-        String sql = "SELECT assistant_id FROM assist WHERE course_id = ? AND year = ? AND semester = ? AND sec_id = ? LIMIT 1";
+        String sql = "SELECT assistant_id FROM assist WHERE course_id = ? AND year = ? AND semester = ? LIMIT 1";
 
         try (PreparedStatement st = con.prepareStatement(sql)) {
             st.setString(1, course);
             st.setInt(2, Integer.parseInt(year));
             st.setString(3, semester);
-            st.setInt(4, Integer.parseInt(sec));
 
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
@@ -975,6 +973,7 @@ public class DBModel {
         }
         return id;
     }
+
 
     public boolean isValidEmail(String email) {
         String sql = "SELECT check_email_format(?);";
@@ -1624,6 +1623,25 @@ public class DBModel {
             st.setInt(2, year);
             st.setString(3, semester);
             st.setInt(4, sec_id);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                lects.add(rs.getString(1));
+            }
+            return lects;
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    public ArrayList<String> getLecturesName(String course_id, int year, String semester) {
+        ArrayList<String> lects = new ArrayList<>();
+        String sql = "select lecture_title " +
+                "from lectures " +
+                "where course_id = ? and year = ? and semester = ?;";
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, course_id);
+            st.setInt(2, year);
+            st.setString(3, semester);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 lects.add(rs.getString(1));
