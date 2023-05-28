@@ -76,6 +76,8 @@ public class LectureSheet implements Initializable {
         setComboBoxes();
     }
     private void setComboBoxes() {
+        ObservableList<String> ids = FXCollections.observableList(db.getCourseIDs(email));
+
         ObservableList<String> lname = FXCollections.observableList(db.getLecturesTitle(l.getCourse_id(),Integer.parseInt(y) , s , l.getSec_id()));
         LnameCom.setItems(lname);
         CmboBoxAutoComplete.cmboBoxAutoComplete(LnameCom, lname);
