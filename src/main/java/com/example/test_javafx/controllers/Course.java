@@ -106,6 +106,10 @@ public class Course implements Initializable {
         }
     }
 
+    @FXML
+    void insertSection(ActionEvent event) {
+        nav.navigateTo(root, nav.ADD_SECTION_FXML);
+    }
     public void doubleClick(TableView<Courses> courses) {
         ButtonType buttonCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
         courses.setRowFactory(tv -> {

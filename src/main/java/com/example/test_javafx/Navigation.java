@@ -8,7 +8,6 @@ import java.util.Objects;
 
 public class Navigation {
     public final String MAIN_FXML = "views/start.fxml";
-    public final String ADD_SECTION_FXML = "views/addNewSection.fxml";
     public final String LECTURES_TIMES_FXML = "views/lecturestimes.fxml";
     public final String ENROLL_STUDENT_FXML = "views/enrollstudent.fxml";
     public final String START_CONTROLLER_FXML = "views/start.fxml";
@@ -16,6 +15,7 @@ public class Navigation {
     public final String ADMIN_FXML = "views/admin.fxml";
     public final String TEACH_ASSISTANT_FXML = "views/teachassistant.fxml";
     public final String COURSE_FXML = "views/course.fxml";
+    public final String ADD_SECTION_FXML = "views/addsection.fxml";
     public final String Student_Registration = "views/StudentRegistration.fxml";
     public final String ModifyStudentData = "views/ModifyStudentData.fxml";
     public final String INSERT_COURSE_FXML = "views/insertcourse.fxml";

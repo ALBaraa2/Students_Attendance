@@ -17,6 +17,7 @@
       <TableView fx:id="table" layoutY="80.0" prefHeight="276.0" prefWidth="600.0" AnchorPane.bottomAnchor="44.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0">
         <columns>
             <TableColumn fx:id="status" prefWidth="115.20001220703125" text="Attendance Status" />
+            <TableColumn fx:id="lecture_title" prefWidth="115.20001220703125" text="Lecture Title" />
         </columns>
       </TableView>
       <Button alignment="CENTER" blendMode="MULTIPLY" contentDisplay="CENTER" layoutX="526.0" layoutY="364.0" mnemonicParsing="false" onAction="#back" prefHeight="26.0" prefWidth="60.0" text="Back" textFill="#030303" AnchorPane.bottomAnchor="9.600000000000023" AnchorPane.rightAnchor="14.0">
