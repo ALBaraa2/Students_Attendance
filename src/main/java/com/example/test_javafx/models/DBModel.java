@@ -17,6 +17,7 @@ public class DBModel {
     public DBModel() {
         schemaConnect("proj");
 
+
     }
 
     public static DBModel getModel() {
@@ -32,6 +33,7 @@ public class DBModel {
         source.setDatabaseName("project");
         source.setUser("postgres");
         source.setPassword("120202789");
+
         try {
             con = source.getConnection();
             System.out.println("Connected to database");
@@ -1667,7 +1669,25 @@ public ArrayList<AttendanceSheet> getAttendanceReport(String course_id, int year
     }
 }
 
-
+    public ArrayList<Lectures> lectureSheet(String email , String LT) {
+        ArrayList<Lectures> arr = new ArrayList<>();
+        String sql = "SELECT DISTINCT lecture_id,  lecture_time, lecture_date,lecture_location, course_id, year, semester, sec_id" +
+                " FROM lectures" +
+                " NATURAL JOIN assist" +
+                " JOIN users ON users.id = assist.assistant_id" +
+                " WHERE users.email = ? AND lecture_title = ?;";
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, email);
+            st.setString(2, LT);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                arr.add(new Lectures(rs.getString(1) ,rs.getTime(2) ,rs.getDate(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getString(7),rs.getInt(8)));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return arr ;
+    }
 
 }
 
