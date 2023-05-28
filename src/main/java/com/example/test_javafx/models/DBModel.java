@@ -15,7 +15,7 @@ public class DBModel {
 
     //here our queries method
     public DBModel() {
-        schemaConnect("proj");
+        schemaConnect("project");
 
     }
 
@@ -31,7 +31,7 @@ public class DBModel {
         source.setServerName("localhost");
         source.setDatabaseName("project");
         source.setUser("postgres");
-        source.setPassword("120202789");
+        source.setPassword("123");
         try {
             con = source.getConnection();
             System.out.println("Connected to database");
@@ -1488,14 +1488,17 @@ public class DBModel {
 
     public boolean attendance(String student, String course_id, String email, String sec_id,
                              String lecture_name) {
-        String sql = "UPDATE attendance " +
-                "SET attendance_status = 'yes' " +
-                "WHERE course_id = ?" +
-                "  AND year = CAST(? as INTEGER)" +
-                " AND semester = ?" +
-                "  AND sec_id = CAST(? as INTEGER)" +
-                "  AND lecture_id = ?" +
-                "  AND (students.student_id = ? OR students.student_name = ? OR phone.student_phone = ?);";
+        String sql = "UPDATE attendance" +
+                " SET attendance_status = 'yes'" +
+                "FROM students, phone " +
+                "WHERE attendance.course_id = ? " +
+                "  AND attendance.year = CAST(? as INTEGER) " +
+                "  AND attendance.semester = ? " +
+                "  AND attendance.sec_id = CAST(? as INTEGER) " +
+                "  AND attendance.lecture_id = ? " +
+                "  AND (students.student_id = ? OR students.student_name = ? OR phone.student_phone = ?) " +
+                "  AND students.student_id = attendance.student_id " +
+                "  AND students.student_id = phone.student_id;";
         try (PreparedStatement st = con.prepareStatement(sql)) {
             st.setString(1, course_id);
             st.setString(2, getYearSemester(email)[0]);
@@ -1505,7 +1508,7 @@ public class DBModel {
                     getYearSemester(email)[1], sec_id));
             st.setString(6, student);
             st.setString(7, student);
-            st.setInt(8, Integer.parseInt(student));
+            st.setString(8, student);
             if (st.executeUpdate() > 0) {
                 return true;
             } else return false;
@@ -1633,7 +1636,7 @@ public class DBModel {
 public ArrayList<AttendanceSheet> getAttendanceReport(String course_id, int year, String semester, int sec_id,
                                                       String lectuerName, String student) {
     ArrayList<AttendanceSheet> lects = new ArrayList<>();
-    String sql = "SELECT attendance_status " +
+    String sql = "SELECT distinct attendance_status " +
             "FROM attendance " +
             "JOIN students USING (student_id) " +
             "JOIN phone USING (student_id) " +
