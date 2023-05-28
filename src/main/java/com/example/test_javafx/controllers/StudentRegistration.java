@@ -128,22 +128,16 @@ public class StudentRegistration  implements Initializable {
                     xz.setTextFill(Color.RED);
                     xz.setText("This id is already exist");
                 }else{
-                    if(!num1.isEmpty() && num2.isEmpty() && num3.isEmpty()) {
+
                         db.addStudent(studentId,studentName,street,city,gender);
                         db.insertPhone(studentId,num1);
-                        xz.setTextFill(Color.GREEN);
-                        xz.setText("successfully registered");
-                    }else if (!num1.isEmpty() && !num2.isEmpty() && num3.isEmpty()){
-                        db.addStudent(studentId,studentName,street,city,gender);
-                        db.insertPhone2(studentId,num1,num2);
-                        xz.setTextFill(Color.GREEN);
-                        xz.setText("successfully registered");
-                    } else if (!num1.isEmpty() && !num2.isEmpty() && !num3.isEmpty()) {
-                        db.addStudent(studentId,studentName,street,city,gender);
-                        db.insertPhone3(studentId,num1,num2,num3);
-                        xz.setTextFill(Color.GREEN);
-                        xz.setText("successfully registered");
+                     if (!num2.isEmpty()){
+                        db.insertPhone(studentId,num2);
+                    }if (!num3.isEmpty()) {
+                        db.insertPhone(studentId,num3);
                     }
+                    xz.setTextFill(Color.GREEN);
+                    xz.setText("successfully registered");
                 }
             }else{
                 xz.setTextFill(Color.RED);
