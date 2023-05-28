@@ -1100,7 +1100,7 @@ public class DBModel {
         }
     }
     public boolean addStudent(String studentId, String studentName, String street, String city, String gender) {
-        String sql = "INSERT INTO students (student_id, student_name, student_address, gender, student_phone) VALUES (?, ?, ROW(?, ?)::address, ?, ?)";
+        String sql = "INSERT INTO students (student_id, student_name, student_address, gender) VALUES (?, ?, ROW(?, ?)::address, ?)";
 
         try (PreparedStatement st = con.prepareStatement(sql)) {
             st.setString(1, studentId);
@@ -1135,42 +1135,6 @@ public class DBModel {
             return false;
         }
     }
-    public boolean insertPhone2(String studentId, String studentPhone1, String studentPhone2) {
-        String sql = "INSERT INTO phone (student_id, student_phone) VALUES (?, ?), (?, ?)";
-        try (PreparedStatement statement = con.prepareStatement(sql)) {
-            statement.setString(1, studentId);
-            statement.setString(2, studentPhone1);
-            statement.setString(3, studentId);
-            statement.setString(4, studentPhone2);
-
-            int rowsAffected = statement.executeUpdate();
-            return rowsAffected > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    public boolean insertPhone3(String studentId, String studentPhone1, String studentPhone2, String studentPhone3) {
-        String sql = "INSERT INTO phone (student_id, student_phone) VALUES (?, ?), (?, ?), (?, ?)";
-        try (PreparedStatement statement = con.prepareStatement(sql)) {
-            statement.setString(1, studentId);
-            statement.setString(2, studentPhone1);
-            statement.setString(3, studentId);
-            statement.setString(4, studentPhone2);
-            statement.setString(5, studentId);
-            statement.setString(6, studentPhone3);
-
-            int rowsAffected = statement.executeUpdate();
-            return rowsAffected > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-
-
 
     public ArrayList<AttendanceSheet> attendanceSheet(String lid, String course_id, String year, String semester, String sec_id) {
         ArrayList<AttendanceSheet> arr = new ArrayList<>();
