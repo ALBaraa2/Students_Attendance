@@ -6,12 +6,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.BorderPane;
+
 
 public class Report {
 
     @FXML
-    private AnchorPane root;
+    private BorderPane root;
 
     DBModel db = new DBModel();
     Navigation nav = new Navigation();
@@ -30,4 +31,10 @@ public class Report {
     void sheetOfAttendance(ActionEvent event) {
         nav.navigateTo(root , nav.ATTENDANCE_SHEET_FXML);
     }
+
+    @FXML
+    void SheetOfLecture(ActionEvent event) {
+        nav.navigateTo(root , nav.SHEET_OF_LECTURE);
+    }
 }
+

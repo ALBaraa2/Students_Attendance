@@ -15,7 +15,7 @@ public class DBModel {
 
     //here our queries method
     public DBModel() {
-        schemaConnect("project");
+        schemaConnect("attendance");
 
     }
 
@@ -29,9 +29,9 @@ public class DBModel {
     public void connect() {
         PGSimpleDataSource source = new PGSimpleDataSource();
         source.setServerName("localhost");
-        source.setDatabaseName("project");
+        source.setDatabaseName("project_database");
         source.setUser("postgres");
-        source.setPassword("123");
+        source.setPassword("feraskhaled30");
         try {
             con = source.getConnection();
             System.out.println("Connected to database");
@@ -1662,6 +1662,7 @@ public class DBModel {
             return null;
         }
     }
+<<<<<<< HEAD
     //حالة الحضور لطالب في مساق معين
     public ArrayList<AttendanceSheet> getAttendanceReport(String course_id, int year, String semester, int sec_id,
                                                           String student) {
@@ -1676,10 +1677,18 @@ public class DBModel {
                 "AND semester = ? " +
                 "AND sec_id = ? " +
                 "AND (student_name = ? OR student_phone = ? OR student_id = ?);";
+=======
+    public ArrayList<String> getLecturesName(String course_id, int year, String semester) {
+        ArrayList<String> lects = new ArrayList<>();
+        String sql = "select lecture_title " +
+                "from lectures " +
+                "where course_id = ? and year = ? and semester = ?;";
+>>>>>>> 9421325fd21253ef7af5c56ef3d49388a5eee5db
         try (PreparedStatement st = con.prepareStatement(sql)) {
             st.setString(1, course_id);
             st.setInt(2, year);
             st.setString(3, semester);
+<<<<<<< HEAD
             st.setInt(4, sec_id);
             st.setString(5, student);
             st.setString(6, student);
@@ -1687,11 +1696,77 @@ public class DBModel {
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 lects.add(new AttendanceSheet(rs.getString(1), rs.getString(2)));
+=======
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                lects.add(rs.getString(1));
+>>>>>>> 9421325fd21253ef7af5c56ef3d49388a5eee5db
             }
             return lects;
         } catch (SQLException ex) {
             Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
             return null;
+<<<<<<< HEAD
+=======
         }
     }
+//حالة الحضور لطالب في مساق معين
+public ArrayList<AttendanceSheet> getAttendanceReport(String course_id, int year, String semester, int sec_id,
+                                                      String lectuerName, String student) {
+    ArrayList<AttendanceSheet> lects = new ArrayList<>();
+    String sql = "SELECT distinct attendance_status " +
+            "FROM attendance " +
+            "JOIN students USING (student_id) " +
+            "JOIN phone USING (student_id) " +
+            "JOIN lectures USING (course_id, year, semester, sec_id) " +
+            "WHERE course_id = ? " +
+            "AND year = ? " +
+            "AND semester = ? " +
+            "AND sec_id = ? " +
+            "AND lecture_title = ? " +
+            "AND (student_name = ? OR student_phone = ? OR student_id = ?);";
+    try (PreparedStatement st = con.prepareStatement(sql)) {
+        st.setString(1, course_id);
+        st.setInt(2, year);
+        st.setString(3, semester);
+        st.setInt(4, sec_id);
+        st.setString(5, lectuerName);
+        st.setString(6, student);
+        st.setString(7, student);
+        st.setString(8, student);
+        ResultSet rs = st.executeQuery();
+        while (rs.next()) {
+            lects.add(new AttendanceSheet(rs.getString(1)));
+>>>>>>> 9421325fd21253ef7af5c56ef3d49388a5eee5db
+        }
+    }
+<<<<<<< HEAD
 }
+=======
+}
+
+    public ArrayList<Lectures> lectureSheet(String email , String LT) {
+        ArrayList<Lectures> arr = new ArrayList<>();
+        String sql = "SELECT DISTINCT lecture_id,  lecture_time, lecture_date,lecture_location, course_id, year, semester, sec_id" +
+                " FROM lectures" +
+                " NATURAL JOIN assist" +
+                " JOIN users ON users.id = assist.assistant_id" +
+                " WHERE users.email = ? AND lecture_title = ?;";
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, email);
+            st.setString(2, LT);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                arr.add(new Lectures(rs.getString(1) ,rs.getTime(2) ,rs.getDate(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getString(7),rs.getInt(8)));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return arr ;
+    }
+
+}
+
+
+
+>>>>>>> 9421325fd21253ef7af5c56ef3d49388a5eee5db
