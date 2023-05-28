@@ -48,7 +48,6 @@ public class Lecture implements Initializable {
     @FXML
     public ComboBox<String> SIcom;
 
-
     @FXML
     private Label massege1;
 
@@ -58,9 +57,9 @@ public class Lecture implements Initializable {
     @FXML
     public ComboBox<String> Ycom;
 
-
     DBModel db = DBModel.getModel();
     Navigation nav = new Navigation();
+    String email = SharedData.getInstance().getEmail();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -75,7 +74,7 @@ public class Lecture implements Initializable {
     }
 
     private void setComboBoxes() {
-        ObservableList<String> ids = FXCollections.observableList(db.getCourseIDs());
+        ObservableList<String> ids = FXCollections.observableList(db.getCourseIDs(email));
         CIcom.setItems(ids);
         CmboBoxAutoComplete.cmboBoxAutoComplete(CIcom , ids);
         CIcom.setOnAction(this::handleCIcomAction);

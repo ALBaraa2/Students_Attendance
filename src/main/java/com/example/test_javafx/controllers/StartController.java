@@ -29,7 +29,6 @@ public class StartController implements Initializable {
     }
 
     public void navToAddSection() {
-        nav.navigateTo(rootPane, nav.ADD_SECTION_FXML);
     }
 
     public void navToEnrollStudent() {
