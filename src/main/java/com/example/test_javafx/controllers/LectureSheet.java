@@ -15,11 +15,15 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class LectureSheet implements Initializable {
+
+    @FXML
+    private AnchorPane root;
 
     @FXML
     private ComboBox<String> LnameCom;
@@ -79,6 +83,10 @@ public class LectureSheet implements Initializable {
     @FXML
     void viewLName(ActionEvent event) {
         table.setItems(FXCollections.observableArrayList(db.lectureSheet(email ,LnameCom.getValue())));
+    }
+    @FXML
+    void back(ActionEvent event) {
+        nav.navigateTo(root , nav.TEACH_ASSISTANT_FXML);
     }
 
 }
