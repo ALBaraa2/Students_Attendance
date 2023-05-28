@@ -15,7 +15,7 @@ public class DBModel {
 
     //here our queries method
     public DBModel() {
-        schemaConnect("project");
+        schemaConnect("proj");
 
     }
 
@@ -31,7 +31,7 @@ public class DBModel {
         source.setServerName("localhost");
         source.setDatabaseName("project");
         source.setUser("postgres");
-        source.setPassword("123");
+        source.setPassword("120202789");
         try {
             con = source.getConnection();
             System.out.println("Connected to database");
