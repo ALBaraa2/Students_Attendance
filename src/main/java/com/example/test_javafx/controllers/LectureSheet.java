@@ -67,7 +67,6 @@ public class LectureSheet implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
         course_id.setCellValueFactory(new PropertyValueFactory<>("course_id"));
         lecture_date.setCellValueFactory(new PropertyValueFactory<>("lecture_date"));
         lecture_id.setCellValueFactory(new PropertyValueFactory<>("lecture_id"));
@@ -86,8 +85,7 @@ public class LectureSheet implements Initializable {
     }
     private void setComboBoxesLecture_name(ActionEvent event) {
         String course_id = courseIDcom.getSelectionModel().getSelectedItem();
-        ObservableList<String> lname = FXCollections.observableList(db.getLecturesName(course_id,
-                Integer.parseInt(y), s));
+        ObservableList<String> lname = FXCollections.observableList(db.getLecturesName(course_id, Integer.parseInt(y), s));
         LnameCom.setItems(lname);
 
     }

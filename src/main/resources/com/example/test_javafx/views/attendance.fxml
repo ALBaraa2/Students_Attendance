@@ -12,9 +12,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.test_javafx.controllers.Attendance">
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="461.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.test_javafx.controllers.Attendance">
    <children>
-      <TableView fx:id="table" layoutY="80.0" prefHeight="276.0" prefWidth="600.0" AnchorPane.bottomAnchor="44.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0">
+      <TableView fx:id="table" layoutY="80.0" prefHeight="292.0" prefWidth="600.0" AnchorPane.bottomAnchor="89.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0">
         <columns>
             <TableColumn fx:id="status" prefWidth="115.20001220703125" text="Attendance Status" />
         </columns>
@@ -24,7 +24,7 @@
             <Font name="Algerian" size="12.0" />
          </font>
       </Button>
-      <ButtonBar blendMode="DIFFERENCE" layoutX="6.0" layoutY="344.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="42.0" prefWidth="464.0" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="6.0">
+      <ButtonBar blendMode="DIFFERENCE" layoutX="6.0" layoutY="372.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="42.0" prefWidth="464.0" AnchorPane.bottomAnchor="47.0" AnchorPane.leftAnchor="6.0">
          <buttons>
             <Button alignment="CENTER" blendMode="LIGHTEN" contentDisplay="CENTER" minWidth="74.0" mnemonicParsing="false" onAction="#AttendanceReport" prefHeight="22.0" style="-fx-background-radius: 20;" text="Attendance report" textFill="#2cad21">
                <font>
@@ -64,5 +64,10 @@
             <Insets left="7.0" />
          </padding>
       </HBox>
+      <Button alignment="CENTER" blendMode="MULTIPLY" contentDisplay="CENTER" layoutX="150.0" layoutY="425.0" mnemonicParsing="false" onAction="#xlsx" prefHeight="26.0" prefWidth="254.0" text="xlsx" textFill="#030303" fx:id="xlx">
+         <font>
+            <Font name="Algerian" size="12.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
