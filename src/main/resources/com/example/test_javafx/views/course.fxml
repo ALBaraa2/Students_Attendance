@@ -58,7 +58,7 @@
             </Button>
          </buttons>
       </ButtonBar>
-      <Label fx:id="massege" alignment="TOP_LEFT" layoutX="18.0" layoutY="389.0" prefHeight="26.0" prefWidth="466.0" text="Note: Double click on the course to delete" textFill="#0dfdff">
+      <Label fx:id="massege" alignment="TOP_LEFT" layoutX="18.0" layoutY="389.0" prefHeight="26.0" prefWidth="466.0" text="Note: Double click on the course to delete" textFill="#0dfdff" AnchorPane.bottomAnchor="50.6" AnchorPane.leftAnchor="18.0">
          <font>
             <Font size="16.0" />
          </font>

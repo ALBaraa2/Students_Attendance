@@ -13,7 +13,7 @@
 
 <AnchorPane fx:id="root" prefHeight="394.0" prefWidth="617.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.test_javafx.controllers.AttendanceSheet">
    <children>
-      <TableView fx:id="sheet" layoutY="-6.0" prefHeight="274.0" prefWidth="482.0" style="-fx-border-color: #fff;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="135.0" AnchorPane.topAnchor="-6.0">
+      <TableView fx:id="sheet" layoutY="-6.0" prefHeight="274.0" prefWidth="482.0" style="-fx-border-color: #fff;" AnchorPane.bottomAnchor="119.60000000000002" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="134.60000000000002" AnchorPane.topAnchor="0.0">
         <columns>
           <TableColumn fx:id="student_name" prefWidth="126.0" styleClass="show-hide-columns-button" text="student_name" />
           <TableColumn fx:id="student_id" prefWidth="115.0" styleClass="show-hide-columns-button" text="student_id" />
@@ -28,7 +28,7 @@
          <font>
             <Font size="16.0" />
          </font></Label>
-      <VBox layoutY="273.0" prefHeight="122.0" prefWidth="308.0" spacing="19.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="273.0">
+      <VBox layoutY="273.0" prefHeight="122.0" prefWidth="308.0" spacing="19.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
          <children>
             <HBox prefHeight="25.0" prefWidth="311.0">
                <children>
@@ -62,7 +62,7 @@
             </HBox>
          </children>
       </VBox>
-      <VBox layoutX="483.0" prefHeight="243.0" prefWidth="134.0" spacing="28.0" AnchorPane.leftAnchor="483.0" AnchorPane.rightAnchor="0.0">
+      <VBox layoutX="483.0" prefHeight="274.0" prefWidth="134.0" spacing="28.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <ComboBox fx:id="course_idCom" prefHeight="25.0" prefWidth="137.0" promptText="course id" stylesheets="@style.css">
                <styleClass>

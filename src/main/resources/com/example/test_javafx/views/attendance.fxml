@@ -20,7 +20,7 @@
             <TableColumn fx:id="lecture_title" prefWidth="115.20001220703125" text="Lecture Title" />
         </columns>
       </TableView>
-      <Button alignment="CENTER" blendMode="MULTIPLY" contentDisplay="CENTER" layoutX="526.0" layoutY="364.0" mnemonicParsing="false" onAction="#back" prefHeight="26.0" prefWidth="60.0" text="Back" textFill="#030303" AnchorPane.bottomAnchor="9.600000000000023" AnchorPane.leftAnchor="526.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="425.0">
+      <Button alignment="CENTER" blendMode="MULTIPLY" contentDisplay="CENTER" layoutX="526.0" layoutY="364.0" mnemonicParsing="false" onAction="#back" prefHeight="26.0" prefWidth="60.0" text="Back" textFill="#030303" AnchorPane.bottomAnchor="9.600000000000023" AnchorPane.rightAnchor="14.0">
          <font>
             <Font name="Algerian" size="12.0" />
          </font>
@@ -65,10 +65,9 @@
             <Insets left="7.0" />
          </padding>
       </HBox>
-      <Button alignment="CENTER" blendMode="MULTIPLY" contentDisplay="CENTER" layoutX="110.0" layoutY="425.0" mnemonicParsing="false" onAction="#xlsx" prefHeight="26.0" prefWidth="254.0" text="xlsx" textFill="#030303" AnchorPane.bottomAnchor="9.600000000000001" AnchorPane.leftAnchor="109.99999999999997" AnchorPane.rightAnchor="235.6" AnchorPane.topAnchor="425.0" fx:id="xlx">
+      <Button alignment="CENTER" blendMode="MULTIPLY" contentDisplay="CENTER" layoutX="72.0" layoutY="425.0" mnemonicParsing="false" onAction="#xlsx" prefHeight="28.0" prefWidth="327.0" style="-fx-background-color: #21682d; -fx-background-radius: 15;" text="Attendance Registration by xlsx file" textFill="#d9e4da" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="72.0">
          <font>
-            <Font name="Algerian" size="12.0" />
-         </font>
-      </Button>
+            <Font name="Algerian" size="15.0" />
+         </font></Button>
    </children>
 </AnchorPane>

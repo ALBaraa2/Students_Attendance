@@ -51,14 +51,14 @@
       </ButtonBar>
       <ComboBox fx:id="CIcom" layoutX="503.0" layoutY="1.0" prefHeight="26.0" prefWidth="106.0" promptText="Course id" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <ComboBox fx:id="SIcom" layoutX="493.0" layoutY="284.0" prefHeight="26.0" prefWidth="106.0" promptText="Section_id" AnchorPane.rightAnchor="0.6000000000000227" />
-      <Label fx:id="massege1" alignment="CENTER" layoutY="364.0" prefHeight="34.0" prefWidth="494.0" visible="false">
+      <Label fx:id="massege1" alignment="CENTER" layoutY="364.0" prefHeight="34.0" prefWidth="494.0" visible="false" AnchorPane.bottomAnchor="46.6" AnchorPane.leftAnchor="0.0">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
       <ComboBox fx:id="Ycom" layoutX="493.0" layoutY="94.0" prefHeight="25.0" prefWidth="106.0" promptText="Year" AnchorPane.rightAnchor="0.6000000000000227" />
       <ComboBox fx:id="Scom" layoutX="493.0" layoutY="187.0" prefHeight="26.0" prefWidth="106.0" promptText="Semester" AnchorPane.rightAnchor="0.6000000000000227" />
-      <Label layoutX="14.0" layoutY="337.0" prefHeight="18.0" prefWidth="373.0" text="Note: Double click on the lecture to delete">
+      <Label layoutX="14.0" layoutY="337.0" prefHeight="18.0" prefWidth="373.0" text="Note: Double click on the lecture to delete" AnchorPane.bottomAnchor="81.6" AnchorPane.leftAnchor="14.0">
          <font>
             <Font size="17.0" />
          </font>

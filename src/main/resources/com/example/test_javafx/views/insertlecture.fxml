@@ -11,24 +11,23 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
 <BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.test_javafx.controllers.InsertLecture">
    <center>
       <AnchorPane prefHeight="500.0" prefWidth="350.0" style="-fx-background-color: #da7227;" BorderPane.alignment="CENTER">
          <children>
-            <Text fill="#fffefe" layoutX="2.0" layoutY="257.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Insert Lecture" textAlignment="CENTER" wrappingWidth="312.93670654296875">
+            <Label alignment="CENTER" layoutY="225.0" prefHeight="50.0" prefWidth="350.0" text="Insert Lecture" textFill="WHITE" AnchorPane.bottomAnchor="224.6" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="225.0">
                <font>
-                  <Font name="System Italic" size="20.0" />
+                  <Font name="System Italic" size="33.0" />
                </font>
-            </Text>
+            </Label>
          </children>
       </AnchorPane>
    </center>
    <right>
       <AnchorPane prefHeight="500.0" prefWidth="382.0" style="-fx-background-color: #a89696;" BorderPane.alignment="CENTER">
          <children>
-            <VBox alignment="CENTER" layoutY="71.0" prefHeight="358.0" prefWidth="384.0" spacing="35.0" AnchorPane.bottomAnchor="71.0" AnchorPane.topAnchor="71.0">
+            <VBox alignment="CENTER" layoutY="5.0" prefHeight="494.0" prefWidth="384.0" spacing="35.0" AnchorPane.bottomAnchor="1.0" AnchorPane.topAnchor="5.0">
                <children>
                   <HBox prefHeight="15.0" prefWidth="266.0" spacing="46.0">
                      <children>
@@ -82,6 +81,15 @@
                         <TextField fx:id="location" prefHeight="26.0" prefWidth="197.0" />
                      </children>
                   </HBox>
+                  <HBox prefHeight="26.0" prefWidth="347.0" spacing="100.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#done" prefHeight="26.0" prefWidth="54.0" style="-fx-background-color: #000000;" text="Done" textFill="#00ff5e" />
+                        <Button mnemonicParsing="false" onAction="#backToLecture" prefHeight="26.0" prefWidth="58.0" style="-fx-background-color: #000000;" text="Back" textFill="RED" />
+                     </children>
+                     <padding>
+                        <Insets left="73.0" />
+                     </padding>
+                  </HBox>
                   <Label fx:id="massege" alignment="CENTER" prefHeight="45.0" prefWidth="272.0" visible="false">
                      <font>
                         <Font size="18.0" />
@@ -92,15 +100,6 @@
                   <Insets left="17.0" right="17.0" top="14.0" />
                </padding>
             </VBox>
-            <HBox layoutX="29.0" layoutY="423.0" prefHeight="26.0" prefWidth="347.0" spacing="100.0">
-               <children>
-                  <Button mnemonicParsing="false" onAction="#done" prefHeight="26.0" prefWidth="54.0" style="-fx-background-color: #000000;" text="Done" textFill="#00ff5e" />
-                  <Button mnemonicParsing="false" onAction="#backToLecture" prefHeight="26.0" prefWidth="58.0" style="-fx-background-color: #000000;" text="Back" textFill="RED" />
-               </children>
-               <padding>
-                  <Insets left="73.0" />
-               </padding>
-            </HBox>
          </children>
       </AnchorPane>
    </right>
