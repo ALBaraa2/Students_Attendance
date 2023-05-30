@@ -16,7 +16,6 @@ public class DBModel {
     //here our queries method
     public DBModel() {
         schemaConnect("attendance");
-
     }
 
     public static DBModel getModel() {
@@ -872,16 +871,20 @@ public class DBModel {
     }
 
     public void addEnrollment(String course, String year, String semester, String assistantId) {
-        String sql = "INSERT INTO assist (course_id, year, semester, assistant_id) VALUES (?, ?, ?, ?)";
-
-        try (PreparedStatement st = con.prepareStatement(sql)) {
-            st.setString(1, course);
-            st.setInt(2, Integer.parseInt(year));
-            st.setString(3, semester);
-            st.setInt(4, Integer.parseInt(assistantId));
-            st.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+        ArrayList<String> sec_ids = getSecIds(course,Integer.parseInt(year),semester);
+        for (String sec_id : sec_ids) {
+            System.out.println(sec_id);
+            String sql = "INSERT INTO assist (course_id, year, semester, assistant_id,sec_id) VALUES (?, ?, ?, ?,?)";
+            try (PreparedStatement st = con.prepareStatement(sql)) {
+                st.setString(1, course);
+                st.setInt(2, Integer.parseInt(year));
+                st.setString(3, semester);
+                st.setInt(4, Integer.parseInt(assistantId));
+                st.setInt(5, Integer.parseInt(sec_id));
+                st.executeUpdate();
+            } catch (SQLException ex) {
+                Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 
@@ -933,28 +936,23 @@ public class DBModel {
 
     public boolean checkEnrollments(String course, String year, String semester) {
         String sql = "SELECT COUNT(*) FROM assist WHERE course_id = ? AND year = ? AND semester = ?";
-
         try (PreparedStatement st = con.prepareStatement(sql)) {
             st.setString(1, course);
             st.setInt(2, Integer.parseInt(year));
             st.setString(3, semester);
-
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
                 int count = rs.getInt(1);
-                return count == 1;
+                return count > 0;
             }
         } catch (SQLException ex) {
             Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         return false;
     }
 
     public boolean checkEnrollmentsStudent(String Studentid,String course, String year, String semester, String sec) {//تفحص هل طالب موجود بنفس الidوالCidو yearو semesterوsecفى جدول الenrollments
-
         String sql = "SELECT COUNT(*) FROM enrollments WHERE student_id = ? AND course_id = ? AND year = ? AND semester = ? AND sec_id = ?";
-
         try (PreparedStatement st = con.prepareStatement(sql)) {
             st.setString(1, Studentid);
             st.setString(2, course);
@@ -965,12 +963,11 @@ public class DBModel {
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
                 int count = rs.getInt(1);
-                return count == 1;
+                return count >0;
             }
         } catch (SQLException ex) {
             Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         return false;
     }
 
@@ -1607,7 +1604,7 @@ public class DBModel {
     public ArrayList<String> getStudents(String course_id, String email, String sec_id) {
         ArrayList<String> arr = new ArrayList<>();
         String sql = "select distinct student_id, student_phone, student_name" +
-                " from attendance natural join phone natural join students" +
+                " from enrollments natural join phone natural join students" +
                 " where course_id = ? and year = CAST(? as INTEGER) and semester = ? and sec_id = CAST(? as INTEGER);";
         try (PreparedStatement st = con.prepareStatement(sql)) {
             st.setString(1, course_id);
@@ -1737,6 +1734,7 @@ public class DBModel {
         }
         return arr ;
     }
+
 }
 
 

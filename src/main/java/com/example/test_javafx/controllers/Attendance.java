@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import org.apache.poi.ss.usermodel.Cell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -20,8 +21,10 @@ import javafx.scene.paint.Color;
 
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.apache.poi.ss.usermodel.*;
 
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -158,12 +161,41 @@ public class Attendance implements Initializable {
             // الحصول على الملف المختار عند النقر على زر "Open"
             java.io.File selectedFile = fileChooser.showOpenDialog(fileChooserStage);
             if (selectedFile != null) {
-                System.out.println("Selected File: " + selectedFile.getAbsolutePath());
+                readExcelFile(selectedFile.getAbsolutePath());
             } else {
                 System.out.println("No file selected.");
             }
 
         });
 
+    }
+    public void readExcelFile(String filePath) {
+        try {
+            // تحميل ملف Excel
+            Workbook workbook = WorkbookFactory.create(new File(filePath));
+
+            // افتح صفحة العمل الأولى
+            Sheet sheet = workbook.getSheetAt(0);
+
+            // قم بتصفح الصفوف والأعمدة واطبع قيمة كل خلية
+            for (Row row : sheet) {
+                for (Cell cell : row) {
+                    CellType cellType = cell.getCellType();
+                    if (cellType == CellType.STRING) {
+                        System.out.print(cell.getStringCellValue() + "\t");
+                    } else if (cellType == CellType.NUMERIC) {
+                        db.attendance(String.valueOf(cell.getNumericCellValue()),courseID.getValue(),email,sec_id.getValue(),LName.getValue());
+                    } else if (cellType == CellType.BLANK) {
+                        System.out.print("BLANK\t");
+                    }
+                }
+                System.out.println();
+            }
+
+            // أغلق ملف Excel
+            workbook.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
