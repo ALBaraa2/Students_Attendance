@@ -27,12 +27,12 @@
       </Button>
       <ButtonBar blendMode="DIFFERENCE" layoutX="6.0" layoutY="372.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="42.0" prefWidth="464.0" AnchorPane.bottomAnchor="47.0" AnchorPane.leftAnchor="6.0">
          <buttons>
-            <Button alignment="CENTER" blendMode="LIGHTEN" contentDisplay="CENTER" minWidth="74.0" mnemonicParsing="false" onAction="#AttendanceReport" prefHeight="22.0" style="-fx-background-radius: 20;" text="Attendance report" textFill="#2cad21">
+            <Button alignment="CENTER" blendMode="LIGHTEN" contentDisplay="CENTER" minWidth="74.0" mnemonicParsing="false" onAction="#AttendanceReport" prefHeight="22.0" style="-fx-background-radius: 20;" text="Attendance report" textFill="#8d22ab">
                <font>
                   <Font name="Algerian" size="12.0" />
                </font>
             </Button>
-            <Button alignment="CENTER" blendMode="LIGHTEN" contentDisplay="CENTER" mnemonicParsing="false" onAction="#Checkin" prefHeight="22.0" prefWidth="218.0" style="-fx-background-radius: 20;" stylesheets="@style.css" text="Attendance Registration" textFill="#2cad21">
+            <Button alignment="CENTER" blendMode="LIGHTEN" contentDisplay="CENTER" mnemonicParsing="false" onAction="#Checkin" prefHeight="22.0" prefWidth="218.0" style="-fx-background-radius: 20;" stylesheets="@style.css" text="Attendance Registration" textFill="#8d22ab">
                <font>
                   <Font name="Algerian" size="12.0" />
                </font>
@@ -65,7 +65,7 @@
             <Insets left="7.0" />
          </padding>
       </HBox>
-      <Button alignment="CENTER" blendMode="MULTIPLY" contentDisplay="CENTER" layoutX="150.0" layoutY="425.0" mnemonicParsing="false" onAction="#xlsx" prefHeight="26.0" prefWidth="254.0" text="xlsx" textFill="#030303" fx:id="xlx">
+      <Button alignment="CENTER" blendMode="MULTIPLY" contentDisplay="CENTER" layoutX="72.0" layoutY="425.0" mnemonicParsing="false" onAction="#xlsx" prefHeight="26.0" prefWidth="307.0" style="-fx-background-color: #21682d; -fx-background-radius: 15;" text="Attendance Registration by xlsx file" textFill="#d9e4da" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="72.0" fx:id="xlx">
          <font>
             <Font name="Algerian" size="12.0" />
          </font>
