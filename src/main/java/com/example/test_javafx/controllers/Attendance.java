@@ -151,12 +151,9 @@ public class Attendance implements Initializable {
             // تحديد نوع الملفات المسموح بها
             fileChooser.getExtensionFilters().addAll(
                     new FileChooser.ExtensionFilter("Text Files", "*.xlsx")
-
             );
             Stage fileChooserStage = new Stage();
             fileChooserStage.setTitle("File Chooser");
-
-
             // الحصول على الملف المختار عند النقر على زر "Open"
             java.io.File selectedFile = fileChooser.showOpenDialog(fileChooserStage);
             System.out.println(selectedFile.getAbsolutePath());
@@ -167,7 +164,6 @@ public class Attendance implements Initializable {
             }
 
         });
-
     }
     //قراءة id الطالب من ملف اكسيل ووضع الطالب في حالة حضور
     public void readExcelFile(String filePath) {
@@ -193,7 +189,6 @@ public class Attendance implements Initializable {
                 }
                 System.out.println();
             }
-
             // أغلق ملف Excel
             workbook.close();
         } catch (Exception e) {

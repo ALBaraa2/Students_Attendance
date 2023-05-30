@@ -15,7 +15,7 @@ public class DBModel {
 
     //here our queries method
     public DBModel() {
-        schemaConnect("attendance");
+        schemaConnect("project");
     }
 
     public static DBModel getModel() {
@@ -28,9 +28,9 @@ public class DBModel {
     public void connect() {
         PGSimpleDataSource source = new PGSimpleDataSource();
         source.setServerName("localhost");
-        source.setDatabaseName("project_database");
+        source.setDatabaseName("project");
         source.setUser("postgres");
-        source.setPassword("feraskhaled30");
+        source.setPassword("123");
 
 
         try {
@@ -562,18 +562,17 @@ public class DBModel {
         }
     }
 
-    public ArrayList<Courses> getCourses(String year, String semester) {
+    public ArrayList<Courses> getCourses() {
         ArrayList<Courses> c = new ArrayList<>();
-        String sql = "select distinct course_id, instructor_name, course_name, course_location"
-                + " from courses natural join section"
-                + " where year = CAST(? as INTEGER) and semester = ? ;";
-        try (PreparedStatement st = con.prepareStatement(sql)) {
-            st.setString(1, year);
-            st.setString(2, semester);
-            ResultSet rs = st.executeQuery();
+        String sql = "SELECT c.course_id, instructor_name, c.course_name, c.course_location, year, semester, sec_id" +
+                " FROM courses c" +
+                " JOIN section ON c.course_id = section.course_id;";
+        try (Statement st = con.createStatement();
+             ResultSet rs = st.executeQuery(sql)
+        ) {
             while (rs.next()) {
                 c.add(new Courses(rs.getString(1), rs.getString(2), rs.getString(3),
-                        rs.getString(4)));
+                        rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7)));
             }
             return c;
         } catch (SQLException ex) {
@@ -615,12 +614,13 @@ public class DBModel {
     }
 
 
-    public ArrayList<String> getCourseIDsFromAttendance() {
+    public ArrayList<String> getCourseIDsFromAttendance(String email) {
         ArrayList<String> ids = new ArrayList<>();
-        String sql = "select distinct course_id from attendance;";
-        try (Statement st = con.createStatement();
-             ResultSet rs = st.executeQuery(sql)
-        ) {
+        String sql = "select distinct course_id from attendance natural join assist join users on (assist.assistant_id = users.id)" +
+                " Where email = ?;";
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, email);
+            ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 ids.add(rs.getString(1));
             }
@@ -1029,11 +1029,14 @@ public class DBModel {
         }
     }
 
-    public boolean deleteCourse(String cid) {
-        String sql = "DELETE FROM courses" +
-                " WHERE course_id = ? ;";
+    public boolean deleteCourseSection(String cid, String year, String semester, String sec_id) {
+        String sql = "DELETE FROM section" +
+                " WHERE course_id = ? and year = CAST(? as integer) and semester = ? and sec_id = CAST(? as integer);";
         try (PreparedStatement st = con.prepareStatement(sql)) {
             st.setString(1, cid);
+            st.setString(2, year);
+            st.setString(3, semester);
+            st.setString(4, sec_id);
             int rowsDeleted = st.executeUpdate();
             if (rowsDeleted > 0) {
                 return true;
@@ -1494,7 +1497,11 @@ public class DBModel {
 
     //ايجاد السنة والفصل التي يقوم بالاشراف عليها من قبل المعيد الذي يدخل البرنامج
     public String[] getYearSemester(String email) {
-        String sql = "select year, semester from users join assist on(users.id = assist.assistant_id) where email = ? limit 1;";
+        String sql = "SELECT year, semester" +
+                " from users join assist on(users.id = assist.assistant_id)" +
+                " where email = ?" +
+                " ORDER BY year DESC, semester" +
+                " limit 1;";
         String[] s = new String[2];
         try (PreparedStatement st = con.prepareStatement(sql)) {
             st.setString(1, email);
@@ -1504,6 +1511,7 @@ public class DBModel {
                 s[1] = rs.getString(2);
                 return s;
             }
+            System.out.println(rs.getString(1));
             return null;
         } catch (SQLException ex) {
             Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
@@ -1732,7 +1740,6 @@ public class DBModel {
         }
         return arr ;
     }
-
 }
 
 

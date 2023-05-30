@@ -4,6 +4,7 @@ import com.example.test_javafx.Navigation;
 import com.example.test_javafx.models.CmboBoxAutoComplete;
 import com.example.test_javafx.models.DBModel;
 import com.example.test_javafx.models.Lectures;
+import com.example.test_javafx.models.SharedData;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -67,8 +68,8 @@ public class AttendanceSheet implements Initializable  {
     private Label student_count;
 
     DBModel db = new DBModel();
-
     Navigation nav = new Navigation();
+    String email = SharedData.getInstance().getEmail();
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         student_name.setCellValueFactory(new PropertyValueFactory<>("student_name"));
@@ -77,7 +78,7 @@ public class AttendanceSheet implements Initializable  {
         setComboBoxes();
     }
     private void setComboBoxes() {
-        ObservableList<String> ids = FXCollections.observableList(db.getCourseIDsFromAttendance());
+        ObservableList<String> ids = FXCollections.observableList(db.getCourseIDsFromAttendance(email));
         course_idCom.setItems(ids);
         CmboBoxAutoComplete.cmboBoxAutoComplete(course_idCom , ids);
         course_idCom.setOnAction(this::handleCIcomAction);
@@ -134,7 +135,6 @@ public class AttendanceSheet implements Initializable  {
         }
     }
 
-
     @FXML
     void view(ActionEvent event) {
         if (course_idCom.getValue() == null || sec_idCom.getValue() == null||lecture_idCom.getValue() == null || yearCom.getValue() == null || semesterCom.getValue()== null){
@@ -157,7 +157,6 @@ public class AttendanceSheet implements Initializable  {
             student_count.setText(db.student_count(lecture_idCom.getValue(),course_idCom.getValue() ,yearCom.getValue(),semesterCom.getValue(), sec_idCom.getValue()));
             attendance_count.setText(db.attendance_count(lecture_idCom.getValue(),course_idCom.getValue() ,yearCom.getValue(),semesterCom.getValue(), sec_idCom.getValue()));
         }
-
     }
     @FXML
     void back(ActionEvent event) {

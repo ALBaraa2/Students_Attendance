@@ -12,14 +12,14 @@
       <Button layoutX="35.0" layoutY="412.0" mnemonicParsing="false" onAction="#viewLName" text="View lecture sheet" />
       <TableView fx:id="table" layoutY="77.0" prefHeight="283.0" prefWidth="750.0">
         <columns>
-          <TableColumn fx:id="lecture_id" prefWidth="75.0" text="lecture_id" />
-            <TableColumn fx:id="lecture_date" prefWidth="75.0" text="lecture_date" />
-            <TableColumn fx:id="lecture_time" prefWidth="75.0" text="lecture_time" />
-            <TableColumn fx:id="lecture_location" prefWidth="105.0" text="lecture_location" />
-            <TableColumn fx:id="course_id" prefWidth="93.0" text="course_id" />
-            <TableColumn fx:id="year" prefWidth="87.0" text="year" />
-            <TableColumn fx:id="semester" prefWidth="71.0" text="semester" />
-            <TableColumn fx:id="sec_id" prefWidth="93.0" text="sec_id" />
+          <TableColumn fx:id="lecture_id" prefWidth="75.0" text="Lecture_id" />
+            <TableColumn fx:id="lecture_date" prefWidth="74.40008544921875" text="Date" />
+            <TableColumn fx:id="lecture_time" prefWidth="84.800048828125" text="Time" />
+            <TableColumn fx:id="lecture_location" prefWidth="70.40003967285156" text="Location" />
+            <TableColumn fx:id="course_id" prefWidth="124.79998779296875" text="Course_id" />
+            <TableColumn fx:id="year" prefWidth="87.0" text="Year" />
+            <TableColumn fx:id="semester" prefWidth="71.0" text="Semester" />
+            <TableColumn fx:id="sec_id" prefWidth="62.40008544921875" text="Sec_id" />
         </columns>
       </TableView>
       <Button layoutX="319.0" layoutY="412.0" mnemonicParsing="false" onAction="#back" text="BACK" />

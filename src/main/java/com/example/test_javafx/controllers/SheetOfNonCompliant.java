@@ -4,6 +4,7 @@ import com.example.test_javafx.Navigation;
 import com.example.test_javafx.models.AttendanceSheet;
 import com.example.test_javafx.models.CmboBoxAutoComplete;
 import com.example.test_javafx.models.DBModel;
+import com.example.test_javafx.models.SharedData;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
@@ -48,8 +49,8 @@ public class SheetOfNonCompliant implements Initializable {
     private Label error;
 
     DBModel db = new DBModel();
-
     Navigation nav = new Navigation();
+    String email = SharedData.getInstance().getEmail();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -60,7 +61,7 @@ public class SheetOfNonCompliant implements Initializable {
 
 
     private void setComboBoxes() {
-        ObservableList<String> ids = FXCollections.observableList(db.getCourseIDs());
+        ObservableList<String> ids = FXCollections.observableList(db.getCourseIDsFromAttendance(email));
         CmboBoxAutoComplete.cmboBoxAutoComplete(courseIdCom , ids);
     }
     @FXML
