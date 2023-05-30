@@ -15,7 +15,7 @@ public class DBModel {
 
     //here our queries method
     public DBModel() {
-        schemaConnect("proj");
+        schemaConnect("project");
 
     }
 
@@ -31,7 +31,7 @@ public class DBModel {
         source.setServerName("localhost");
         source.setDatabaseName("project");
         source.setUser("postgres");
-        source.setPassword("120202789");
+        source.setPassword("123");
 
 
         try {
@@ -872,16 +872,20 @@ public class DBModel {
     }
 
     public void addEnrollment(String course, String year, String semester, String assistantId) {
-        String sql = "INSERT INTO assist (course_id, year, semester, assistant_id) VALUES (?, ?, ?, ?)";
-
-        try (PreparedStatement st = con.prepareStatement(sql)) {
-            st.setString(1, course);
-            st.setInt(2, Integer.parseInt(year));
-            st.setString(3, semester);
-            st.setInt(4, Integer.parseInt(assistantId));
-            st.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+        ArrayList<String> sec_ids = getSecIds(course,Integer.parseInt(year),semester);
+        for (String sec_id : sec_ids) {
+            System.out.println(sec_id);
+            String sql = "INSERT INTO assist (course_id, year, semester, assistant_id,sec_id) VALUES (?, ?, ?, ?,?)";
+            try (PreparedStatement st = con.prepareStatement(sql)) {
+                st.setString(1, course);
+                st.setInt(2, Integer.parseInt(year));
+                st.setString(3, semester);
+                st.setInt(4, Integer.parseInt(assistantId));
+                st.setInt(5, Integer.parseInt(sec_id));
+                st.executeUpdate();
+            } catch (SQLException ex) {
+                Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 
@@ -933,28 +937,23 @@ public class DBModel {
 
     public boolean checkEnrollments(String course, String year, String semester) {
         String sql = "SELECT COUNT(*) FROM assist WHERE course_id = ? AND year = ? AND semester = ?";
-
         try (PreparedStatement st = con.prepareStatement(sql)) {
             st.setString(1, course);
             st.setInt(2, Integer.parseInt(year));
             st.setString(3, semester);
-
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
                 int count = rs.getInt(1);
-                return count == 1;
+                return count > 0;
             }
         } catch (SQLException ex) {
             Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         return false;
     }
 
     public boolean checkEnrollmentsStudent(String Studentid,String course, String year, String semester, String sec) {//تفحص هل طالب موجود بنفس الidوالCidو yearو semesterوsecفى جدول الenrollments
-
         String sql = "SELECT COUNT(*) FROM enrollments WHERE student_id = ? AND course_id = ? AND year = ? AND semester = ? AND sec_id = ?";
-
         try (PreparedStatement st = con.prepareStatement(sql)) {
             st.setString(1, Studentid);
             st.setString(2, course);
@@ -965,12 +964,11 @@ public class DBModel {
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
                 int count = rs.getInt(1);
-                return count == 1;
+                return count >0;
             }
         } catch (SQLException ex) {
             Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         return false;
     }
 
@@ -1737,4 +1735,6 @@ public class DBModel {
         }
         return arr ;
     }
+
+
 }
