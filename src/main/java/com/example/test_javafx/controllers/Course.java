@@ -1,11 +1,9 @@
 package com.example.test_javafx.controllers;
 
 import com.example.test_javafx.Navigation;
-import com.example.test_javafx.models.CmboBoxAutoComplete;
 import com.example.test_javafx.models.Courses;
 import com.example.test_javafx.models.DBModel;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,7 +16,6 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.paint.Color;
 
 public class Course implements Initializable {
     @FXML
@@ -43,13 +40,16 @@ public class Course implements Initializable {
     private TableView<Courses> courses;
 
     @FXML
-    private ComboBox<String> semester;
-
-    @FXML
-    private ComboBox<String> year;
-
-    @FXML
     private Label massege;
+
+    @FXML
+    private TableColumn<?, ?> sec_id;
+
+    @FXML
+    private TableColumn<?, ?> semester;
+
+    @FXML
+    private TableColumn<?, ?> year;
 
 
     DBModel db = DBModel.getModel();
@@ -61,24 +61,12 @@ public class Course implements Initializable {
         instructor_name.setCellValueFactory(new PropertyValueFactory<>("instructor_name"));
         course_location.setCellValueFactory(new PropertyValueFactory<>("course_location"));
         course_name.setCellValueFactory(new PropertyValueFactory<>("course_name"));
+        year.setCellValueFactory(new PropertyValueFactory<>("year"));
+        semester.setCellValueFactory(new PropertyValueFactory<>("semester"));
+        sec_id.setCellValueFactory(new PropertyValueFactory<>("sec_id"));
         doubleClick(courses);
-        setComboBoxes();
     }
 
-    private void setComboBoxes() {
-        ObservableList<String> years = FXCollections.observableList(db.getYears());
-        year.setItems(years);
-        year.setOnAction(this::handleSAction);
-    }
-
-    @FXML
-    private void handleSAction(ActionEvent event) {
-        if (year.getValue() != null) {
-            String selectedYear = year.getSelectionModel().getSelectedItem();
-            ObservableList<String> semesters = FXCollections.observableList(db.getSemesters(selectedYear));
-            semester.setItems(semesters);
-        }
-    }
     @FXML
     void backFromCourse(ActionEvent event) {
         nav.navigateTo(root, nav.ADMIN_FXML);
@@ -96,20 +84,14 @@ public class Course implements Initializable {
 
     @FXML
     void viewCourses(ActionEvent event) {
-        if (year.getValue() != null && semester.getValue() != null) {
-            massege.setVisible(false);
-            courses.setItems(FXCollections.observableArrayList(db.getCourses(year.getValue(), semester.getValue())));
-        } else {
-            massege.setText("Select Year and Semester");
-            massege.setTextFill(Color.RED);
-            massege.setVisible(true);
-        }
+        courses.setItems(FXCollections.observableArrayList(db.getCourses()));
     }
 
     @FXML
     void insertSection(ActionEvent event) {
         nav.navigateTo(root, nav.ADD_SECTION_FXML);
     }
+
     public void doubleClick(TableView<Courses> courses) {
         ButtonType buttonCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
         courses.setRowFactory(tv -> {
@@ -120,12 +102,11 @@ public class Course implements Initializable {
                     Optional<ButtonType> result = showAlert("Are You sure delete " + rowData.getCourse_id());
                     if (result.isPresent()) {
                         if (result.get() == ButtonType.OK) {
-                            db.deleteCourse(rowData.getCourse_id());
+                            db.deleteCourseSection(rowData.getCourse_id(),rowData.getYear(),rowData.getSemester(),rowData.getSec_id());
                             nav.navigateTo(root, nav.COURSE_FXML);
                             view.setOnAction(this::viewCourses);
                         } else if (result.get() == buttonCancel) {
                             nav.navigateTo(root, nav.COURSE_FXML);
-                            courses.setItems(FXCollections.observableArrayList(db.getCourses(year.getValue(), semester.getValue())));
                         }
                     }
                 }

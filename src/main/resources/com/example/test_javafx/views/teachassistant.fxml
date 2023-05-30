@@ -24,10 +24,22 @@
          <children>
             <VBox layoutX="41.0" layoutY="78.0" spacing="30.0" AnchorPane.bottomAnchor="77.20000000000005" AnchorPane.leftAnchor="41.0" AnchorPane.rightAnchor="42.0" AnchorPane.topAnchor="78.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#editLectures" prefHeight="38.0" prefWidth="217.0" text="Add and edit lectures" />
-                  <Button mnemonicParsing="false" onAction="#editStudant" prefHeight="38.0" prefWidth="217.0" text="Registration and editing of students " />
-                  <Button mnemonicParsing="false" onAction="#attendance" prefHeight="38.0" prefWidth="217.0" text="Attendance Registration" />
-                  <Button mnemonicParsing="false" onAction="#reports" prefHeight="38.0" prefWidth="217.0" text="Extraction of reports and statements" />
+                  <Button mnemonicParsing="false" onAction="#editLectures" prefHeight="38.0" prefWidth="217.0" style="-fx-background-radius: 20;" styleClass="green" stylesheets="@style.css" text="Add and edit lectures" textFill="#055173">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Button>
+                  <Button mnemonicParsing="false" onAction="#editStudant" prefHeight="38.0" prefWidth="217.0" style="-fx-background-radius: 20;" styleClass="green" stylesheets="@style.css" text="Registration and editing of students " textFill="#055173">
+                     <font>
+                        <Font name="System Bold" size="11.0" />
+                     </font></Button>
+                  <Button mnemonicParsing="false" onAction="#attendance" prefHeight="38.0" prefWidth="217.0" style="-fx-background-radius: 20;" styleClass="green" stylesheets="@style.css" text="Attendance Registration" textFill="#055173">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Button>
+                  <Button mnemonicParsing="false" onAction="#reports" prefHeight="38.0" prefWidth="217.0" style="-fx-background-radius: 20;" styleClass="green" stylesheets="@style.css" text="Extraction of reports and statements" textFill="#055173">
+                     <font>
+                        <Font name="System Bold" size="11.0" />
+                     </font></Button>
                </children>
             </VBox>
             <Button layoutX="119.0" layoutY="355.0" mnemonicParsing="false" onAction="#backToLogin" prefHeight="30.0" prefWidth="58.0" style="-fx-background-color: #000000;" text="Back" textFill="RED" />

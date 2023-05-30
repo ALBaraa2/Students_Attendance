@@ -88,7 +88,6 @@ public class LectureSheet implements Initializable {
         String course_id = courseIDcom.getSelectionModel().getSelectedItem();
         ObservableList<String> lname = FXCollections.observableList(db.getLecturesName(course_id, Integer.parseInt(y), s));
         LnameCom.setItems(lname);
-
     }
     @FXML
     void viewLName(ActionEvent event) {
@@ -96,7 +95,7 @@ public class LectureSheet implements Initializable {
     }
     @FXML
     void back(ActionEvent event) {
-        nav.navigateTo(root , nav.TEACH_ASSISTANT_FXML);
+        nav.navigateTo(root , nav.REPORT_FXML);
     }
 
 }
