@@ -19,6 +19,11 @@
                   <Font name="Algerian" size="12.0" />
                </font>
             </Button>
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#insertSection" style="-fx-background-radius: 20;" text="Add Section" textFill="#2cad21">
+               <font>
+                  <Font name="Algerian" size="12.0" />
+               </font>
+            </Button>
             <Button alignment="CENTER" blendMode="LIGHTEN" contentDisplay="CENTER" mnemonicParsing="false" onAction="#insertPage" style="-fx-background-radius: 20;" text="insert" textFill="#2cad21">
                <font>
                   <Font name="Algerian" size="12.0" />
