@@ -972,10 +972,8 @@ public class DBModel {
     }
 
     public String getAssistantId(String course, String year, String semester) {
-
         String id = "";
         String sql = "SELECT assistant_id FROM assist WHERE course_id = ? AND year = ? AND semester = ? LIMIT 1";
-
         try (PreparedStatement st = con.prepareStatement(sql)) {
             st.setString(1, course);
             st.setInt(2, Integer.parseInt(year));
@@ -985,13 +983,11 @@ public class DBModel {
             if (rs.next()) {
                 id = String.valueOf(rs.getInt(1));
             }
-
         } catch (SQLException ex) {
             Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
         }
         return id;
     }
-
 
     public boolean isValidEmail(String email) {
         String sql = "SELECT check_email_format(?);";
@@ -1669,7 +1665,7 @@ public class DBModel {
                 "FROM attendance " +
                 "JOIN students USING (student_id) " +
                 "JOIN phone USING (student_id) " +
-                "JOIN lectures USING (course_id, year, semester, sec_id) " +
+                "JOIN lectures USING (course_id, year, semester, sec_id, lecture_id) " +
                 "WHERE course_id = ? " +
                 "AND year = ? " +
                 "AND semester = ? " +

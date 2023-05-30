@@ -34,8 +34,7 @@ public class TAEnrollmentCourse implements Initializable {
 
     @FXML
     private ComboBox<String> sSemester;
-    @FXML
-    private ComboBox<String> sSeId;
+
 
     DBModel db = new DBModel();
     public void initialize(URL url, ResourceBundle rb) {
