@@ -1513,6 +1513,7 @@ public class DBModel {
 
     public boolean attendance(String student, String course_id, String email, String sec_id,
                               String lecture_name) {
+        System.out.println(student);
         String sql = "UPDATE attendance" +
                 " SET attendance_status = 'yes'" +
                 "FROM students, phone " +
@@ -1535,6 +1536,7 @@ public class DBModel {
             st.setString(7, student);
             st.setString(8, student);
             if (st.executeUpdate() > 0) {
+                System.out.println("ubdate");
                 return true;
             } else return false;
 

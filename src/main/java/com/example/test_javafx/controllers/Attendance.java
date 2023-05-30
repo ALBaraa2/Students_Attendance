@@ -26,6 +26,7 @@ import org.apache.poi.ss.usermodel.*;
 
 import java.io.File;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ResourceBundle;
 
 public class Attendance implements Initializable {
@@ -158,6 +159,7 @@ public class Attendance implements Initializable {
 
             // الحصول على الملف المختار عند النقر على زر "Open"
             java.io.File selectedFile = fileChooser.showOpenDialog(fileChooserStage);
+            System.out.println(selectedFile.getAbsolutePath());
             if (selectedFile != null) {
                 readExcelFile(selectedFile.getAbsolutePath());
             } else {
@@ -167,7 +169,9 @@ public class Attendance implements Initializable {
         });
 
     }
+    //قراءة id الطالب من ملف اكسيل ووضع الطالب في حالة حضور
     public void readExcelFile(String filePath) {
+        System.out.println("yes");
         try {
             // تحميل ملف Excel
             Workbook workbook = WorkbookFactory.create(new File(filePath));
@@ -182,9 +186,9 @@ public class Attendance implements Initializable {
                     if (cellType == CellType.STRING) {
                         System.out.print(cell.getStringCellValue() + "\t");
                     } else if (cellType == CellType.NUMERIC) {
-                        db.attendance(String.valueOf(cell.getNumericCellValue()),courseID.getValue(),email,sec_id.getValue(),LName.getValue());
-                    } else if (cellType == CellType.BLANK) {
-                        System.out.print("BLANK\t");
+                        String value = String.valueOf(cell.getNumericCellValue());
+                        String formattedValue = value.replace(".", "").substring(0, value.length() - 3);
+                        db.attendance(formattedValue,courseID.getValue(),email,sec_id.getValue(),LName.getValue());
                     }
                 }
                 System.out.println();
