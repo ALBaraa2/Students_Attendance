@@ -973,10 +973,8 @@ public class DBModel {
     }
 
     public String getAssistantId(String course, String year, String semester) {
-
         String id = "";
         String sql = "SELECT assistant_id FROM assist WHERE course_id = ? AND year = ? AND semester = ? LIMIT 1";
-
         try (PreparedStatement st = con.prepareStatement(sql)) {
             st.setString(1, course);
             st.setInt(2, Integer.parseInt(year));
@@ -986,13 +984,11 @@ public class DBModel {
             if (rs.next()) {
                 id = String.valueOf(rs.getInt(1));
             }
-
         } catch (SQLException ex) {
             Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
         }
         return id;
     }
-
 
     public boolean isValidEmail(String email) {
         String sql = "SELECT check_email_format(?);";
@@ -1605,7 +1601,7 @@ public class DBModel {
     public ArrayList<String> getStudents(String course_id, String email, String sec_id) {
         ArrayList<String> arr = new ArrayList<>();
         String sql = "select distinct student_id, student_phone, student_name" +
-                " from attendance natural join phone natural join students" +
+                " from enrollments natural join phone natural join students" +
                 " where course_id = ? and year = CAST(? as INTEGER) and semester = ? and sec_id = CAST(? as INTEGER);";
         try (PreparedStatement st = con.prepareStatement(sql)) {
             st.setString(1, course_id);
@@ -1670,7 +1666,7 @@ public class DBModel {
                 "FROM attendance " +
                 "JOIN students USING (student_id) " +
                 "JOIN phone USING (student_id) " +
-                "JOIN lectures USING (course_id, year, semester, sec_id) " +
+                "JOIN lectures USING (course_id, year, semester, sec_id, lecture_id) " +
                 "WHERE course_id = ? " +
                 "AND year = ? " +
                 "AND semester = ? " +

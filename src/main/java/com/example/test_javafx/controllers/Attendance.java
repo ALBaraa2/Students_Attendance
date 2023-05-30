@@ -74,12 +74,10 @@ public class Attendance implements Initializable {
         ObservableList<String> sec_ids = FXCollections.observableList(db.getSecIds(course_id,
                 Integer.parseInt(year), semester));
         sec_id.setItems(sec_ids);
-
         EventHandler<ActionEvent> comboEvent = (ActionEvent event) -> {
             setComboBoxesLecturename(event);
             setComboBoxesStudent(event);
         };
-
         sec_id.setOnAction(comboEvent);
     }
 
@@ -117,7 +115,7 @@ public class Attendance implements Initializable {
                 massege.setTextFill(Color.GREEN);
                 massege.setVisible(true);
             } else {
-                massege.setText("Faild");
+                massege.setText("Failed");
                 massege.setTextFill(Color.RED);
                 massege.setVisible(true);
             }
