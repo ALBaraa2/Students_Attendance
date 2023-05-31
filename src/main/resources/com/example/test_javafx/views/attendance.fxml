@@ -25,7 +25,7 @@
             <Font name="Algerian" size="12.0" />
          </font>
       </Button>
-      <ButtonBar blendMode="DIFFERENCE" layoutX="6.0" layoutY="372.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="42.0" prefWidth="464.0" AnchorPane.bottomAnchor="47.0" AnchorPane.leftAnchor="6.0">
+      <ButtonBar blendMode="DIFFERENCE" layoutX="6.0" layoutY="372.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="42.0" prefWidth="464.0" AnchorPane.bottomAnchor="47.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="371.6">
          <buttons>
             <Button alignment="CENTER" blendMode="LIGHTEN" contentDisplay="CENTER" minWidth="74.0" mnemonicParsing="false" onAction="#AttendanceReport" prefHeight="22.0" style="-fx-background-radius: 20;" text="Attendance report" textFill="#8d22ab">
                <font>
@@ -42,7 +42,7 @@
             <DropShadow radius="4.75" width="0.0" />
          </effect>
       </ButtonBar>
-      <HBox layoutX="99.0" layoutY="14.0" prefHeight="26.0" prefWidth="600.0" spacing="12.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <HBox layoutX="99.0" layoutY="14.0" prefHeight="26.0" prefWidth="600.0" spacing="12.0" AnchorPane.bottomAnchor="420.6" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="13.999999999999979">
          <children>
             <ComboBox fx:id="courseID" prefWidth="200.0" promptText="Courses id" />
             <ComboBox fx:id="sec_id" prefWidth="200.0" promptText="Sections" />
@@ -56,7 +56,7 @@
             <Insets left="7.0" />
          </padding>
       </HBox>
-      <HBox layoutY="53.0" prefHeight="26.0" prefWidth="600.0" spacing="12.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <HBox layoutY="53.0" prefHeight="26.0" prefWidth="600.0" spacing="12.0" AnchorPane.bottomAnchor="381.6" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="53.0">
          <children>
             <ComboBox fx:id="LName" prefWidth="200.0" promptText="Lecture name" />
             <ComboBox fx:id="student" prefWidth="200.0" promptText="ID or Name or Phone number" />
@@ -65,7 +65,10 @@
             <Insets left="7.0" />
          </padding>
       </HBox>
+<<<<<<< HEAD
 
+=======
+>>>>>>> e6b9948755330fd8072325111fe8036ff2ee2add
       <Button alignment="CENTER" blendMode="MULTIPLY" contentDisplay="CENTER" layoutX="72.0" layoutY="425.0" mnemonicParsing="false" onAction="#xlsx" prefHeight="28.0" prefWidth="327.0" style="-fx-background-color: #21682d; -fx-background-radius: 15;" text="Attendance Registration by xlsx file" textFill="#d9e4da" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="72.0">
          <font>
             <Font name="Algerian" size="15.0" />
