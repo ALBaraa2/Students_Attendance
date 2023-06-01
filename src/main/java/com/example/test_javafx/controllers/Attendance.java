@@ -141,7 +141,6 @@ public class Attendance implements Initializable {
         nav.navigateTo(root, nav.TEACH_ASSISTANT_FXML);
     }
 
-
     public void xlsx() {
         xlx.setOnAction(e -> {
             FileChooser fileChooser = new FileChooser();

@@ -78,7 +78,7 @@ public class AttendanceSheet implements Initializable  {
         setComboBoxes();
     }
     private void setComboBoxes() {
-        ObservableList<String> ids = FXCollections.observableList(db.getCourseIDsFromAttendance(email));
+        ObservableList<String> ids = FXCollections.observableList(db.getCourseIDsOfAssistantByEmail(email));
         course_idCom.setItems(ids);
         CmboBoxAutoComplete.cmboBoxAutoComplete(course_idCom , ids);
         course_idCom.setOnAction(this::handleCIcomAction);

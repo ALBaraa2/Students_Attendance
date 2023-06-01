@@ -238,6 +238,7 @@ public class DBModel {
         }
     }
 
+    //ترجع ids لكل الكورسات الموجودة
     public ArrayList<String> getCourseIDs() {
         ArrayList<String> ids = new ArrayList<>();
         String sql = "select course_id from courses;";
@@ -270,10 +271,10 @@ public class DBModel {
         return courses;
     }
 
-
-    public ArrayList<String> getCourseIDsFromAttendance(String email) {
+//وظيفة هذه الميثود هي ايجاد الكورسات التي يشرف عليها معيد معين عن طريق الايميل الخاص به
+    public ArrayList<String> getCourseIDsOfAssistantByEmail(String email) {
         ArrayList<String> ids = new ArrayList<>();
-        String sql = "select distinct course_id from attendance natural join assist join users on (assist.assistant_id = users.id)" +
+        String sql = "select distinct course_id from courses natural join assist join users on (assist.assistant_id = users.id)" +
                 " Where email = ?;";
         try (PreparedStatement st = con.prepareStatement(sql)) {
             st.setString(1, email);
@@ -288,6 +289,7 @@ public class DBModel {
         }
     }
 
+    //ترجع جميع السنوات التي درَس فيها مساق معين عن طريق id
     public ArrayList<String> getYears(String course_id) {
         String sql = "select distinct year from section " +
                 " WHERE course_id = ? " +
@@ -376,8 +378,9 @@ public class DBModel {
         }
     }
 
-    public ArrayList<String> getStudentID() { //ترجع id طالب من جدول الstudent
-        String sql = "select DISTINCT student_id from students;";
+    //ايجاد ids كل الطلاب
+    public ArrayList<String> getStudentID() {
+        String sql = "select student_id from students;";
         ArrayList<String> ids = new ArrayList<>();
         try (Statement st = con.createStatement();
              ResultSet rs = st.executeQuery(sql)
@@ -392,7 +395,7 @@ public class DBModel {
         }
     }
 
-
+    //ايجاد جميع الفصول التي درس فيها مساق معين في سنة معينة
     public ArrayList<String> getSemesters(String course_id, int year) {
         String sql = "select distinct semester from section" +
                 " WHERE course_id = ? and year = ? " +
@@ -432,11 +435,10 @@ public class DBModel {
         return semesters;
     }
 
-
+    //ايجاد كل الشعب لمساق معين درًس في سنة محددة في فصل محدد
     public ArrayList<String> getSecIds(String course_id, int year, String semester) {
-        String sql = "select distinct sec_id from section" +
-                " WHERE course_id = ? and year = ? and semester = ? " +
-                "GROUP BY sec_id;";
+        String sql = "select sec_id from section " +
+                "WHERE course_id = ? and year = ? and semester = ?;";
         ArrayList<String> semesters = new ArrayList<>();
         try (PreparedStatement st = con.prepareStatement(sql)) {
             st.setString(1, course_id);
@@ -608,19 +610,18 @@ public class DBModel {
         return false;
     }
 
-    public boolean checkEnrollmentsStudent(String Studentid,String course, String year, String semester, String sec) {//تفحص هل طالب موجود بنفس الidوالCidو yearو semesterوsecفى جدول الenrollments
-        String sql = "SELECT COUNT(*) FROM enrollments WHERE student_id = ? AND course_id = ? AND year = ? AND semester = ? AND sec_id = ?";
+    public boolean checkEnrollmentsStudent(String Studentid,String course, String year, String semester) {
+        String sql = "SELECT COUNT(*) FROM enrollments WHERE student_id = ? AND course_id = ? " +
+                "AND year = ? AND semester = ?;";
         try (PreparedStatement st = con.prepareStatement(sql)) {
             st.setString(1, Studentid);
             st.setString(2, course);
             st.setInt(3, Integer.parseInt(year));
             st.setString(4, semester);
-            st.setInt(5, Integer.parseInt(sec));
-
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
                 int count = rs.getInt(1);
-                return count >0;
+                return count > 0;
             }
         } catch (SQLException ex) {
             Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
@@ -1132,7 +1133,7 @@ public class DBModel {
         return arr;
     }
 
-    // عرض الطلاب اللذين نسبة حضورهم اقل من 25%
+    // عرض الطلاب الذين نسبة حضورهم اقل من 25%
     public ArrayList<AttendanceSheet> SheetOfNonCompliant(String Cid) {
         ArrayList<AttendanceSheet> arr = new ArrayList<>();
         String sql = "SELECT student_name, SUM(CASE WHEN attendance_status = 'yes' THEN 1 ELSE 0 END) * 100 / COUNT(*) " +

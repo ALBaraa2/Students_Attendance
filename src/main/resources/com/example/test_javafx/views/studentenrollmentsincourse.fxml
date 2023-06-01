@@ -1,49 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="490.0" prefWidth="702.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.test_javafx.controllers.StudentEnrollmentsInCourse">
-   <left>
+   <center>
       <AnchorPane prefHeight="494.0" prefWidth="338.0" style="-fx-background-color: #da7227;" BorderPane.alignment="CENTER">
          <children>
-            <Text fill="WHITE" layoutX="19.0" layoutY="158.0" strokeType="OUTSIDE" strokeWidth="0.0" text="student enrollments in course" textAlignment="CENTER" wrappingWidth="300.13671875">
+            <Label alignment="CENTER" layoutX="1.0" layoutY="218.0" prefHeight="53.0" prefWidth="336.0" text="student enrollments in course" textFill="WHITE" AnchorPane.bottomAnchor="218.79999999999998" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="218.00000000000003">
                <font>
-                  <Font name="System Bold Italic" size="36.0" />
+                  <Font name="System Italic" size="25.0" />
                </font>
-            </Text>
+            </Label>
          </children>
       </AnchorPane>
-   </left>
-   <center>
-      <AnchorPane fx:id="back" prefHeight="494.0" prefWidth="401.0" style="-fx-background-color: #7b9489;" BorderPane.alignment="CENTER">
+   </center>
+   <right>
+      <AnchorPane fx:id="back" prefHeight="490.0" prefWidth="349.0" style="-fx-background-color: #7b9489;" BorderPane.alignment="CENTER">
          <children>
-            <ComboBox fx:id="sID" layoutX="110.0" layoutY="47.0" prefWidth="150.0" promptText="Student ID" />
-            <ComboBox fx:id="sCourse" layoutX="110.0" layoutY="120.0" prefWidth="150.0" promptText="Course ID" />
-            <ComboBox fx:id="sYear" layoutX="110.0" layoutY="176.0" prefWidth="150.0" promptText="Year" />
-            <ComboBox fx:id="sSemester" layoutX="110.0" layoutY="247.0" prefWidth="150.0" promptText="Semester" />
-            <ComboBox fx:id="sSection" layoutX="110.0" layoutY="313.0" prefWidth="150.0" promptText="Section" />
-            <Button fx:id="Done" layoutX="15.0" layoutY="443.0" mnemonicParsing="false" onAction="#done" prefHeight="37.0" prefWidth="98.0" text="Done">
+            <Button fx:id="Done" layoutX="26.0" layoutY="438.0" mnemonicParsing="false" onAction="#done" prefHeight="33.0" prefWidth="86.0" style="-fx-background-color: #000000; -fx-background-radius: 5;" text="Done" textFill="#00ff1e">
                <font>
-                  <Font name="System Bold" size="12.0" />
+                  <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Label alignment="CENTER" layoutX="2.0" layoutY="356.0" prefHeight="47.0" prefWidth="358.0" fx:id="xz">
+            <Label alignment="CENTER" layoutX="3.0" layoutY="375.0" prefHeight="47.0" prefWidth="358.0" fx:id="xz">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
-            <Button fx:id="bcakk" layoutX="246.0" layoutY="443.0" mnemonicParsing="false" onAction="#backToCourse" prefHeight="37.0" prefWidth="98.0" text="Back">
+            <Button fx:id="bcakk" layoutX="248.0" layoutY="438.0" mnemonicParsing="false" onAction="#backToCourse" prefHeight="33.0" prefWidth="86.0" style="-fx-background-color: #000000; -fx-background-radius: 5;" text="Back" textFill="RED">
                <font>
-                  <Font name="System Bold" size="12.0" />
+                  <Font name="System Bold" size="14.0" />
                </font>
             </Button>
+            <VBox layoutX="10.0" layoutY="87.0" prefHeight="258.0" prefWidth="342.0" spacing="40.0">
+               <children>
+                  <ComboBox fx:id="sID" prefWidth="150.0" promptText="Student ID" />
+                  <ComboBox fx:id="sCourse" prefWidth="150.0" promptText="Course ID" />
+                  <ComboBox fx:id="sYear" prefWidth="150.0" promptText="Year" />
+                  <ComboBox fx:id="sSemester" prefWidth="150.0" promptText="Semester" />
+                  <ComboBox fx:id="sSection" prefWidth="150.0" promptText="Section" />
+               </children>
+               <padding>
+                  <Insets left="95.0" />
+               </padding>
+            </VBox>
          </children>
       </AnchorPane>
-   </center>
+   </right>
 </BorderPane>

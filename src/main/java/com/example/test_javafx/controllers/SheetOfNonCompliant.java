@@ -11,8 +11,11 @@ import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+<<<<<<< HEAD
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
+=======
+>>>>>>> e0bdc71cf4b8e91fb6d5da2d242a9cdc5b9f0097
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -33,13 +36,13 @@ public class SheetOfNonCompliant implements Initializable {
     private AnchorPane root;
 
     @FXML
-    private TableColumn<com.example.test_javafx.models.AttendanceSheet, String> Student_Name;
+    private TableColumn<AttendanceSheet, String> Student_Name;
 
     @FXML
-    private TableColumn<com.example.test_javafx.models.AttendanceSheet, Double> attendancePercentage;
+    private TableColumn<AttendanceSheet, Double> attendancePercentage;
 
     @FXML
-    private TableView<com.example.test_javafx.models.AttendanceSheet> sheet;
+    private TableView<AttendanceSheet> sheet;
 
     @FXML
     private ComboBox<String> courseIdCom;
@@ -61,15 +64,16 @@ public class SheetOfNonCompliant implements Initializable {
         setComboBoxes();
     }
 
-
     private void setComboBoxes() {
-        ObservableList<String> ids = FXCollections.observableList(db.getCourseIDsFromAttendance(email));
+        ObservableList<String> ids = FXCollections.observableList(db.getCourseIDsOfAssistantByEmail(email));
         CmboBoxAutoComplete.cmboBoxAutoComplete(courseIdCom , ids);
     }
+
     @FXML
     void back(ActionEvent event) {
         nav.navigateTo(root , nav.REPORT_FXML);
     }
+
     @FXML
     void view(ActionEvent event) {
         sheet.setItems(FXCollections.observableArrayList(db.SheetOfNonCompliant(courseIdCom.getValue())));
@@ -77,6 +81,7 @@ public class SheetOfNonCompliant implements Initializable {
 
     @FXML
     void XLSX(ActionEvent event) throws IOException {
+<<<<<<< HEAD
         String newSheetName = courseIdCom.getValue();
         xlx.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -97,6 +102,15 @@ public class SheetOfNonCompliant implements Initializable {
                     Workbook workbook = new XSSFWorkbook();
 
                     // Create a new sheet
+=======
+        String filePath = "C:\\Users\\albaraa\\Downloads\\s_1.xlsx";
+        String newSheetName = courseIdCom.getValue();
+        File file = new File(filePath);
+        if (file.exists()) {
+            try (FileInputStream fis = new FileInputStream(filePath);
+                 Workbook workbook = new XSSFWorkbook(fis)) {
+                // Create a new sheet
+>>>>>>> e0bdc71cf4b8e91fb6d5da2d242a9cdc5b9f0097
                 if (workbook.getSheet(newSheetName) == null) {
                     Sheet sheet = workbook.createSheet(newSheetName);
                     // Write data to the new sheet
@@ -113,6 +127,7 @@ public class SheetOfNonCompliant implements Initializable {
                 } else {
                     error.setText("this course is already exsist");
                 }
+<<<<<<< HEAD
 
                     try {
                         // حفظ المصنف Excel في الملف المحدد
@@ -130,6 +145,15 @@ public class SheetOfNonCompliant implements Initializable {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+=======
+                try (FileOutputStream outputStream = new FileOutputStream("C:\\Users\\albaraa\\Downloads\\s_1.xlsx")) {
+                    workbook.write(outputStream);
+                    workbook.close();
+                } catch (FileNotFoundException e) {
+                    throw new RuntimeException(e);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+>>>>>>> e0bdc71cf4b8e91fb6d5da2d242a9cdc5b9f0097
                 }
             }
         });

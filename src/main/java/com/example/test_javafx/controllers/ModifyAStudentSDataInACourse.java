@@ -177,21 +177,16 @@ public class ModifyAStudentSDataInACourse implements Initializable {
 
     @FXML
     void done(ActionEvent event) {
-
         String id = sId.getValue().trim();
-
         String Ocourse = OcourseId.getValue().trim();
         String OOyear = Oyear.getValue().trim();
         String OOsemester = Osemester.getValue().trim();
         String Osec = Osection.getValue().trim();
-
         String Ncourse = NcourseId.getValue().trim();
         String NNyear = Nyear.getValue().trim();
         String NNsemester = Nsemester.getValue().trim();
         String Nsec = Nsection.getValue().trim();
-
-
-        if(db.checkEnrollmentsStudent(id,Ncourse,NNyear,NNsemester,Nsec)){
+        if(db.checkEnrollmentsStudent(id,Ncourse,NNyear,NNsemester)){
             xz.setTextFill(Color.RED);
             xz.setText("this course is already enrollments by same student");
         }else {

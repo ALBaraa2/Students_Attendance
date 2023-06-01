@@ -14,13 +14,6 @@ import java.util.ResourceBundle;
 
 public class Student implements Initializable {
 
-    Navigation nav = new Navigation();
-    public void initialize(URL url, ResourceBundle rb) {
-
-    }
-
-    @FXML
-    private AnchorPane AP;
 
     @FXML
     private Button SM;
@@ -35,29 +28,28 @@ public class Student implements Initializable {
     private Button SE;
 
     @FXML
-    private Pane SRe;
-
-    @FXML
     private Button back;
 
-    @FXML
-    private Pane main;
+    Navigation nav = new Navigation();
+    public void initialize(URL url, ResourceBundle rb) {
+
+    }
 
     @FXML
     void SR(ActionEvent event) {
-
         nav.navigateTo(SR, nav.Student_Registration);
     }
-
 
     @FXML
     void SEe(ActionEvent event) {
         nav.navigateTo(SE, nav.StudentEnrollmentsInCourse);
     }
+
     @FXML
     void back(ActionEvent event) {
         nav.navigateTo(back, nav.TEACH_ASSISTANT_FXML);
     }
+
     @FXML
     void SMM(ActionEvent event) {
         nav.navigateTo(SM, nav.ModifyStudentData);
