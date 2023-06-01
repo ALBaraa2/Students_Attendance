@@ -16,11 +16,6 @@ import java.util.ResourceBundle;
 
 public class StudentRegistration  implements Initializable {
 
-    Navigation nav = new Navigation();
-    public void initialize(URL url, ResourceBundle rb) {
-        sGender();
-    }
-    DBModel db = DBModel.getModel();
 
     @FXML
     private TextField Scity;
@@ -55,14 +50,20 @@ public class StudentRegistration  implements Initializable {
     private Label xz;
 
 
-
     private void sGender(){
         ObservableList<String> genderOptions = FXCollections.observableArrayList("male", "female");
         Sgender.setItems(genderOptions);
         Sgender.setValue("Gender");
     }
+
     private boolean textField2Visible = false;
     private boolean textField3Visible = false;
+
+    public void initialize(URL url, ResourceBundle rb) {
+        sGender();
+    }
+    Navigation nav = new Navigation();
+    DBModel db = DBModel.getModel();
 
     @FXML
     private void handleButtonAction(ActionEvent event) {
@@ -149,9 +150,4 @@ public class StudentRegistration  implements Initializable {
     void back(ActionEvent event) {
         nav.navigateTo(back, nav.STUDENT_FXML);
     }
-
-
-
-
-
 }

@@ -8,34 +8,30 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="root" prefHeight="400.0" prefWidth="600.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.test_javafx.controllers.SheetOfNonCompliant">
+<AnchorPane fx:id="root" prefHeight="442.0" prefWidth="600.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.test_javafx.controllers.SheetOfNonCompliant">
    <children>
-      <TableView fx:id="sheet" layoutX="23.0" prefHeight="306.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="47.0">
+      <TableView fx:id="sheet" layoutX="23.0" prefHeight="301.0" prefWidth="600.0" AnchorPane.bottomAnchor="93.39999999999998" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="47.0">
          <columns>
             <TableColumn fx:id="Student_Name" prefWidth="124.0" text="Student_Name" />
             <TableColumn fx:id="attendancePercentage" prefWidth="183.0" text="Attendance_Percentage" />
          </columns>
       </TableView>
-      <Button layoutX="513.0" layoutY="353.0" mnemonicParsing="false" onAction="#back" prefHeight="25.0" prefWidth="87.0" text="Back" textFill="#2c2929" AnchorPane.bottomAnchor="16.0" AnchorPane.rightAnchor="0.0">
+      <Button layoutX="498.0" layoutY="353.0" mnemonicParsing="false" onAction="#back" prefHeight="25.0" prefWidth="87.0" text="Back" textFill="#2c2929" AnchorPane.bottomAnchor="15.800000000000011" AnchorPane.rightAnchor="14.799999999999955">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </Button>
-      <Button layoutY="353.0" mnemonicParsing="false" onAction="#view" prefHeight="25.0" prefWidth="87.0" text="View" textFill="#429e42" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="0.0">
+      <Button layoutX="12.0" layoutY="353.0" mnemonicParsing="false" onAction="#view" prefHeight="25.0" prefWidth="87.0" text="View" textFill="#429e42" AnchorPane.bottomAnchor="15.800000000000011" AnchorPane.leftAnchor="12.0">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </Button>
-      <ComboBox fx:id="courseIdCom" layoutY="14.0" prefWidth="150.0" promptText="Course_Id" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="14.0" />
-      <Button layoutX="107.0" layoutY="353.0" mnemonicParsing="false" onAction="#XLSX" prefHeight="25.0" prefWidth="87.0" text="XLSX" textFill="#429e42">
+      <ComboBox fx:id="courseIdCom" layoutX="12.0" layoutY="14.0" prefWidth="150.0" promptText="Course_Id" AnchorPane.leftAnchor="12.0" AnchorPane.topAnchor="14.0" />
+      <Button layoutX="119.0" layoutY="353.0" mnemonicParsing="false" onAction="#XLSX" prefHeight="25.0" prefWidth="87.0" text="XLSX" textFill="#429e42" AnchorPane.bottomAnchor="15.8" AnchorPane.leftAnchor="119.0">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </Button>
-      <Label fx:id="error" alignment="CENTER" layoutX="200.0" layoutY="360.0" prefHeight="25.0" prefWidth="298.0" textFill="#f50a0a">
-         <font>
-            <Font name="Algerian" size="15.0" />
-         </font>
-      </Label>
+      <Label fx:id="error" layoutX="4.0" layoutY="343.0" prefHeight="31.0" prefWidth="248.0" text="Label" AnchorPane.bottomAnchor="67.8" AnchorPane.leftAnchor="4.0" />
    </children>
 </AnchorPane>

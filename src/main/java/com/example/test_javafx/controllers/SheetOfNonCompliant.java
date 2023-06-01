@@ -10,18 +10,14 @@ import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.awt.Desktop;
 import java.io.*;
-
-import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
@@ -34,13 +30,13 @@ public class SheetOfNonCompliant implements Initializable {
     private AnchorPane root;
 
     @FXML
-    private TableColumn<com.example.test_javafx.models.AttendanceSheet, String> Student_Name;
+    private TableColumn<AttendanceSheet, String> Student_Name;
 
     @FXML
-    private TableColumn<com.example.test_javafx.models.AttendanceSheet, Double> attendancePercentage;
+    private TableColumn<AttendanceSheet, Double> attendancePercentage;
 
     @FXML
-    private TableView<com.example.test_javafx.models.AttendanceSheet> sheet;
+    private TableView<AttendanceSheet> sheet;
 
     @FXML
     private ComboBox<String> courseIdCom;
@@ -59,15 +55,16 @@ public class SheetOfNonCompliant implements Initializable {
         setComboBoxes();
     }
 
-
     private void setComboBoxes() {
-        ObservableList<String> ids = FXCollections.observableList(db.getCourseIDsFromAttendance(email));
+        ObservableList<String> ids = FXCollections.observableList(db.getCourseIDsOfAssistantByEmail(email));
         CmboBoxAutoComplete.cmboBoxAutoComplete(courseIdCom , ids);
     }
+
     @FXML
     void back(ActionEvent event) {
         nav.navigateTo(root , nav.REPORT_FXML);
     }
+
     @FXML
     void view(ActionEvent event) {
         sheet.setItems(FXCollections.observableArrayList(db.SheetOfNonCompliant(courseIdCom.getValue())));
@@ -75,11 +72,9 @@ public class SheetOfNonCompliant implements Initializable {
 
     @FXML
     void XLSX(ActionEvent event) throws IOException {
-        String filePath = "C:\\Users\\HP\\Desktop\\New folder\\s_1.xlsx";
-
+        String filePath = "C:\\Users\\albaraa\\Downloads\\s_1.xlsx";
         String newSheetName = courseIdCom.getValue();
         File file = new File(filePath);
-
         if (file.exists()) {
             try (FileInputStream fis = new FileInputStream(filePath);
                  Workbook workbook = new XSSFWorkbook(fis)) {
@@ -100,14 +95,13 @@ public class SheetOfNonCompliant implements Initializable {
                 } else {
                     error.setText("this course is already exsist");
                 }
-                try (FileOutputStream outputStream = new FileOutputStream("C:\\Users\\HP\\Desktop\\New folder\\s_1.xlsx")) {
+                try (FileOutputStream outputStream = new FileOutputStream("C:\\Users\\albaraa\\Downloads\\s_1.xlsx")) {
                     workbook.write(outputStream);
                     workbook.close();
                 } catch (FileNotFoundException e) {
                     throw new RuntimeException(e);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
-
                 }
             } catch (IOException e) {
                 e.printStackTrace();

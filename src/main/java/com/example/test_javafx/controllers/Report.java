@@ -1,11 +1,8 @@
 package com.example.test_javafx.controllers;
 
 import com.example.test_javafx.Navigation;
-import com.example.test_javafx.models.DBModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 
 
@@ -14,7 +11,6 @@ public class Report {
     @FXML
     private BorderPane root;
 
-    DBModel db = new DBModel();
     Navigation nav = new Navigation();
 
     @FXML
