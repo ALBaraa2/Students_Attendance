@@ -80,7 +80,6 @@ public class Attendance implements Initializable {
         courseID.setOnAction(this::setComboBoxesSec_id);
     }
     private void setComboBoxesSec_id(ActionEvent event1) {
-        System.out.println(year +"\n"+semester);
         String course_id = courseID.getSelectionModel().getSelectedItem();
         ObservableList<String> sec_ids = FXCollections.observableList(db.getSecIds(course_id,
                 Integer.parseInt(year), semester));
@@ -156,7 +155,6 @@ public class Attendance implements Initializable {
             fileChooserStage.setTitle("File Chooser");
             // الحصول على الملف المختار عند النقر على زر "Open"
             java.io.File selectedFile = fileChooser.showOpenDialog(fileChooserStage);
-            System.out.println(selectedFile.getAbsolutePath());
             if (selectedFile != null) {
                 readExcelFile(selectedFile.getAbsolutePath());
             } else {
@@ -167,7 +165,6 @@ public class Attendance implements Initializable {
     }
     //قراءة id الطالب من ملف اكسيل ووضع الطالب في حالة حضور
     public void readExcelFile(String filePath) {
-        System.out.println("yes");
         try {
             // تحميل ملف Excel
             Workbook workbook = WorkbookFactory.create(new File(filePath));
@@ -179,15 +176,12 @@ public class Attendance implements Initializable {
             for (Row row : sheet) {
                 for (Cell cell : row) {
                     CellType cellType = cell.getCellType();
-                    if (cellType == CellType.STRING) {
-                        System.out.print(cell.getStringCellValue() + "\t");
-                    } else if (cellType == CellType.NUMERIC) {
+                    if (cellType == CellType.NUMERIC) {
                         String value = String.valueOf(cell.getNumericCellValue());
                         String formattedValue = value.replace(".", "").substring(0, value.length() - 3);
                         db.attendance(formattedValue,courseID.getValue(),email,sec_id.getValue(),LName.getValue());
                     }
                 }
-                System.out.println();
             }
             // أغلق ملف Excel
             workbook.close();

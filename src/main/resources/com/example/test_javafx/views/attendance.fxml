@@ -65,11 +65,7 @@
             <Insets left="7.0" />
          </padding>
       </HBox>
-<<<<<<< HEAD
-
-=======
->>>>>>> e6b9948755330fd8072325111fe8036ff2ee2add
-      <Button alignment="CENTER" blendMode="MULTIPLY" contentDisplay="CENTER" layoutX="72.0" layoutY="425.0" mnemonicParsing="false" onAction="#xlsx" prefHeight="28.0" prefWidth="327.0" style="-fx-background-color: #21682d; -fx-background-radius: 15;" text="Attendance Registration by xlsx file" textFill="#d9e4da" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="72.0">
+      <Button alignment="CENTER" blendMode="MULTIPLY" contentDisplay="CENTER" layoutX="72.0" layoutY="425.0" mnemonicParsing="false" onAction="#xlsx" prefHeight="28.0" prefWidth="327.0" style="-fx-background-color: #21682d; -fx-background-radius: 15;" text="Attendance Registration by xlsx file" textFill="#d9e4da" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="72.0" fx:id="xlx">
          <font>
             <Font name="Algerian" size="15.0" />
          </font></Button>
