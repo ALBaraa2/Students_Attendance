@@ -15,7 +15,7 @@ public class DBModel {
 
     //here our queries method
     public DBModel() {
-        schemaConnect("project");
+        schemaConnect("attendance");
     }
 
     public static DBModel getModel() {
@@ -28,9 +28,9 @@ public class DBModel {
     public void connect() {
         PGSimpleDataSource source = new PGSimpleDataSource();
         source.setServerName("localhost");
-        source.setDatabaseName("project");
+        source.setDatabaseName("project_database");
         source.setUser("postgres");
-        source.setPassword("123");
+        source.setPassword("feraskhaled30");
 
 
         try {
