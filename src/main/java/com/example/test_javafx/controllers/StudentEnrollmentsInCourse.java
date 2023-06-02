@@ -17,8 +17,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class StudentEnrollmentsInCourse implements Initializable {
-        @FXML
-        private Button Done;
 
         @FXML
         private Label xz;
@@ -43,7 +41,6 @@ public class StudentEnrollmentsInCourse implements Initializable {
 
         Navigation nav = new Navigation();
         DBModel db = new DBModel();
-
 
         public void initialize(URL url, ResourceBundle rb) {
                 setComboBoxes();
@@ -102,11 +99,6 @@ public class StudentEnrollmentsInCourse implements Initializable {
         }
 
         @FXML
-        void backToCourse(ActionEvent event) {
-                nav.navigateTo(bcakk, nav.STUDENT_FXML);
-        }
-
-        @FXML
         void done(ActionEvent event) {
                 String id = sID.getValue().trim();
                 String course = sCourse.getValue().trim();
@@ -121,6 +113,11 @@ public class StudentEnrollmentsInCourse implements Initializable {
                         xz.setTextFill(Color.GREEN);
                         xz.setText("                   successfully Enrollments");
                 }
+        }
+
+        @FXML
+        void backToCourse(ActionEvent event) {
+                nav.navigateTo(bcakk, nav.STUDENT_FXML);
         }
 }
 

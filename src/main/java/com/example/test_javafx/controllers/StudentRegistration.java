@@ -42,15 +42,16 @@ public class StudentRegistration  implements Initializable {
     private TextField Sstreet;
 
     @FXML
-    private Button done;
-
-    @FXML
     private Button back;
+
     @FXML
     private Label xz;
 
+    Navigation nav = new Navigation();
+    DBModel db = DBModel.getModel();
 
-    private void sGender(){
+
+    public void initialize(URL url, ResourceBundle rb) {
         ObservableList<String> genderOptions = FXCollections.observableArrayList("male", "female");
         Sgender.setItems(genderOptions);
         Sgender.setValue("Gender");
@@ -58,12 +59,6 @@ public class StudentRegistration  implements Initializable {
 
     private boolean textField2Visible = false;
     private boolean textField3Visible = false;
-
-    public void initialize(URL url, ResourceBundle rb) {
-        sGender();
-    }
-    Navigation nav = new Navigation();
-    DBModel db = DBModel.getModel();
 
     @FXML
     private void handleButtonAction(ActionEvent event) {
@@ -83,13 +78,8 @@ public class StudentRegistration  implements Initializable {
     }
 
     public boolean validateStudentId(String studentId) {
-        if (studentId.matches("\\d{9}")) {
-            return true;
-        } else {
-            return false;
-        }
+        return studentId.matches("\\d{9}");
     }
-
 
     @FXML
     void done(ActionEvent event) {
@@ -101,10 +91,6 @@ public class StudentRegistration  implements Initializable {
         String num1 = Sph1.getText().trim();
         String num2 = Sph11.getText().trim();
         String num3 = Sph12.getText().trim();
-
-        
-
-
         if (studentId.isEmpty()) {
             xz.setTextFill(Color.RED);
             xz.setText("Please enter your ID");
@@ -129,7 +115,6 @@ public class StudentRegistration  implements Initializable {
                     xz.setTextFill(Color.RED);
                     xz.setText("This id is already exist");
                 }else{
-
                         db.addStudent(studentId,studentName,street,city,gender);
                         db.insertPhone(studentId,num1);
                      if (!num2.isEmpty()){
