@@ -610,6 +610,7 @@ public class DBModel {
         return false;
     }
 
+    //
     public boolean checkEnrollmentsStudent(String Studentid,String course, String year, String semester) {
         String sql = "SELECT COUNT(*) FROM enrollments WHERE student_id = ? AND course_id = ? " +
                 "AND year = ? AND semester = ?;";
