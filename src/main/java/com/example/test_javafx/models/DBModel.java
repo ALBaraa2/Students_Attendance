@@ -185,7 +185,7 @@ public class DBModel {
             return false;
         }
     }
-
+    // اضافة section في جدول الsection
     public boolean addSection(String cId, String cLocation, String year, String semester) {
         String sql = "insert into section (course_id, year, semester, course_location) values (?,CAST(? as INTEGER),?,?);";
         try (PreparedStatement st = con.prepareStatement(sql)) {
@@ -203,7 +203,7 @@ public class DBModel {
             return false;
         }
     }
-
+    //فحص اذا كان الsection الخاص بالcourse موجود ام لا
     public boolean sectionIsExist(String cId, String year, String semester) {
         String sql = "SELECT * FROM section WHERE course_id = ? AND year = CAST(? as INTEGER) AND semester = ?;";
         try (PreparedStatement st = con.prepareStatement(sql)) {
@@ -238,7 +238,7 @@ public class DBModel {
         }
     }
 
-    //ترجع ids لكل الكورسات الموجودة
+    //  ترجع ids لكل الكورسات الموجودة في جدول الcourses
     public ArrayList<String> getCourseIDs() {
         ArrayList<String> ids = new ArrayList<>();
         String sql = "select course_id from courses;";
@@ -1156,10 +1156,18 @@ public class DBModel {
     //ايجاد السنة والفصل التي يقوم بالاشراف عليها من قبل المعيد الذي يدخل البرنامج
     public String[] getYearSemester(String email) {
         String sql = "SELECT year, semester" +
-                " from users join assist on(users.id = assist.assistant_id)" +
-                " where email = ?" +
-                " ORDER BY year DESC, semester" +
-                " limit 1;";
+                "FROM users s join assist on(s.id = assist.assistant_id)" +
+                "where s.email = ?" +
+                "GROUP BY year, semester" +
+                "HAVING year = (SELECT MAX(year) FROM assist)" +
+                "ORDER BY CASE" +
+                "    WHEN semester = 'Fall' THEN 1" +
+                "    WHEN semester = 'Winter' THEN 2" +
+                "    WHEN semester = 'Spring' THEN 3" +
+                "    WHEN semester = 'Summer' THEN 4" +
+                "    ELSE 5" +
+                "END DESC" +
+                "LIMIT 1;";
         String[] s = new String[2];
         try (PreparedStatement st = con.prepareStatement(sql)) {
             st.setString(1, email);
@@ -1376,16 +1384,18 @@ public class DBModel {
         return lects;
     }
     //عرض تقرير المحاضرة
-    public ArrayList<Lectures> lectureSheet(String email , String LT) {
+    public ArrayList<Lectures> lectureSheet(String email , String LT , String y , String semester) {
         ArrayList<Lectures> arr = new ArrayList<>();
         String sql = "SELECT DISTINCT lecture_id,  lecture_time, lecture_date,lecture_location, course_id, year, semester, sec_id" +
                 " FROM lectures" +
                 " NATURAL JOIN assist" +
                 " JOIN users ON users.id = assist.assistant_id" +
-                " WHERE users.email = ? AND lecture_title = ?;";
+                " WHERE users.email = ? AND lecture_title = ? AND year = cast(? as integer) AND semester = ?;";
         try (PreparedStatement st = con.prepareStatement(sql)) {
             st.setString(1, email);
             st.setString(2, LT);
+            st.setString(3, y);
+            st.setString(4, semester);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 arr.add(new Lectures(rs.getString(1) ,rs.getTime(2) ,rs.getDate(3),

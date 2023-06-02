@@ -10,22 +10,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.test_javafx.controllers.InsertCourse">
-   <center>
-      <AnchorPane prefHeight="500.0" prefWidth="350.0" style="-fx-background-color: #da7227;" BorderPane.alignment="CENTER">
-         <children>
-            <Label alignment="CENTER" layoutX="-1.0" layoutY="227.0" prefHeight="18.0" prefWidth="318.0" text="Insert Course" textFill="WHITE" AnchorPane.bottomAnchor="226.6" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="227.0">
-               <font>
-                  <Font name="System Italic" size="31.0" />
-               </font>
-            </Label>
-         </children>
-      </AnchorPane>
-   </center>
+<BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="502.0" prefWidth="645.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.test_javafx.controllers.InsertCourse">
    <right>
-      <AnchorPane prefHeight="500.0" prefWidth="382.0" style="-fx-background-color: #a89696;" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="502.0" prefWidth="367.0" style="-fx-background-color: #a89696;" BorderPane.alignment="CENTER">
          <children>
-            <VBox layoutX="44.0" layoutY="21.0" prefHeight="458.0" prefWidth="294.0" spacing="39.0">
+            <VBox layoutX="-5.0" layoutY="-5.0" prefHeight="500.0" prefWidth="382.0" spacing="39.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <HBox prefHeight="27.0" prefWidth="100.0" spacing="66.0">
                      <children>
@@ -36,6 +25,9 @@
                         </Label>
                         <TextField fx:id="course_id" />
                      </children>
+                     <padding>
+                        <Insets left="30.0" />
+                     </padding>
                   </HBox>
                   <HBox prefHeight="27.0" prefWidth="100.0" spacing="20.0">
                      <children>
@@ -46,6 +38,9 @@
                         </Label>
                         <TextField fx:id="instructor_name" />
                      </children>
+                     <padding>
+                        <Insets left="30.0" />
+                     </padding>
                   </HBox>
                   <HBox prefHeight="27.0" prefWidth="100.0" spacing="38.0">
                      <children>
@@ -56,6 +51,9 @@
                         </Label>
                         <TextField fx:id="course_name" />
                      </children>
+                     <padding>
+                        <Insets left="30.0" />
+                     </padding>
                   </HBox>
                   <HBox prefHeight="27.0" prefWidth="100.0" spacing="21.0">
                      <children>
@@ -66,6 +64,9 @@
                         </Label>
                         <TextField fx:id="course_location" />
                      </children>
+                     <padding>
+                        <Insets left="30.0" />
+                     </padding>
                   </HBox>
                   <HBox prefHeight="25.0" prefWidth="294.0" spacing="62.0">
                      <children>
@@ -84,10 +85,10 @@
                         </Button>
                      </children>
                      <padding>
-                        <Insets left="34.0" />
+                        <Insets left="66.0" />
                      </padding>
                   </HBox>
-                  <Label fx:id="faild" alignment="CENTER" prefHeight="36.0" prefWidth="307.0">
+                  <Label fx:id="faild" alignment="CENTER" prefHeight="36.0" prefWidth="350.0" style="-fx-border-color: #fff;">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -100,4 +101,15 @@
          </children>
       </AnchorPane>
    </right>
+   <center>
+      <AnchorPane prefHeight="474.0" prefWidth="263.0" style="-fx-background-color: #da7227;" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="CENTER" layoutX="-1.0" layoutY="227.0" prefHeight="18.0" prefWidth="318.0" text="Insert Course" textFill="WHITE" AnchorPane.bottomAnchor="226.6" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="227.0">
+               <font>
+                  <Font name="System Italic" size="31.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </center>
 </BorderPane>

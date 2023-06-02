@@ -86,12 +86,13 @@ public class LectureSheet implements Initializable {
     }
     private void setComboBoxesLecture_name(ActionEvent event) {
         String course_id = courseIDcom.getSelectionModel().getSelectedItem();
+        System.out.println(s+" "+y);
         ObservableList<String> lname = FXCollections.observableList(db.getLecturesName(course_id, Integer.parseInt(y), s));
         LnameCom.setItems(lname);
     }
     @FXML
     void viewLName(ActionEvent event) {
-        table.setItems(FXCollections.observableArrayList(db.lectureSheet(email ,LnameCom.getValue())));
+        table.setItems(FXCollections.observableArrayList(db.lectureSheet(email ,LnameCom.getValue(), y , s)));
     }
     @FXML
     void back(ActionEvent event) {

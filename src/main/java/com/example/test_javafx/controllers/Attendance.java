@@ -11,22 +11,16 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import org.apache.poi.ss.usermodel.Cell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.apache.poi.ss.usermodel.*;
-
-
 import java.io.File;
 import java.net.URL;
-import java.text.DecimalFormat;
 import java.util.ResourceBundle;
 
 public class Attendance implements Initializable {
@@ -69,16 +63,20 @@ public class Attendance implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        //وضع البيانات داخل الاعمدة في tableview
         status.setCellValueFactory(new PropertyValueFactory<>("attendance_status"));
         lecture_title.setCellValueFactory(new PropertyValueFactory<>("lecture_title"));
+        //تفعيل ميثودsetComboBoxes عند تشغيل البرنامج
         setComboBoxes();
     }
+    //وضع الcourse الخاص بالمعيد الذي يقوم بالدخول الى البرنامج في الComboBox الخاص بcourseID ومن ثم يتم تقعيلsetComboBoxesSec_id
     private void setComboBoxes() {
         ObservableList<String> ids = FXCollections.observableList(db.getCourseIDs(email));
         courseID.setItems(ids);
         CmboBoxAutoComplete.cmboBoxAutoComplete(courseID, ids);
         courseID.setOnAction(this::setComboBoxesSec_id);
     }
+    // وضع الSec_id الخاص بالcourse (الذي يتم وضعه في الميثود السابقة) في الComboBox الخاص بsec_id
     private void setComboBoxesSec_id(ActionEvent event1) {
         String course_id = courseID.getSelectionModel().getSelectedItem();
         ObservableList<String> sec_ids = FXCollections.observableList(db.getSecIds(course_id,
@@ -90,7 +88,7 @@ public class Attendance implements Initializable {
         };
         sec_id.setOnAction(comboEvent);
     }
-
+    // وضع الLecturename الخاص بالcourse (الذي يتم وضعه في ميثود setComboBoxes) في الComboBox الخاص بLName
     private void setComboBoxesLecturename(ActionEvent event) {
         String course_id = courseID.getSelectionModel().getSelectedItem();
         String secid = sec_id.getSelectionModel().getSelectedItem();

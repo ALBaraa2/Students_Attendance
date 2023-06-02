@@ -16,21 +16,24 @@ public class Admin {
     private Button back;
 
 
+
+    // الذهاب الى صفحة courses
     @FXML
     void Courses(ActionEvent event) {
         nav.navigateTo(anchorPane, nav.COURSE_FXML);
     }
-
+    //الذهاب الى صفحة تسجيل معيد او admin
     @FXML
     void navToCreateUserAccount(ActionEvent event) {
         nav.navigateTo(anchorPane, nav.CREATE_USER_ACCOUNT_FXML);
     }
-
+    //الذهاب الى صفحة ربط المعيد بالcourse
     @FXML
     void navToTAEnrollmentCourse(ActionEvent event) {
         nav.navigateTo(anchorPane, nav.TA_Enrollment_Course_FXML);
 
     }
+    //الرجوع من صفحة الadmin الى صفحة login
     @FXML
     void back(ActionEvent event) {
         nav.navigateTo(anchorPane, nav.LOGIN_FXML);

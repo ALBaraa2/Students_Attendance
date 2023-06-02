@@ -42,6 +42,7 @@ public class InsertCourse {
         if (!course_id.getText().equals("") && !course_name.getText().equals("") && !course_location.getText().equals("") && !instructor_name.getText().equals("")) {
             if (db.insertCourse(course_id.getText(), instructor_name.getText(), course_name.getText(), course_location.getText())) {
                 faild.setText("Course added successfully");
+                faild.setStyle("-fx-border-color: green; -fx-border-width: 2px;");
                 faild.setTextFill(Color.GREEN);
                 faild.setVisible(true);
                 course_id.setText("");
@@ -49,12 +50,14 @@ public class InsertCourse {
                 course_location.setText("");
                 instructor_name.setText("");
             } else {
-                faild.setText("Course added failed!");
+                faild.setText("Course_id :must be 4 letters and 4 number");
+                faild.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
                 faild.setTextFill(Color.RED);
                 faild.setVisible(true);
             }
         } else {
             faild.setText("Complete data registration");
+            faild.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
             faild.setVisible(true);
         }
     }
