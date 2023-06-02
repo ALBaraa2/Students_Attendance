@@ -12,7 +12,6 @@ public class TeachAssistant {
     @FXML
     private BorderPane root;
 
-    DBModel db = DBModel.getModel();
     Navigation nav = new Navigation();
 
     @FXML

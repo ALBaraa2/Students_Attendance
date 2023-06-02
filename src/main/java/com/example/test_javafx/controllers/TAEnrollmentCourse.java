@@ -1,6 +1,7 @@
 package com.example.test_javafx.controllers;
 
 import com.example.test_javafx.Navigation;
+import com.example.test_javafx.models.CmboBoxAutoComplete;
 import com.example.test_javafx.models.DBModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -35,20 +36,34 @@ public class TAEnrollmentCourse implements Initializable {
     @FXML
     private ComboBox<String> sSemester;
 
+    @FXML
+    private Label name;
 
+    Navigation nav = new Navigation();
     DBModel db = new DBModel();
+
     public void initialize(URL url, ResourceBundle rb) {
         setTAid();
         setComboBoxes();
+        sTAid.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                name.setText(db.getTeachAssistantName(newValue));
+            } else {
+                name.setText("");
+            }
+        });
     }
+
     private void setTAid(){
         ObservableList<String> ids = FXCollections.observableList(db.getTA_id());
         sTAid.setItems(ids);
+        CmboBoxAutoComplete.cmboBoxAutoComplete(sTAid , ids);
     }
 
     private void setComboBoxes() {
         ObservableList<String> ids = FXCollections.observableList(db.getCourseIDs());
         sCourse.setItems(ids);
+        CmboBoxAutoComplete.cmboBoxAutoComplete(sCourse , ids);
         sCourse.setOnAction(this::handleCIcomAction);
     }
 
@@ -73,8 +88,6 @@ public class TAEnrollmentCourse implements Initializable {
             }
         }
     }
-
-    Navigation nav = new Navigation();
     @FXML
     void backToCourse(ActionEvent event) {
         nav.navigateTo(close, nav.ADMIN_FXML);
@@ -92,8 +105,7 @@ public class TAEnrollmentCourse implements Initializable {
         }else{
             db.addEnrollment(course,year,semester,id);
                 xz.setTextFill(Color.GREEN);
-                xz.setText("                   successfully Enrollments");
-
+                xz.setText("successfully Enrollments");
         }
     }
 

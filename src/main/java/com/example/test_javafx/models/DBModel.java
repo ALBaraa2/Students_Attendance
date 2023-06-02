@@ -15,7 +15,7 @@ public class DBModel {
 
     //here our queries method
     public DBModel() {
-        schemaConnect("attendance");
+        schemaConnect("project");
     }
 
     public static DBModel getModel() {
@@ -28,9 +28,9 @@ public class DBModel {
     public void connect() {
         PGSimpleDataSource source = new PGSimpleDataSource();
         source.setServerName("localhost");
-        source.setDatabaseName("project_database");
+        source.setDatabaseName("project");
         source.setUser("postgres");
-        source.setPassword("feraskhaled30");
+        source.setPassword("123");
 
 
         try {
@@ -378,6 +378,25 @@ public class DBModel {
         }
     }
 
+    //This method returns the name of the teaching assistant from his id
+    public String getTeachAssistantName(String id) {
+        String sql = "select name " +
+                "from teach_assistant ta " +
+                "where ta.id = CAST(? AS INTEGER);";
+        String name = new String();
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, id);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                name = rs.getString(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+        return name;
+    }
+
     //ايجاد ids كل الطلاب
     public ArrayList<String> getStudentID() {
         String sql = "select student_id from students;";
@@ -529,6 +548,7 @@ public class DBModel {
         }
     }
 
+    //هذه تقوم بربط معيد في مساق معين
     public void addEnrollment(String course, String year, String semester, String assistantId) {
         ArrayList<String> sec_ids = getSecIds(course,Integer.parseInt(year),semester);
         for (String sec_id : sec_ids) {
@@ -547,9 +567,9 @@ public class DBModel {
         }
     }
 
-    public void addEnrollmentStudent(String course, String year, String semester, String sec, String studentID) { //ربط طالب بمساق
+    //هذه الميثود تقوم بربط الطالب في مساق معين
+    public void addEnrollmentStudent(String course, String year, String semester, String sec, String studentID) {
         String sql = "INSERT INTO enrollments (course_id, year, semester, sec_id, student_id) VALUES (?, ?, ?, ?,?)";
-
         try (PreparedStatement st = con.prepareStatement(sql)) {
             st.setString(1, course);
             st.setInt(2, Integer.parseInt(year));
@@ -593,6 +613,7 @@ public class DBModel {
         }
     }
 
+    //يتم ارجاع true اذا كان هناك معيد يشرف على الكورس المحدد
     public boolean checkEnrollments(String course, String year, String semester) {
         String sql = "SELECT COUNT(*) FROM assist WHERE course_id = ? AND year = ? AND semester = ?";
         try (PreparedStatement st = con.prepareStatement(sql)) {
@@ -610,6 +631,7 @@ public class DBModel {
         return false;
     }
 
+    //هذه الميثود تقوم بفحص هل الطالب مسجل في مساق معين ام لا
     public boolean checkEnrollmentsStudent(String Studentid,String course, String year, String semester) {
         String sql = "SELECT COUNT(*) FROM enrollments WHERE student_id = ? AND course_id = ? " +
                 "AND year = ? AND semester = ?;";
@@ -629,6 +651,7 @@ public class DBModel {
         return false;
     }
 
+    //this method returns assistant id whose assist in selected course
     public String getAssistantId(String course, String year, String semester) {
         String id = "";
         String sql = "SELECT assistant_id FROM assist WHERE course_id = ? AND year = ? AND semester = ? LIMIT 1";
@@ -776,37 +799,30 @@ public class DBModel {
         }
     }
 
+    //This method returns true if the student is successfully inserted
     public boolean addStudent(String studentId, String studentName, String street, String city, String gender) {
-        String sql = "INSERT INTO students (student_id, student_name, student_address, gender) VALUES (?, ?, ROW(?, ?)::address, ?)";
-
+        String sql = "INSERT INTO students (student_id, student_name, student_address, gender) " +
+                "VALUES (?, ?, ROW(?, ?)::address, ?)";
         try (PreparedStatement st = con.prepareStatement(sql)) {
             st.setString(1, studentId);
             st.setString(2, studentName);
             st.setString(3, city);
             st.setString(4, street);
             st.setString(5, gender);
-
-            int rowsAffected = st.executeUpdate();
-
-            if (rowsAffected > 0) {
-                return true;
-            } else {
-                return false;
-            }
+            return st.executeUpdate() > 0;
         } catch (SQLException ex) {
             Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
     }
 
+    //This method returns true if the student phone is successfully inserted
     public boolean insertPhone(String studentId, String studentPhone) {
         String sql = "INSERT INTO phone (student_id, student_phone) VALUES (?, ?)";
-        try (PreparedStatement statement = con.prepareStatement(sql)) {
-            statement.setString(1, studentId);
-            statement.setString(2, studentPhone);
-
-            int rowsAffected = statement.executeUpdate();
-            return rowsAffected > 0;
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, studentId);
+            st.setString(2, studentPhone);
+            return st.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
@@ -918,12 +934,11 @@ public class DBModel {
         return s;
     }
 
+    //This method return ture if student-id is existed
     public boolean checkStudentExists(String id) {
         String sql = "SELECT COUNT(*) FROM students WHERE student_id = ?";
-
         try (PreparedStatement st = con.prepareStatement(sql)) {
             st.setString(1, id);
-
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
                 int count = rs.getInt(1);
@@ -1153,7 +1168,7 @@ public class DBModel {
         return arr;
     }
 
-    //ايجاد السنة والفصل التي يقوم بالاشراف عليها من قبل المعيد الذي يدخل البرنامج
+    //ايجاد السنة والفصل التي يشرف عليها المعيد الذي يدخل البرنامج
     public String[] getYearSemester(String email) {
         String sql = "SELECT year, semester" +
                 "FROM users s join assist on(s.id = assist.assistant_id)" +

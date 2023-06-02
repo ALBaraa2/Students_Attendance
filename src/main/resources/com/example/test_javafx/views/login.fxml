@@ -16,7 +16,7 @@
             <children>
                 <Button fx:id="log" layoutX="149.0" layoutY="378.0" mnemonicParsing="false" onAction="#ass" prefHeight="39.0" prefWidth="80.0" style="-fx-background-color: #da7227;" text="Login" textFill="WHITE" />
                 <TextField fx:id="email" layoutX="119.0" layoutY="204.0" promptText="Email" style="-fx-background-color: transparent; -fx-border-color: #da7227; -fx-border-width: 0px 0px 2px 0px;" />
-                <PasswordField fx:id="passwoed" layoutX="119.0" layoutY="274.0" promptText="Passwoed" style="-fx-background-color: transparent; -fx-border-color: #da7227; -fx-border-width: 0px 0px 2px 0px;" />
+                <PasswordField fx:id="password" layoutX="119.0" layoutY="274.0" promptText="Passwoed" style="-fx-background-color: transparent; -fx-border-color: #da7227; -fx-border-width: 0px 0px 2px 0px;" />
                 <Label fx:id="loginTitleLabel" alignment="CENTER" layoutX="97.0" layoutY="134.0" prefHeight="49.0" prefWidth="156.0" style="-fx-font-size: 40; -fx-text-fill: linear-gradient(from 0% 0% to 100% 200%, repeat, aqua 0%, red 50%); -fx-font-weight: BOLD;" text="Login" textFill="#31ebfc" />
             <Label fx:id="faild" contentDisplay="CENTER" layoutX="114.0" layoutY="322.0" prefHeight="36.0" prefWidth="158.0" textAlignment="CENTER" textFill="RED" visible="false" />
             <Pane layoutX="84.0" layoutY="204.0" prefHeight="31.0" prefWidth="30.0" styleClass="user" stylesheets="@style.css" />
