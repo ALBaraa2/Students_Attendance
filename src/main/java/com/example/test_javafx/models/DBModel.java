@@ -1168,7 +1168,7 @@ public class DBModel {
         return arr;
     }
 
-    //ايجاد السنة والفصل التي يقوم بالاشراف عليها من قبل المعيد الذي يدخل البرنامج
+    //ايجاد السنة والفصل التي يشرف عليها المعيد الذي يدخل البرنامج
     public String[] getYearSemester(String email) {
         String sql = "SELECT year, semester" +
                 " from users join assist on(users.id = assist.assistant_id)" +
