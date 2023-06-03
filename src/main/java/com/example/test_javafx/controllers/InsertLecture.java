@@ -11,8 +11,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import java.net.URL;
 import java.time.LocalDate;
-import java.sql.Time;
-import java.sql.Date;
 import java.util.ResourceBundle;
 
 public class InsertLecture implements Initializable {
@@ -75,11 +73,15 @@ public class InsertLecture implements Initializable {
 
     @FXML
     void done(ActionEvent event) {
-        if (title.getText() != null && date.getValue() != null && houre.getValue() != null && location.getText() != null) {
+        if (!title.getText().equals("") && date.getValue() != null && houre.getValue() != null) {
+            String l = location.getText();
             String time = houre.getValue().toString() + ":" + minute.getValue().toString() + ":00";
             LocalDate localDate = date.getValue();
             String date = String.valueOf(localDate);
-            if (db.insertLecture(title.getText(), date, time, location.getText(),
+            if (l.equals("")){
+                l = db.getLocationFromSection(course_id,year,semester,sec_id);
+            }
+            if (db.insertLecture(title.getText(), date, time, l,
                     course_id, year, semester, sec_id)) {
                 massege.setText("Registration Successful");
                 massege.setTextFill(Color.GREEN);

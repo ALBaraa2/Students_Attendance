@@ -150,13 +150,21 @@ public class Attendance implements Initializable {
         String course_id = courseID.getSelectionModel().getSelectedItem();
         String secid = sec_id.getSelectionModel().getSelectedItem();
         String Student = student.getSelectionModel().getSelectedItem();
-        table.setItems(FXCollections.observableArrayList(db.getAttendanceReport
-                (course_id,Integer.parseInt(year.getValue()), semester.getValue(),Integer.parseInt(secid),Student)));
+        if (student.getValue() != null && LName.getValue() != null && courseID.getValue() != null && sec_id.getValue() != null
+                && year.getValue() != null && semester.getValue() != null) {
+            table.setItems(FXCollections.observableArrayList(db.getAttendanceReport
+                    (course_id, Integer.parseInt(year.getValue()), semester.getValue(), Integer.parseInt(secid), Student)));
+        } else {
+            massege.setText("Complete the data");
+            massege.setTextFill(Color.RED);
+            massege.setVisible(true);
+        }
     }
 
     @FXML
     void Checkin(ActionEvent event) {
-        if (student.getValue() != null && LName.getValue() != null && courseID.getValue() != null && sec_id.getValue() != null){
+        if (student.getValue() != null && LName.getValue() != null && courseID.getValue() != null && sec_id.getValue() != null
+                && year.getValue() != null && semester.getValue() != null){
             if (db.attendance(student.getValue(),courseID.getValue(),year.getValue(),semester.getValue(),sec_id.getValue(),LName.getValue())){
                 massege.setText("Done");
                 massege.setTextFill(Color.GREEN);
@@ -167,7 +175,27 @@ public class Attendance implements Initializable {
                 massege.setVisible(true);
             }
         } else {
-            massege.setText("Complete data");
+            massege.setText("Complete the data");
+            massege.setTextFill(Color.RED);
+            massege.setVisible(true);
+        }
+    }
+
+    @FXML
+    void modify(ActionEvent event) {
+        if (student.getValue() != null && LName.getValue() != null && courseID.getValue() != null && sec_id.getValue() != null
+                && year.getValue() != null && semester.getValue() != null) {
+            if (db.modidyAttendance(student.getValue(), courseID.getValue(), year.getValue(), semester.getValue(), sec_id.getValue(), LName.getValue())) {
+                massege.setText("Done");
+                massege.setTextFill(Color.GREEN);
+                massege.setVisible(true);
+            } else {
+                massege.setText("Failed");
+                massege.setTextFill(Color.RED);
+                massege.setVisible(true);
+            }
+        } else {
+            massege.setText("Complete the data");
             massege.setTextFill(Color.RED);
             massege.setVisible(true);
         }
@@ -179,25 +207,30 @@ public class Attendance implements Initializable {
     }
 
     public void xlsx() {
-        xlx.setOnAction(e -> {
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Choose File");
-
-            // تحديد نوع الملفات المسموح بها
-            fileChooser.getExtensionFilters().addAll(
-                    new FileChooser.ExtensionFilter("Text Files", "*.xlsx")
-            );
-            Stage fileChooserStage = new Stage();
-            fileChooserStage.setTitle("File Chooser");
-            // الحصول على الملف المختار عند النقر على زر "Open"
-            java.io.File selectedFile = fileChooser.showOpenDialog(fileChooserStage);
-            if (selectedFile != null) {
-                readExcelFile(selectedFile.getAbsolutePath());
-            } else {
-                System.out.println("No file selected.");
-            }
-
-        });
+        if (LName.getValue() != null && courseID.getValue() != null && sec_id.getValue() != null
+                && year.getValue() != null && semester.getValue() != null) {
+            xlx.setOnAction(e -> {
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.setTitle("Choose File");
+                // تحديد نوع الملفات المسموح بها
+                fileChooser.getExtensionFilters().addAll(
+                        new FileChooser.ExtensionFilter("Text Files", "*.xlsx")
+                );
+                Stage fileChooserStage = new Stage();
+                fileChooserStage.setTitle("File Chooser");
+                // الحصول على الملف المختار عند النقر على زر "Open"
+                java.io.File selectedFile = fileChooser.showOpenDialog(fileChooserStage);
+                if (selectedFile != null) {
+                    readExcelFile(selectedFile.getAbsolutePath());
+                } else {
+                    System.out.println("No file selected.");
+                }
+            });
+        } else {
+            massege.setText("Complete the data");
+            massege.setTextFill(Color.RED);
+            massege.setVisible(true);
+        }
     }
 
     //قراءة id الطالب من ملف اكسيل ووضع الطالب في حالة حضور

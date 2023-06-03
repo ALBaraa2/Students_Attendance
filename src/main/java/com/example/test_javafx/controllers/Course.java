@@ -51,7 +51,6 @@ public class Course implements Initializable {
     @FXML
     private TableColumn<?, ?> year;
 
-
     DBModel db = DBModel.getModel();
     Navigation nav = new Navigation();
 

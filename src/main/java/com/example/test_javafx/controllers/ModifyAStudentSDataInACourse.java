@@ -18,11 +18,6 @@ import java.util.ResourceBundle;
 
 public class ModifyAStudentSDataInACourse implements Initializable {
 
-    DBModel db = new DBModel();
-
-
-    Navigation nav = new Navigation();
-
 
     @FXML
     private ComboBox<String> NcourseId;
@@ -63,6 +58,9 @@ public class ModifyAStudentSDataInACourse implements Initializable {
     @FXML
     private ComboBox<String> sId;
 
+    DBModel db = new DBModel();
+    Navigation nav = new Navigation();
+
     public void initialize(URL url, ResourceBundle rb) {
         setStudentid();
         setComboBoxes2();
@@ -74,8 +72,7 @@ public class ModifyAStudentSDataInACourse implements Initializable {
             sId.setItems(ids);
             sId.setOnAction(this::setComboBoxeAction);
 
-        }
-
+    }
 
     @FXML
     private void setComboBoxeAction(ActionEvent event){
@@ -86,7 +83,6 @@ public class ModifyAStudentSDataInACourse implements Initializable {
             OcourseId.setOnAction(this::handleCIcomAction );
         }
     }
-
 
     @FXML
     private void setComboBoxes2() {

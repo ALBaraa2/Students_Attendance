@@ -75,62 +75,75 @@ public class SheetOfNonCompliant implements Initializable {
 
     @FXML
     void view(ActionEvent event) {
-        sheet.setItems(FXCollections.observableArrayList(db.SheetOfNonCompliant(courseIdCom.getValue())));
+        if (courseIdCom.getValue() != null) {
+            if (!db.SheetOfNonCompliant(courseIdCom.getValue()).isEmpty()) {
+                sheet.setItems(FXCollections.observableArrayList(db.SheetOfNonCompliant(courseIdCom.getValue())));
+            } else {
+                error.setText("There are no students with an attendance rate of less than 25%");
+            }
+        } else
+            error.setText("Select Course id");
     }
     public void XLSX() {
-        xlx.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                String newSheetName = courseIdCom.getValue();
-                Stage fileChooserStage = new Stage();
-                fileChooserStage.setTitle("File Chooser");
-                DirectoryChooser directoryChooser = new DirectoryChooser();
-                File selectedFolder = directoryChooser.showDialog(fileChooserStage);
+        if (courseIdCom.getValue() != null) {
+            if (!db.SheetOfNonCompliant(courseIdCom.getValue()).isEmpty()) {
+                xlx.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        String newSheetName = courseIdCom.getValue();
+                        Stage fileChooserStage = new Stage();
+                        fileChooserStage.setTitle("File Chooser");
+                        DirectoryChooser directoryChooser = new DirectoryChooser();
+                        File selectedFolder = directoryChooser.showDialog(fileChooserStage);
 
-                if (selectedFolder != null) {
-                    // اسم الملف الذي ترغب في إنشائه
-                    String fileName = "SheetOfNonCompliant.xlsx";
+                        if (selectedFolder != null) {
+                            // اسم الملف الذي ترغب في إنشائه
+                            String fileName = "SheetOfNonCompliant.xlsx";
 
-                    // تعيين المسار الكامل للملف الذي ترغب في حفظه
-                    String filePath = selectedFolder.getPath() + "/" + fileName;
+                            // تعيين المسار الكامل للملف الذي ترغب في حفظه
+                            String filePath = selectedFolder.getPath() + "/" + fileName;
 
-                    // إنشاء مصنف Excel جديد
-                    Workbook workbook = new XSSFWorkbook();
+                            // إنشاء مصنف Excel جديد
+                            Workbook workbook = new XSSFWorkbook();
 
-                    // Create a new sheet
-                    if (workbook.getSheet(newSheetName) == null) {
-                        Sheet sheet = workbook.createSheet(newSheetName);
-                        // Write data to the new sheet
-                        int size = db.SheetOfNonCompliant(newSheetName).size();
-                        ArrayList<AttendanceSheet> x = db.SheetOfNonCompliant(courseIdCom.getValue());
-                        for (int i = 0; i < x.size(); i++) {
-                            Row row = sheet.createRow(i);
-                            Cell cell1 = row.createCell(0);
-                            Cell cell2 = row.createCell(1);
-                            cell1.setCellValue(x.get(i).getStudent_name());
-                            cell2.setCellValue(x.get(i).getAttendancePercentage() + "%");
+                            // Create a new sheet
+                            if (workbook.getSheet(newSheetName) == null) {
+                                Sheet sheet = workbook.createSheet(newSheetName);
+                                // Write data to the new sheet
+                                int size = db.SheetOfNonCompliant(newSheetName).size();
+                                ArrayList<AttendanceSheet> x = db.SheetOfNonCompliant(courseIdCom.getValue());
+                                for (int i = 0; i < x.size(); i++) {
+                                    Row row = sheet.createRow(i);
+                                    Cell cell1 = row.createCell(0);
+                                    Cell cell2 = row.createCell(1);
+                                    cell1.setCellValue(x.get(i).getStudent_name());
+                                    cell2.setCellValue(x.get(i).getAttendancePercentage() + "%");
+                                }
+                                error.setText("");
+                            } else {
+                                error.setText("this course is already exsist");
+                            }
+                            try {
+                                // حفظ المصنف Excel في الملف المحدد
+                                FileOutputStream outputStream = new FileOutputStream(new File(filePath));
+                                workbook.write(outputStream);
+                                workbook.close();
+                                outputStream.close();
+                                // فتح الملف إذا كان موجودًا
+                                File file = new File(filePath);
+                                Desktop.getDesktop().open(file);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
                         }
-                        error.setText("");
-                    } else {
-                        error.setText("this course is already exsist");
                     }
-
-                    try {
-                        // حفظ المصنف Excel في الملف المحدد
-                        FileOutputStream outputStream = new FileOutputStream(new File(filePath));
-                        workbook.write(outputStream);
-                        workbook.close();
-                        outputStream.close();
-                        // فتح الملف إذا كان موجودًا
-                        File file = new File(filePath);
-                            Desktop.getDesktop().open(file);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                }
+                });
+            } else {
+                error.setText("There are no students with an attendance rate of less than 25%");
             }
-        });
+        } else
+            error.setText("Select Course id");
     }
 }
 

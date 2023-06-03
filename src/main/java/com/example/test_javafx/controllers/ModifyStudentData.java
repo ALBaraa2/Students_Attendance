@@ -1,6 +1,7 @@
 package com.example.test_javafx.controllers;
 
 import com.example.test_javafx.Navigation;
+import com.example.test_javafx.models.CmboBoxAutoComplete;
 import com.example.test_javafx.models.DBModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -69,9 +70,10 @@ public class ModifyStudentData  implements Initializable {
     private TextField tS;
     @FXML
     private void setStudent_Id(){
-        ObservableList<String> genderOptions = FXCollections.observableArrayList(db.getAllStudentIds());
-        s_id.setItems(genderOptions);
+        ObservableList<String> ids = FXCollections.observableArrayList(db.getAllStudentIds());
+        s_id.setItems(ids);
         s_id.setPromptText("S_ID");
+        CmboBoxAutoComplete.cmboBoxAutoComplete(s_id , ids);
         s_id.setOnAction(this::setStudent_PhoneAction);
     }
 
@@ -79,16 +81,19 @@ public class ModifyStudentData  implements Initializable {
     private void setStudent_PhoneAction(ActionEvent event) {
         if (s_id.getValue() != null) {
             String selectedID = s_id.getSelectionModel().getSelectedItem();
-            ObservableList<String> genderOptions = FXCollections.observableArrayList(db.getStudentPhoneNumbers(selectedID));
-            s_ph.setItems(genderOptions);
+            ObservableList<String> phones = FXCollections.observableArrayList(db.getStudentPhoneNumbers(selectedID));
+            s_ph.setItems(phones);
+            CmboBoxAutoComplete.cmboBoxAutoComplete(s_ph , phones);
         }
     }
+
     @FXML
     private void sGender(){
         ObservableList<String> genderOptions = FXCollections.observableArrayList("male", "female");
         s_ge.setItems(genderOptions);
 
     }
+
     @FXML
     void dN(ActionEvent event) {
         String selectedID = s_id.getSelectionModel().getSelectedItem();
@@ -152,6 +157,7 @@ public class ModifyStudentData  implements Initializable {
             xz.setText("There was an error, try again!!");
         }
     }
+
     @FXML
     void dS(ActionEvent event) {
         String selectedID = s_id.getSelectionModel().getSelectedItem();
@@ -170,6 +176,7 @@ public class ModifyStudentData  implements Initializable {
             xz.setText("There was an error, try again!!");
         }
     }
+
     @FXML
     void dG(ActionEvent event) {
         String selectedID = s_id.getSelectionModel().getSelectedItem();
@@ -188,12 +195,9 @@ public class ModifyStudentData  implements Initializable {
             xz.setText("There was an error, try again!!");
         }
     }
+
     @FXML
     void back(ActionEvent event) {
         nav.navigateTo(back, nav.STUDENT_FXML);
     }
-
-
-
-
 }

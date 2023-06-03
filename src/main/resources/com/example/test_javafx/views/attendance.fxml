@@ -26,14 +26,19 @@
             <Font name="Algerian" size="12.0" />
          </font>
       </Button>
-      <ButtonBar blendMode="DIFFERENCE" layoutX="14.0" layoutY="433.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="28.0" prefWidth="511.0" AnchorPane.bottomAnchor="38.0" AnchorPane.leftAnchor="14.0">
+      <ButtonBar blendMode="DIFFERENCE" layoutX="7.0" layoutY="428.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="28.0" prefWidth="578.0" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="7.0">
          <buttons>
-            <Button alignment="CENTER" blendMode="LIGHTEN" contentDisplay="CENTER" minWidth="74.0" mnemonicParsing="false" onAction="#AttendanceReport" prefHeight="22.0" style="-fx-background-radius: 20;" text="Attendance report" textFill="#8d22ab">
+            <Button alignment="CENTER" blendMode="LIGHTEN" contentDisplay="CENTER" minWidth="74.0" mnemonicParsing="false" onAction="#modify" prefHeight="22.0" style="-fx-background-radius: 20;" text="Modify status" textFill="#8d22ab">
                <font>
                   <Font name="Algerian" size="12.0" />
                </font>
             </Button>
             <Button alignment="CENTER" blendMode="LIGHTEN" contentDisplay="CENTER" mnemonicParsing="false" onAction="#Checkin" prefHeight="22.0" prefWidth="218.0" style="-fx-background-radius: 20;" stylesheets="@style.css" text="Attendance Registration" textFill="#8d22ab">
+               <font>
+                  <Font name="Algerian" size="12.0" />
+               </font>
+            </Button>
+            <Button alignment="CENTER" blendMode="LIGHTEN" contentDisplay="CENTER" minWidth="74.0" mnemonicParsing="false" onAction="#AttendanceReport" prefHeight="22.0" style="-fx-background-radius: 20;" text="Attendance report" textFill="#8d22ab">
                <font>
                   <Font name="Algerian" size="12.0" />
                </font>

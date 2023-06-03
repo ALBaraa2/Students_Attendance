@@ -33,6 +33,6 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Button>
-      <Label fx:id="error" layoutX="4.0" layoutY="343.0" prefHeight="31.0" prefWidth="248.0" text="Label" AnchorPane.bottomAnchor="67.8" AnchorPane.leftAnchor="4.0" />
+      <Label fx:id="error" layoutX="4.0" layoutY="343.0" prefHeight="44.0" prefWidth="399.0" textFill="RED" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="4.0" />
    </children>
 </AnchorPane>

@@ -45,13 +45,15 @@ public class TAEnrollmentCourse implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         setTAid();
         setComboBoxes();
-        sTAid.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                name.setText(db.getTeachAssistantName(newValue));
-            } else {
-                name.setText("");
-            }
-        });
+        if (sTAid.getValue() != null && sCourse.getValue() != null && sYear.getValue() != null && sSemester.getValue() != null) {
+            sTAid.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+                if (newValue != null) {
+                    name.setText(db.getTeachAssistantName(newValue));
+                } else {
+                    name.setText("");
+                }
+            });
+        }
     }
 
     private void setTAid(){
@@ -95,18 +97,22 @@ public class TAEnrollmentCourse implements Initializable {
 
     @FXML
     void done(ActionEvent event) {
-        String id = sTAid.getValue().trim();
-        String course = sCourse.getValue().trim();
-        String year = sYear.getValue().trim();
-        String semester = sSemester.getValue().trim();
-        if(db.checkEnrollments(course,year,semester)){
-            xz.setTextFill(Color.RED);
-            xz.setText("this course is already enrollments by " + db.getAssistantId(course,year,semester));
-        }else{
-            db.addEnrollment(course,year,semester,id);
+        String id = sTAid.getValue();
+        String course = sCourse.getValue();
+        String year = sYear.getValue();
+        String semester = sSemester.getValue();
+        if (id != null && course != null && year != null && semester != null) {
+            if (db.checkEnrollments(course, year, semester)) {
+                xz.setTextFill(Color.RED);
+                xz.setText("This course is already enrolled by " + db.getAssistantId(course, year, semester));
+            } else {
+                db.addEnrollment(course, year, semester, id);
                 xz.setTextFill(Color.GREEN);
-                xz.setText("successfully Enrollments");
+                xz.setText("Successfully enrolled.");
+            }
+        } else {
+            xz.setTextFill(Color.RED);
+            xz.setText("Complete the data");
         }
     }
-
 }

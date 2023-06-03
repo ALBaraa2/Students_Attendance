@@ -3,7 +3,6 @@ package com.example.test_javafx.controllers;
 import com.example.test_javafx.Navigation;
 import com.example.test_javafx.models.CmboBoxAutoComplete;
 import com.example.test_javafx.models.DBModel;
-import com.example.test_javafx.models.SharedData;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,7 +11,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 
@@ -66,24 +64,32 @@ public class AddSection implements Initializable {
     //في حال عدم وجود section عند الضغط على الزر يتم اضافة section اعتمادا على القيم التي يتم اختيارها من ComboBoxes
     @FXML
     void done(ActionEvent event) {
-        if (course_id.getValue() != null && semester.getValue() != null && year.getText() != null && location.getText() != null){
-                if (db.addSection(course_id.getValue(), location.getText(), year.getText(), semester.getValue())){
-                    masssege.setText("Successful");
-                    masssege.setStyle("-fx-border-color: green; -fx-border-width: 2px;");
-                    masssege.setTextFill(Color.GREEN);
-                    masssege.setVisible(true);
-                } else {
-                    masssege.setText("Failed");
-                    masssege.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
-                    masssege.setTextFill(Color.RED);
-                    masssege.setVisible(true);
+        if (course_id.getValue() != null && semester.getValue() != null && year.getText() != null){
+            String l = location.getText();
+            if (l.equals("")){
+                l = db.getLocationFromCourse(course_id.getValue());
+            }
+            if (db.addSection(course_id.getValue(), l, year.getText(), semester.getValue())){
+                if (db.isAssistedByAssistant(course_id.getValue(), year.getText(), semester.getValue())){
+                    int assistant_id = Integer.parseInt(db.getAssistantIdAndSecID(course_id.getValue(),year.getText(),semester.getValue()).get(0));
+                    int sec_id = Integer.parseInt(db.getAssistantIdAndSecID(course_id.getValue(),year.getText(),semester.getValue()).get(1)) + 1;
+                    db.enrollNewSecToAssistant(course_id.getValue(),year.getText(),semester.getValue(),assistant_id,sec_id);
                 }
-        }else {
+                masssege.setText("Successful");
+                masssege.setStyle("-fx-border-color: green; -fx-border-width: 2px;");
+                masssege.setTextFill(Color.GREEN);
+                masssege.setVisible(true);
+            } else {
+                masssege.setText("Failed");
+                masssege.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+                masssege.setTextFill(Color.RED);
+                masssege.setVisible(true);
+            }
+        } else {
             masssege.setText("Complete data");
             masssege.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
             masssege.setTextFill(Color.RED);
             masssege.setVisible(true);
         }
     }
-
 }
