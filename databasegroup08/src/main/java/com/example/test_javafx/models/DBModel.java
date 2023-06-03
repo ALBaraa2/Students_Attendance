@@ -1373,7 +1373,6 @@ public class DBModel {
     // تشفير كلمة المرور
     public static String hashPassword(String password) {
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
-        System.out.println(hashedPassword);
         return hashedPassword;
     }
 
