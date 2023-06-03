@@ -246,3 +246,8 @@ CREATE TRIGGER section_auto_increment_trigger
 BEFORE INSERT ON section
 FOR EACH ROW
 EXECUTE FUNCTION auto_increment_sec_id();
+
+INSERT INTO users (username, email, password, user_type) 
+VALUES 
+  ('admin', 'admin@gmail.com', '$2a$10$Hm0K6/9J9TCy.ZN0ZiIavupEHnIvUuyij.rELXav7EvI0hyUMeruG', 'admin'),
+ ('assistant', 'user1@gmail.com', '$2a$10$Hm0K6/9J9TCy.ZN0ZiIavupEHnIvUuyij.rELXav7EvI0hyUMeruG', 'teach assistant');
