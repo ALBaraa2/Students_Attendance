@@ -79,10 +79,9 @@ public class SheetOfNonCompliant implements Initializable {
     }
     public void XLSX() {
         xlx.setOnAction(new EventHandler<ActionEvent>() {
-            String newSheetName = courseIdCom.getValue();
-
             @Override
             public void handle(ActionEvent event) {
+                String newSheetName = courseIdCom.getValue();
                 Stage fileChooserStage = new Stage();
                 fileChooserStage.setTitle("File Chooser");
                 DirectoryChooser directoryChooser = new DirectoryChooser();
@@ -104,7 +103,7 @@ public class SheetOfNonCompliant implements Initializable {
                         // Write data to the new sheet
                         int size = db.SheetOfNonCompliant(newSheetName).size();
                         ArrayList<AttendanceSheet> x = db.SheetOfNonCompliant(courseIdCom.getValue());
-                        for (int i = 0; i < size; i++) {
+                        for (int i = 0; i < x.size(); i++) {
                             Row row = sheet.createRow(i);
                             Cell cell1 = row.createCell(0);
                             Cell cell2 = row.createCell(1);
@@ -124,11 +123,7 @@ public class SheetOfNonCompliant implements Initializable {
                         outputStream.close();
                         // فتح الملف إذا كان موجودًا
                         File file = new File(filePath);
-                        if (file.exists()) {
                             Desktop.getDesktop().open(file);
-                        } else {
-
-                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

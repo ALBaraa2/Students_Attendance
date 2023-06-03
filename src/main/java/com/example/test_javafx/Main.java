@@ -15,12 +15,11 @@ public class Main extends Application{
         launch();
     }
 
-
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("views/admin.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("attendance_student");
+        stage.setTitle("attendance student");
         stage.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResourceAsStream("images/uni1.png"))));
         stage.setScene(scene);
         stage.show();

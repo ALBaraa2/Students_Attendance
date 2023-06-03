@@ -15,7 +15,7 @@ public class DBModel {
 
     //here our queries method
     public DBModel() {
-        schemaConnect("project");
+        schemaConnect("attendance");
     }
 
     public static DBModel getModel() {
@@ -28,9 +28,9 @@ public class DBModel {
     public void connect() {
         PGSimpleDataSource source = new PGSimpleDataSource();
         source.setServerName("localhost");
-        source.setDatabaseName("project");
+        source.setDatabaseName("project_database");
         source.setUser("postgres");
-        source.setPassword("123");
+        source.setPassword("feraskhaled30");
 
 
         try {
@@ -550,22 +550,19 @@ public class DBModel {
 
     //هذه تقوم بربط معيد في مساق معين
     public void addEnrollment(String course, String year, String semester, String assistantId) {
-        ArrayList<String> sec_ids = getSecIds(course,Integer.parseInt(year),semester);
-        for (String sec_id : sec_ids) {
-            System.out.println(sec_id);
-            String sql = "INSERT INTO assist (course_id, year, semester, assistant_id,sec_id) VALUES (?, ?, ?, ?,?)";
+
+            String sql = "INSERT INTO assist (course_id, year, semester, assistant_id) VALUES (?, ?, ?, ?)";
             try (PreparedStatement st = con.prepareStatement(sql)) {
                 st.setString(1, course);
                 st.setInt(2, Integer.parseInt(year));
                 st.setString(3, semester);
                 st.setInt(4, Integer.parseInt(assistantId));
-                st.setInt(5, Integer.parseInt(sec_id));
                 st.executeUpdate();
             } catch (SQLException ex) {
                 Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-    }
+
 
     //هذه الميثود تقوم بربط الطالب في مساق معين
     public void addEnrollmentStudent(String course, String year, String semester, String sec, String studentID) {
@@ -1170,18 +1167,18 @@ public class DBModel {
 
     //ايجاد السنة والفصل التي يشرف عليها المعيد الذي يدخل البرنامج
     public String[] getYearSemester(String email) {
-        String sql = "SELECT year, semester" +
-                "FROM users s join assist on(s.id = assist.assistant_id)" +
-                "where s.email = ?" +
-                "GROUP BY year, semester" +
-                "HAVING year = (SELECT MAX(year) FROM assist)" +
-                "ORDER BY CASE" +
-                "    WHEN semester = 'Fall' THEN 1" +
-                "    WHEN semester = 'Winter' THEN 2" +
-                "    WHEN semester = 'Spring' THEN 3" +
-                "    WHEN semester = 'Summer' THEN 4" +
-                "    ELSE 5" +
-                "END DESC" +
+        String sql = "SELECT year, semester " +
+                "FROM users s JOIN assist ON (s.id = assist.assistant_id) " +
+                "WHERE s.email = ? " +
+                "GROUP BY year, semester " +
+                "HAVING year = (SELECT MAX(year) FROM assist) " +
+                "ORDER BY CASE " +
+                "    WHEN semester = 'Fall' THEN 1 " +
+                "    WHEN semester = 'Winter' THEN 2 " +
+                "    WHEN semester = 'Spring' THEN 3 " +
+                "    WHEN semester = 'Summer' THEN 4 " +
+                "    ELSE 5 " +
+                "END DESC " +
                 "LIMIT 1;";
         String[] s = new String[2];
         try (PreparedStatement st = con.prepareStatement(sql)) {
@@ -1406,6 +1403,7 @@ public class DBModel {
                 " NATURAL JOIN assist" +
                 " JOIN users ON users.id = assist.assistant_id" +
                 " WHERE users.email = ? AND lecture_title = ? AND year = cast(? as integer) AND semester = ?;";
+        System.out.println(email+" "+LT+" "+y+" "+semester);
         try (PreparedStatement st = con.prepareStatement(sql)) {
             st.setString(1, email);
             st.setString(2, LT);

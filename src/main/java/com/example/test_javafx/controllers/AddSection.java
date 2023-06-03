@@ -67,7 +67,6 @@ public class AddSection implements Initializable {
     @FXML
     void done(ActionEvent event) {
         if (course_id.getValue() != null && semester.getValue() != null && year.getText() != null && location.getText() != null){
-            if (!db.sectionIsExist(course_id.getValue(), year.getText(), semester.getValue())){
                 if (db.addSection(course_id.getValue(), location.getText(), year.getText(), semester.getValue())){
                     masssege.setText("Successful");
                     masssege.setStyle("-fx-border-color: green; -fx-border-width: 2px;");
@@ -79,12 +78,7 @@ public class AddSection implements Initializable {
                     masssege.setTextFill(Color.RED);
                     masssege.setVisible(true);
                 }
-            } else {
-                masssege.setText("This Section is exist");
-                masssege.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
-                masssege.setVisible(true);
-            }
-        } else {
+        }else {
             masssege.setText("Complete data");
             masssege.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
             masssege.setTextFill(Color.RED);
