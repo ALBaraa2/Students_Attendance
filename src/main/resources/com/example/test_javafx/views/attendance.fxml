@@ -10,11 +10,12 @@
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="461.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.test_javafx.controllers.Attendance">
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="499.0" prefWidth="651.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.test_javafx.controllers.Attendance">
    <children>
-      <TableView fx:id="table" layoutY="80.0" prefHeight="292.0" prefWidth="600.0" AnchorPane.bottomAnchor="89.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0">
+      <TableView fx:id="table" layoutY="98.0" prefHeight="292.0" prefWidth="600.0" AnchorPane.bottomAnchor="71.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="98.0">
         <columns>
             <TableColumn fx:id="status" prefWidth="115.20001220703125" text="Attendance Status" />
             <TableColumn fx:id="lecture_title" prefWidth="115.20001220703125" text="Lecture Title" />
@@ -25,7 +26,7 @@
             <Font name="Algerian" size="12.0" />
          </font>
       </Button>
-      <ButtonBar blendMode="DIFFERENCE" layoutX="6.0" layoutY="372.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="42.0" prefWidth="464.0" AnchorPane.bottomAnchor="47.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="371.6">
+      <ButtonBar blendMode="DIFFERENCE" layoutX="14.0" layoutY="433.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="28.0" prefWidth="511.0" AnchorPane.bottomAnchor="38.0" AnchorPane.leftAnchor="14.0">
          <buttons>
             <Button alignment="CENTER" blendMode="LIGHTEN" contentDisplay="CENTER" minWidth="74.0" mnemonicParsing="false" onAction="#AttendanceReport" prefHeight="22.0" style="-fx-background-radius: 20;" text="Attendance report" textFill="#8d22ab">
                <font>
@@ -42,32 +43,48 @@
             <DropShadow radius="4.75" width="0.0" />
          </effect>
       </ButtonBar>
-      <HBox layoutX="99.0" layoutY="14.0" prefHeight="26.0" prefWidth="600.0" spacing="12.0" AnchorPane.bottomAnchor="420.6" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="13.999999999999979">
-         <children>
-            <ComboBox fx:id="courseID" prefWidth="200.0" promptText="Courses id" />
-            <ComboBox fx:id="sec_id" prefWidth="200.0" promptText="Sections" />
-            <Label fx:id="massege" alignment="CENTER" prefHeight="26.0" prefWidth="166.0" visible="false">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
-         </children>
-         <padding>
-            <Insets left="7.0" />
-         </padding>
-      </HBox>
-      <HBox layoutY="53.0" prefHeight="26.0" prefWidth="600.0" spacing="12.0" AnchorPane.bottomAnchor="381.6" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="53.0">
-         <children>
-            <ComboBox fx:id="LName" prefWidth="200.0" promptText="Lecture name" />
-            <ComboBox fx:id="student" prefWidth="200.0" promptText="ID or Name or Phone number" />
-         </children>
-         <padding>
-            <Insets left="7.0" />
-         </padding>
-      </HBox>
       <Button alignment="CENTER" blendMode="MULTIPLY" contentDisplay="CENTER" layoutX="72.0" layoutY="425.0" mnemonicParsing="false" onAction="#xlsx" prefHeight="28.0" prefWidth="327.0" style="-fx-background-color: #21682d; -fx-background-radius: 15;" text="Attendance Registration by xlsx file" textFill="#d9e4da" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="72.0" fx:id="xlx">
          <font>
             <Font name="Algerian" size="15.0" />
          </font></Button>
+      <VBox layoutX="-1.0" layoutY="1.0" prefHeight="99.0" prefWidth="651.0" spacing="8.0">
+         <children>
+            <HBox prefHeight="13.0" prefWidth="651.0" spacing="12.0">
+               <children>
+                  <ComboBox fx:id="courseID" prefWidth="200.0" promptText="Courses id" />
+                  <ComboBox fx:id="year" prefWidth="200.0" promptText="Year" />
+                  <Label fx:id="massege" alignment="CENTER" prefHeight="26.0" prefWidth="218.0" visible="false">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets left="7.0" />
+               </padding>
+            </HBox>
+            <HBox prefHeight="6.0" prefWidth="651.0" spacing="12.0">
+               <children>
+                  <ComboBox fx:id="semester" prefWidth="200.0" promptText="Semester" />
+                  <ComboBox fx:id="sec_id" prefWidth="200.0" promptText="Sections" />
+               </children>
+               <padding>
+                  <Insets left="7.0" />
+               </padding>
+            </HBox>
+            <HBox prefHeight="18.0" prefWidth="651.0" spacing="12.0">
+               <children>
+                  <ComboBox fx:id="LName" prefWidth="200.0" promptText="Lecture name" />
+                  <ComboBox fx:id="student" prefWidth="200.0" promptText="ID or Name or Phone number" />
+               </children>
+               <padding>
+                  <Insets left="7.0" />
+               </padding>
+            </HBox>
+         </children>
+         <padding>
+            <Insets top="2.0" />
+         </padding>
+      </VBox>
    </children>
 </AnchorPane>

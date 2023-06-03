@@ -12,10 +12,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -58,11 +60,18 @@ public class LectureSheet implements Initializable {
     @FXML
     private TableView<Lectures> table;
 
+    @FXML
+    private ComboBox<String> Csemester;
+
+    @FXML
+    private ComboBox<String> Cyear;
+
+    @FXML
+    private Label massege;
+
     DBModel db = DBModel.getModel();
     Navigation nav = new Navigation();
     String email = SharedData.getInstance().getEmail();
-    String y = db.getYearSemester(email)[0];
-    String s = db.getYearSemester(email)[1];
     Lectures l = new Lectures();
 
     @Override
@@ -81,17 +90,47 @@ public class LectureSheet implements Initializable {
         ObservableList<String> ids = FXCollections.observableList(db.getCourseIDs(email));
         courseIDcom.setItems(ids);
         CmboBoxAutoComplete.cmboBoxAutoComplete(courseIDcom, ids);
-        courseIDcom.setOnAction(this::setComboBoxesLecture_name);
+        courseIDcom.setOnAction(this::setComboBoxesYear);
     }
+
+    private void setComboBoxesYear(ActionEvent event1) {
+        String course_id = courseIDcom.getSelectionModel().getSelectedItem();
+        if (course_id != null) {
+            ObservableList<String> years = FXCollections.observableList(db.getYearsToteachAssistant(email, course_id));
+            Cyear.setItems(years);
+            Cyear.setOnAction(this::setComboBoxesSemester);
+        }
+    }
+
+    private void setComboBoxesSemester(ActionEvent event1) {
+        String course_id = courseIDcom.getSelectionModel().getSelectedItem();
+        String Syear = Cyear.getSelectionModel().getSelectedItem();
+        if (course_id != null && Syear != null) {
+            ObservableList<String> semesters = FXCollections.observableList(db.getSemestersToteachAssistant(email,
+                    course_id, Syear));
+            Csemester.setItems(semesters);
+            Csemester.setOnAction(this::setComboBoxesLecture_name);
+        }
+    }
+
     private void setComboBoxesLecture_name(ActionEvent event) {
         String course_id = courseIDcom.getSelectionModel().getSelectedItem();
-        System.out.println(s+" "+y);
-        ObservableList<String> lname = FXCollections.observableList(db.getLecturesName(course_id, Integer.parseInt(y), s));
+        String Syear = Cyear.getSelectionModel().getSelectedItem();
+        String Ssemester = Csemester.getSelectionModel().getSelectedItem();
+        ObservableList<String> lname = FXCollections.observableList(db.getLecturesName(course_id,
+                Integer.parseInt(Syear), Ssemester));
         LnameCom.setItems(lname);
     }
     @FXML
     void viewLName(ActionEvent event) {
-        table.setItems(FXCollections.observableArrayList(db.lectureSheet(email ,LnameCom.getValue(), y , s)));
+        if (courseIDcom.getValue() != null && Cyear.getValue() != null && Csemester.getValue() != null
+        && LnameCom.getValue() != null) {
+            table.setItems(FXCollections.observableArrayList(db.lectureSheet(email, courseIDcom.getValue(),
+                    LnameCom.getValue(), Cyear.getValue(), Csemester.getValue())));
+        } else {
+            massege.setText("Complete Data");
+            massege.setTextFill(Color.RED);
+        }
     }
     @FXML
     void back(ActionEvent event) {
