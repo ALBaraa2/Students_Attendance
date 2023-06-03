@@ -12,20 +12,16 @@ public class CmboBoxAutoComplete  {
     public static void cmboBoxAutoComplete(ComboBox<String> cb , ObservableList<String> obsList ){
         cb.setEditable(true);
         cb.setEditable(true);
-
         // Create a list with some dummy values.
         ObservableList<String> ids = FXCollections.observableList(obsList);
-
         // Create a FilteredList wrapping the ObservableList.
         FilteredList<String> filteredItems = new FilteredList<>(ids, p -> true);
-
         // Add a listener to the textProperty of the combobox editor. The
         // listener will simply filter the list every time the input is changed
         // as long as the user hasn't selected an item in the list.
         cb.getEditor().textProperty().addListener((obs, oldValue, newValue) -> {
             final TextField editor = cb.getEditor();
             final String selected = cb.getSelectionModel().getSelectedItem();
-
             // This needs run on the GUI thread to avoid the error described
             // here: https://bugs.openjdk.java.net/browse/JDK-8081700.
             Platform.runLater(() -> {
@@ -45,11 +41,6 @@ public class CmboBoxAutoComplete  {
                 }
             });
         });
-
         cb.setItems(filteredItems);
-
-
     }
-
-
 }

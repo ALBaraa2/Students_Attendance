@@ -454,6 +454,43 @@ public class DBModel {
         return semesters;
     }
 
+    public ArrayList<String> getYearsToteachAssistant(String email, String course_id) {
+        String sql = "select distinct year from users join assist on (users.id = assist.assistant_id)" +
+                "WHERE course_id = ? and email = ?;";
+        ArrayList<String> years = new ArrayList<>();
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, course_id);
+            st.setString(2, email);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                years.add(rs.getString(1));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+        return years;
+    }
+
+    public ArrayList<String> getSemestersToteachAssistant(String email, String course_id, String year) {
+        String sql = "select distinct semester from users join assist on (users.id = assist.assistant_id)" +
+                "WHERE course_id = ? and email = ? and year = CAST(? as INTEGER);";
+        ArrayList<String> semesters = new ArrayList<>();
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, course_id);
+            st.setString(2, email);
+            st.setString(3, year);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                semesters.add(rs.getString(1));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+        return semesters;
+    }
+
     //ايجاد كل الشعب لمساق معين درًس في سنة محددة في فصل محدد
     public ArrayList<String> getSecIds(String course_id, int year, String semester) {
         String sql = "select sec_id from section " +
@@ -1181,8 +1218,8 @@ public class DBModel {
                 "    WHEN semester = 'Spring' THEN 3" +
                 "    WHEN semester = 'Summer' THEN 4" +
                 "    ELSE 5" +
-                "END DESC" +
-                "LIMIT 1;";
+                " END DESC" +
+                " LIMIT 1;";
         String[] s = new String[2];
         try (PreparedStatement st = con.prepareStatement(sql)) {
             st.setString(1, email);
@@ -1200,7 +1237,7 @@ public class DBModel {
         }
     }
 
-    public boolean attendance(String student, String course_id, String email, String sec_id,
+    public boolean attendance(String student, String course_id, String year, String semester, String sec_id,
                               String lecture_name) {
         String sql = "UPDATE attendance" +
                 " SET attendance_status = 'yes'" +
@@ -1215,11 +1252,11 @@ public class DBModel {
                 "  AND students.student_id = phone.student_id;";
         try (PreparedStatement st = con.prepareStatement(sql)) {
             st.setString(1, course_id);
-            st.setString(2, getYearSemester(email)[0]);
-            st.setString(3, getYearSemester(email)[1]);
+            st.setString(2, year);
+            st.setString(3, semester);
             st.setString(4, sec_id);
-            st.setString(5, getLectureID(lecture_name, course_id, getYearSemester(email)[0],
-                    getYearSemester(email)[1], sec_id));
+            st.setString(5, getLectureID(lecture_name, course_id, year,
+                    semester, sec_id));
             st.setString(6, student);
             st.setString(7, student);
             st.setString(8, student);
@@ -1286,15 +1323,15 @@ public class DBModel {
         return passwordMatch;
     }
 
-    public ArrayList<String> getStudents(String course_id, String email, String sec_id) {
+    public ArrayList<String> getStudents(String course_id, String year, String semester, String sec_id) {
         ArrayList<String> arr = new ArrayList<>();
         String sql = "select distinct student_id, student_phone, student_name" +
                 " from enrollments natural join phone natural join students" +
                 " where course_id = ? and year = CAST(? as INTEGER) and semester = ? and sec_id = CAST(? as INTEGER);";
         try (PreparedStatement st = con.prepareStatement(sql)) {
             st.setString(1, course_id);
-            st.setString(2, getYearSemester(email)[0]);
-            st.setString(3, getYearSemester(email)[1]);
+            st.setString(2, year);
+            st.setString(3, semester);
             st.setString(4, sec_id);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
@@ -1381,7 +1418,7 @@ public class DBModel {
 
     public ArrayList<String> getLecturesName(String course_id, int year, String semester) {
         ArrayList<String> lects = new ArrayList<>();
-        String sql = "select lecture_title " +
+        String sql = "select distinct lecture_title " +
                 "from lectures " +
                 "where course_id = ? and year = ? and semester = ?;";
         try (PreparedStatement st = con.prepareStatement(sql)) {
@@ -1399,18 +1436,20 @@ public class DBModel {
         return lects;
     }
     //عرض تقرير المحاضرة
-    public ArrayList<Lectures> lectureSheet(String email , String LT , String y , String semester) {
+    public ArrayList<Lectures> lectureSheet(String email,String course_id, String LT , String y , String semester) {
         ArrayList<Lectures> arr = new ArrayList<>();
         String sql = "SELECT DISTINCT lecture_id,  lecture_time, lecture_date,lecture_location, course_id, year, semester, sec_id" +
                 " FROM lectures" +
                 " NATURAL JOIN assist" +
                 " JOIN users ON users.id = assist.assistant_id" +
-                " WHERE users.email = ? AND lecture_title = ? AND year = cast(? as integer) AND semester = ?;";
+                " WHERE users.email = ? AND lecture_title = ? AND year = cast(? as integer) AND semester = ?" +
+                " and course_id = ?;";
         try (PreparedStatement st = con.prepareStatement(sql)) {
             st.setString(1, email);
             st.setString(2, LT);
             st.setString(3, y);
             st.setString(4, semester);
+            st.setString(5, course_id);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 arr.add(new Lectures(rs.getString(1) ,rs.getTime(2) ,rs.getDate(3),

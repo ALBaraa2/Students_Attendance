@@ -55,11 +55,15 @@ public class Attendance implements Initializable {
     @FXML
     private Button xlx;
 
+    @FXML
+    private ComboBox<String> semester;
+
+    @FXML
+    private ComboBox<String> year;
+
     DBModel db = DBModel.getModel();
     Navigation nav = new Navigation();
     String email = SharedData.getInstance().getEmail();
-    String year = db.getYearSemester(email)[0];
-    String semester = db.getYearSemester(email)[1];
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -69,41 +73,76 @@ public class Attendance implements Initializable {
         //تفعيل ميثودsetComboBoxes عند تشغيل البرنامج
         setComboBoxes();
     }
+
     //وضع الcourse الخاص بالمعيد الذي يقوم بالدخول الى البرنامج في الComboBox الخاص بcourseID ومن ثم يتم تقعيلsetComboBoxesSec_id
     private void setComboBoxes() {
         ObservableList<String> ids = FXCollections.observableList(db.getCourseIDs(email));
         courseID.setItems(ids);
         CmboBoxAutoComplete.cmboBoxAutoComplete(courseID, ids);
-        courseID.setOnAction(this::setComboBoxesSec_id);
+        courseID.setOnAction(this::setComboBoxesYear);
     }
+
+    private void setComboBoxesYear(ActionEvent event1) {
+        String course_id = courseID.getSelectionModel().getSelectedItem();
+        if (course_id != null) {
+            ObservableList<String> years = FXCollections.observableList(db.getYearsToteachAssistant(email, course_id));
+            year.setItems(years);
+            year.setOnAction(this::setComboBoxesSemester);
+        }
+    }
+
+    private void setComboBoxesSemester(ActionEvent event1) {
+        String course_id = courseID.getSelectionModel().getSelectedItem();
+        String Syear = year.getSelectionModel().getSelectedItem();
+        if (course_id != null && Syear != null) {
+            ObservableList<String> semesters = FXCollections.observableList(db.getSemestersToteachAssistant(email, course_id, Syear));
+            semester.setItems(semesters);
+            semester.setOnAction(this::setComboBoxesSec_id);
+        }
+    }
+
     // وضع الSec_id الخاص بالcourse (الذي يتم وضعه في الميثود السابقة) في الComboBox الخاص بsec_id
     private void setComboBoxesSec_id(ActionEvent event1) {
         String course_id = courseID.getSelectionModel().getSelectedItem();
-        ObservableList<String> sec_ids = FXCollections.observableList(db.getSecIds(course_id,
-                Integer.parseInt(year), semester));
-        sec_id.setItems(sec_ids);
-        EventHandler<ActionEvent> comboEvent = (ActionEvent event) -> {
-            setComboBoxesLecturename(event);
-            setComboBoxesStudent(event);
-        };
-        sec_id.setOnAction(comboEvent);
+        String Syear = year.getSelectionModel().getSelectedItem();
+        String Ssemseter = semester.getSelectionModel().getSelectedItem();
+        if (course_id != null && Syear != null && Ssemseter != null) {
+            ObservableList<String> sec_ids = FXCollections.observableList(db.getSecIds(course_id,
+                    Integer.parseInt(Syear), Ssemseter));
+            sec_id.setItems(sec_ids);
+            EventHandler<ActionEvent> comboEvent = (ActionEvent event) -> {
+                setComboBoxesLecturename(event);
+                setComboBoxesStudent(event);
+            };
+            sec_id.setOnAction(comboEvent);
+        }
     }
+
     // وضع الLecturename الخاص بالcourse (الذي يتم وضعه في ميثود setComboBoxes) في الComboBox الخاص بLName
     private void setComboBoxesLecturename(ActionEvent event) {
         String course_id = courseID.getSelectionModel().getSelectedItem();
+        String Syear = year.getSelectionModel().getSelectedItem();
+        String Ssemseter = semester.getSelectionModel().getSelectedItem();
         String secid = sec_id.getSelectionModel().getSelectedItem();
-        ObservableList<String> lectureNames = FXCollections.observableList(db.getLecturesTitle(course_id,
-                Integer.parseInt(year), semester, Integer.parseInt(secid)));
-        LName.setItems(lectureNames);
-        CmboBoxAutoComplete.cmboBoxAutoComplete(LName, lectureNames);
+        if (course_id != null && Syear != null && Ssemseter != null && secid != null) {
+            ObservableList<String> lectureNames = FXCollections.observableList(db.getLecturesTitle(course_id,
+                    Integer.parseInt(Syear), Ssemseter, Integer.parseInt(secid)));
+            LName.setItems(lectureNames);
+            CmboBoxAutoComplete.cmboBoxAutoComplete(LName, lectureNames);
+        }
     }
+
     private void setComboBoxesStudent(ActionEvent event) {
         String course_id = courseID.getSelectionModel().getSelectedItem();
+        String Syear = year.getSelectionModel().getSelectedItem();
+        String Ssemseter = semester.getSelectionModel().getSelectedItem();
         String secid = sec_id.getSelectionModel().getSelectedItem();
-        ObservableList<String> students = FXCollections.observableList(db.getStudents(course_id,
-                email, secid));
-        student.setItems(students);
-        CmboBoxAutoComplete.cmboBoxAutoComplete(student, students);
+        if (course_id != null && Syear != null && Ssemseter != null) {
+            ObservableList<String> students = FXCollections.observableList(db.getStudents(course_id,
+                    Syear, Ssemseter, secid));
+            student.setItems(students);
+            CmboBoxAutoComplete.cmboBoxAutoComplete(student, students);
+        }
     }
 
     @FXML
@@ -112,13 +151,13 @@ public class Attendance implements Initializable {
         String secid = sec_id.getSelectionModel().getSelectedItem();
         String Student = student.getSelectionModel().getSelectedItem();
         table.setItems(FXCollections.observableArrayList(db.getAttendanceReport
-                (course_id,Integer.parseInt(year), semester,Integer.parseInt(secid),Student)));
+                (course_id,Integer.parseInt(year.getValue()), semester.getValue(),Integer.parseInt(secid),Student)));
     }
 
     @FXML
     void Checkin(ActionEvent event) {
         if (student.getValue() != null && LName.getValue() != null && courseID.getValue() != null && sec_id.getValue() != null){
-            if (db.attendance(student.getValue(),courseID.getValue(),email,sec_id.getValue(),LName.getValue())){
+            if (db.attendance(student.getValue(),courseID.getValue(),year.getValue(),semester.getValue(),sec_id.getValue(),LName.getValue())){
                 massege.setText("Done");
                 massege.setTextFill(Color.GREEN);
                 massege.setVisible(true);
@@ -160,15 +199,14 @@ public class Attendance implements Initializable {
 
         });
     }
+
     //قراءة id الطالب من ملف اكسيل ووضع الطالب في حالة حضور
     public void readExcelFile(String filePath) {
         try {
             // تحميل ملف Excel
             Workbook workbook = WorkbookFactory.create(new File(filePath));
-
             // افتح صفحة العمل الأولى
             Sheet sheet = workbook.getSheetAt(0);
-
             // قم بتصفح الصفوف والأعمدة واطبع قيمة كل خلية
             for (Row row : sheet) {
                 for (Cell cell : row) {
@@ -176,7 +214,8 @@ public class Attendance implements Initializable {
                     if (cellType == CellType.NUMERIC) {
                         String value = String.valueOf(cell.getNumericCellValue());
                         String formattedValue = value.replace(".", "").substring(0, value.length() - 3);
-                        db.attendance(formattedValue,courseID.getValue(),email,sec_id.getValue(),LName.getValue());
+                        db.attendance(formattedValue,courseID.getValue(),year.getValue(),semester.getValue()
+                                ,sec_id.getValue(),LName.getValue());
                     }
                 }
             }
