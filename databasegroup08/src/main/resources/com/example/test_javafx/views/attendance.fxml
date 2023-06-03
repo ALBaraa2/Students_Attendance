@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="499.0" prefWidth="651.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.test_javafx.controllers.Attendance">
+   <children>
+      <TableView fx:id="table" layoutY="98.0" prefHeight="292.0" prefWidth="600.0" AnchorPane.bottomAnchor="71.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="98.0">
+        <columns>
+            <TableColumn fx:id="status" prefWidth="115.20001220703125" text="Attendance Status" />
+            <TableColumn fx:id="lecture_title" prefWidth="115.20001220703125" text="Lecture Title" />
+        </columns>
+      </TableView>
+      <Button alignment="CENTER" blendMode="MULTIPLY" contentDisplay="CENTER" layoutX="526.0" layoutY="364.0" mnemonicParsing="false" onAction="#back" prefHeight="26.0" prefWidth="60.0" text="Back" textFill="#030303" AnchorPane.bottomAnchor="9.600000000000023" AnchorPane.rightAnchor="14.0">
+         <font>
+            <Font name="Algerian" size="12.0" />
+         </font>
+      </Button>
+      <ButtonBar blendMode="DIFFERENCE" layoutX="7.0" layoutY="428.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="28.0" prefWidth="578.0" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="7.0">
+         <buttons>
+            <Button alignment="CENTER" blendMode="LIGHTEN" contentDisplay="CENTER" minWidth="74.0" mnemonicParsing="false" onAction="#modify" prefHeight="22.0" style="-fx-background-radius: 20;" text="Modify status" textFill="#8d22ab">
+               <font>
+                  <Font name="Algerian" size="12.0" />
+               </font>
+            </Button>
+            <Button alignment="CENTER" blendMode="LIGHTEN" contentDisplay="CENTER" mnemonicParsing="false" onAction="#Checkin" prefHeight="22.0" prefWidth="218.0" style="-fx-background-radius: 20;" stylesheets="@style.css" text="Attendance Registration" textFill="#8d22ab">
+               <font>
+                  <Font name="Algerian" size="12.0" />
+               </font>
+            </Button>
+            <Button alignment="CENTER" blendMode="LIGHTEN" contentDisplay="CENTER" minWidth="74.0" mnemonicParsing="false" onAction="#AttendanceReport" prefHeight="22.0" style="-fx-background-radius: 20;" text="Attendance report" textFill="#8d22ab">
+               <font>
+                  <Font name="Algerian" size="12.0" />
+               </font>
+            </Button>
+         </buttons>
+         <effect>
+            <DropShadow radius="4.75" width="0.0" />
+         </effect>
+      </ButtonBar>
+      <Button alignment="CENTER" blendMode="MULTIPLY" contentDisplay="CENTER" layoutX="72.0" layoutY="425.0" mnemonicParsing="false" onAction="#xlsx" prefHeight="28.0" prefWidth="327.0" style="-fx-background-color: #21682d; -fx-background-radius: 15;" text="Attendance Registration by xlsx file" textFill="#d9e4da" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="72.0" fx:id="xlx">
+         <font>
+            <Font name="Algerian" size="15.0" />
+         </font></Button>
+      <VBox layoutX="-1.0" layoutY="1.0" prefHeight="99.0" prefWidth="651.0" spacing="8.0">
+         <children>
+            <HBox prefHeight="13.0" prefWidth="651.0" spacing="12.0">
+               <children>
+                  <ComboBox fx:id="courseID" prefWidth="200.0" promptText="Courses id" />
+                  <ComboBox fx:id="year" prefWidth="200.0" promptText="Year" />
+                  <Label fx:id="massege" alignment="CENTER" prefHeight="26.0" prefWidth="218.0" visible="false">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets left="7.0" />
+               </padding>
+            </HBox>
+            <HBox prefHeight="6.0" prefWidth="651.0" spacing="12.0">
+               <children>
+                  <ComboBox fx:id="semester" prefWidth="200.0" promptText="Semester" />
+                  <ComboBox fx:id="sec_id" prefWidth="200.0" promptText="Sections" />
+               </children>
+               <padding>
+                  <Insets left="7.0" />
+               </padding>
+            </HBox>
+            <HBox prefHeight="18.0" prefWidth="651.0" spacing="12.0">
+               <children>
+                  <ComboBox fx:id="LName" prefWidth="200.0" promptText="Lecture name" />
+                  <ComboBox fx:id="student" prefWidth="200.0" promptText="ID or Name or Phone number" />
+               </children>
+               <padding>
+                  <Insets left="7.0" />
+               </padding>
+            </HBox>
+         </children>
+         <padding>
+            <Insets top="2.0" />
+         </padding>
+      </VBox>
+   </children>
+</AnchorPane>

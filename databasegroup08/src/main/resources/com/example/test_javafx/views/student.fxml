@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="490.0" prefWidth="702.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.test_javafx.controllers.Student">
+   <right>
+      <AnchorPane prefHeight="490.0" prefWidth="338.0" style="-fx-background-color: #7b9489;" BorderPane.alignment="CENTER">
+         <children>
+            <VBox layoutX="9.0" layoutY="63.0" prefHeight="363.0" prefWidth="340.0" spacing="40.0">
+               <children>
+                  <Button fx:id="SR" mnemonicParsing="false" onAction="#SR" prefHeight="48.0" prefWidth="287.0" style="-fx-background-radius: 20;" styleClass="green" stylesheets="@style.css" text="Student registration">
+                     <font>
+                        <Font name="System Bold Italic" size="20.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="SM" mnemonicParsing="false" onAction="#SMM" prefHeight="48.0" prefWidth="287.0" style="-fx-background-radius: 20;" styleClass="green" stylesheets="@style.css" text="Modify student data">
+                     <font>
+                        <Font name="System Bold Italic" size="20.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="SE" mnemonicParsing="false" onAction="#SEe" prefHeight="48.0" prefWidth="287.0" style="-fx-background-radius: 20;" styleClass="green" stylesheets="@style.css" text="student enrollments in course">
+                     <font>
+                        <Font name="System Bold Italic" size="18.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="ME" mnemonicParsing="false" onAction="#MEE" prefHeight="48.0" prefWidth="287.0" style="-fx-background-radius: 20;" styleClass="green" stylesheets="@style.css" text="Modify Enrollments data">
+                     <font>
+                        <Font name="System Bold Italic" size="20.0" />
+                     </font>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets left="24.0" />
+               </padding>
+            </VBox>
+            <Button fx:id="back" layoutX="134.0" layoutY="426.0" mnemonicParsing="false" onAction="#back" prefHeight="34.0" prefWidth="89.0" style="-fx-background-color: #000000;" text="Back" textFill="RED">
+               <font>
+                  <Font name="System Bold Italic" size="14.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+   </right>
+   <center>
+      <AnchorPane prefHeight="490.0" prefWidth="352.0" style="-fx-background-color: #da7227;" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="CENTER" layoutY="212.0" prefHeight="65.0" prefWidth="352.0" text="Registration and editing of students " AnchorPane.bottomAnchor="212.79999999999995" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="212.0">
+               <font>
+                  <Font name="System Italic" size="22.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>

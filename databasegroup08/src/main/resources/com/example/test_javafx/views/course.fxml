@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="root" prefHeight="466.0" prefWidth="716.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.test_javafx.controllers.Course">
+   <children>
+      <ButtonBar blendMode="DIFFERENCE" layoutX="63.0" layoutY="354.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="46.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0">
+        <buttons>
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#modifyPage" style="-fx-background-radius: 20;" text="modify" textFill="#2cad21">
+               <font>
+                  <Font name="Algerian" size="12.0" />
+               </font>
+            </Button>
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#insertSection" style="-fx-background-radius: 20;" text="Add Section" textFill="#2cad21">
+               <font>
+                  <Font name="Algerian" size="12.0" />
+               </font>
+            </Button>
+            <Button alignment="CENTER" blendMode="LIGHTEN" contentDisplay="CENTER" mnemonicParsing="false" onAction="#insertPage" style="-fx-background-radius: 20;" text="insert" textFill="#2cad21">
+               <font>
+                  <Font name="Algerian" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="view" alignment="CENTER" blendMode="LIGHTEN" contentDisplay="CENTER" mnemonicParsing="false" onAction="#viewCourses" prefHeight="22.0" prefWidth="110.0" style="-fx-background-radius: 20;" stylesheets="@style.css" text="View Courses" textFill="#2cad21">
+               <font>
+                  <Font name="Algerian" size="12.0" />
+               </font>
+            </Button>
+        </buttons>
+         <effect>
+            <DropShadow radius="4.75" width="0.0" />
+         </effect>
+      </ButtonBar>
+      <TableView fx:id="courses" layoutY="-2.0" prefHeight="336.0" prefWidth="820.0" AnchorPane.bottomAnchor="64.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <columns>
+          <TableColumn fx:id="course_id" maxWidth="1.7976931348623157E308" minWidth="80.0" prefWidth="-1.0" text="Course_id" />
+          <TableColumn fx:id="instructor_name" maxWidth="1.7976931348623157E308" minWidth="114.0" prefWidth="129.0" text="Instructor_name" />
+            <TableColumn fx:id="course_name" maxWidth="1.7976931348623157E308" minWidth="95.0" prefWidth="128.0" text="Name" />
+            <TableColumn fx:id="course_location" maxWidth="1.7976931348623157E308" minWidth="77.79998779296875" prefWidth="110.39996337890625" text="Location" />
+            <TableColumn fx:id="year" prefWidth="113.60003662109375" text="Year" />
+            <TableColumn fx:id="semester" prefWidth="75.0" text="Semester" />
+            <TableColumn fx:id="sec_id" prefWidth="75.0" text="Sec_id" />
+        </columns>
+      </TableView>
+      <ButtonBar blendMode="DIFFERENCE" layoutX="501.0" layoutY="354.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="46.0" prefWidth="62.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="6.0">
+         <buttons>
+            <Button alignment="CENTER" blendMode="MULTIPLY" contentDisplay="CENTER" mnemonicParsing="false" onAction="#backFromCourse" text="Back" textFill="#030303">
+               <font>
+                  <Font name="Algerian" size="12.0" />
+               </font>
+            </Button>
+         </buttons>
+      </ButtonBar>
+      <Label fx:id="massege" alignment="TOP_LEFT" layoutX="18.0" layoutY="389.0" prefHeight="26.0" prefWidth="466.0" text="Note: Double click on the course to delete" textFill="#0dfdff" AnchorPane.bottomAnchor="50.6" AnchorPane.leftAnchor="18.0">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+   </children>
+   <effect>
+      <DropShadow height="85.48" offsetX="10.0" offsetY="10.0" radius="46.5175" width="102.59" />
+   </effect>
+</AnchorPane>
