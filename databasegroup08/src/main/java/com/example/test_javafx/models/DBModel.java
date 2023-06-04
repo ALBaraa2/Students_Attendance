@@ -28,7 +28,7 @@ public class DBModel {
     public void connect() {
         PGSimpleDataSource source = new PGSimpleDataSource();
         source.setServerName("localhost");
-        source.setDatabaseName("project_database");
+        source.setDatabaseName("databasegroup08");
         source.setUser("postgres");
         source.setPassword("feraskhaled30");
 
