@@ -30,7 +30,8 @@ public class DBModel {
         source.setServerName("localhost");
         source.setDatabaseName("databasegroup08");
         source.setUser("postgres");
-        source.setPassword("feraskhaled30");
+        //use your password
+        source.setPassword("");
 
 
         try {
