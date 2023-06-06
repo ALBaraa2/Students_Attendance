@@ -86,7 +86,10 @@ public class CreateUserAccount implements Initializable {
                     if (!db.isPre_Registered(email.getText())) {
                         if (db.isValidEmail(email.getText())) {
                             if (db.creatUser(name.getText(), email.getText(), db.hashPassword(password.getText()), usertype)) {
-                                massege.setText("Registration Successful");
+//                                after deadlin
+                                massege.setText("Your Id : "+db.gitIdFromUser());
+                                massege.setStyle("-fx-border-color: green; -fx-border-width: 2px;");
+//                                ------------------>
                                 massege.setTextFill(Color.GREEN);
                                 massege.setVisible(true);
                                 reset();

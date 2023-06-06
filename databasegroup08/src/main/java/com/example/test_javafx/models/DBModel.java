@@ -1521,6 +1521,23 @@ public class DBModel {
         }
         return arr ;
     }
+//-------------------->after deadline<-----------------------------
+    public String gitIdFromUser() {
+
+        String sql = "SELECT id FROM users order by  id desc limit 1;";
+        try (Statement st = con.createStatement();
+             ResultSet rs = st.executeQuery(sql);
+        ) {
+            if (rs.next()){
+                return rs.getString(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBModel.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+        return null;
+    }
+//    --------------------------------------------------------------->
 }
 
 
