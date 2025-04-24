@@ -1,7 +1,56 @@
-# DataBase_Project
-1- قم بوضع ملف Tables.sql في برنامج الدبيفر ومن ثم عمل رن اسم الداتا بيز databasegroup08 واسم السكيما attendance .
-2- تشغيل intelij وفتح ملف المشروع (databasegroup08) .
-3- استخدم كلمة المرور الخاصة بك في صفحة DBModel .
-4- الذهاب الى صفحة الMain وعمل run للبرنامج لتظهر لك صفحة الlogin الخاصة بالبرنامج .
-5- للذهاب الى صفحة الadmin يجب استخدام هذا الاميل admin@gmail.com وكلمة المرور هذه 123456 .
-6- للذهاب الى صفحة teach assistant يجب استعمال هذا الاميل user1@gmail.com وكلمة المرور هذه 123456 .
+# 🎓 Students Attendance Management System
+
+A Java-based desktop application for managing student attendance. The system uses PostgreSQL for database management and was developed with IntelliJ IDEA.
+
+## 📝 Overview
+
+This application allows:
+
+- Recording and tracking student attendance.
+- Managing users with two roles: Admin and Teaching Assistant.
+- Secure login functionality with role-based access.
+
+## 🚀 Features
+
+- **Authentication**: Login system for Admin and Teaching Assistant users.
+- **Attendance Tracking**: Record and view attendance data per student.
+- **Role-Based Access**: Admins have full control; Teaching Assistants have limited access.
+
+## 🛠️ Tech Stack
+
+- **Language**: Java
+- **Database**: PostgreSQL
+- **IDE**: IntelliJ IDEA
+
+
+## ⚙️ Installation & Setup
+
+### 1. Set Up the Database
+
+- Open `Tables.sql` using DBeaver or any SQL client.
+- Execute the script to create a database named `databasegroup08` with a schema named `attendance`.
+
+### 2. Configure and Run the Project
+
+- Open the project in IntelliJ IDEA.
+- Go to `DBModel.java` and replace the password field with your PostgreSQL password.
+- Open `Main.java` and run the application.
+
+### 3. Test User Accounts
+
+You can log in using the following test accounts:
+
+#### Admin
+- Email: `admin@gmail.com`
+- Password: `123456`
+
+#### Teaching Assistant
+- Email: `user1@gmail.com`
+- Password: `123456`
+
+## 📬 Contact
+
+For issues, suggestions, or improvements, open an issue or contact [ALBaraa2](https://github.com/ALBaraa2), or [Feras-Alaqad
+](https://github.com/Feras-Alaqad) or [7amzaAlzebda](https://github.com/7amzaAlzebda).
+
+
